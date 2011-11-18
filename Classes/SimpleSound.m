@@ -9,10 +9,9 @@ static ALuint hitSoundBuffer, hitSoundSource;
 
 @implementation SimpleSound
 
-static void
-LogErrors(void){
+static void LogErrors(void) {
 	ALenum alerr;
-	while(alerr = alGetError())
+	while( (alerr = alGetError()) )
 		NSLog(@"OpenAL error 0x%X\n", alerr);
 }
 
