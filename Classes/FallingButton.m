@@ -22,7 +22,6 @@ static cpFloat frand_unit(){return 2.0f*((cpFloat)rand()/(cpFloat)RAND_MAX) - 1.
 
 - (void)updatePosition {
 	self.transform = body.affineTransform;
-    
 }
 
 - (id)initWithFrame:(CGRect)frame {
@@ -40,7 +39,7 @@ static cpFloat frand_unit(){return 2.0f*((cpFloat)rand()/(cpFloat)RAND_MAX) - 1.
 		body = [[ChipmunkBody alloc] initWithMass:mass andMoment:moment];
 		body.pos = cpv(200.0f, 200.0f);
 
-		ChipmunkShape *shape = [ChipmunkPolyShape boxWithBody:body width:frame.size.width height:frame.size.height];
+		shape = [[ChipmunkPolyShape boxWithBody:body width:frame.size.width height:frame.size.height] retain];
 		
 		shape.elasticity = 0.3f;
 		shape.friction = 0.3f;
@@ -65,6 +64,16 @@ static cpFloat frand_unit(){return 2.0f*((cpFloat)rand()/(cpFloat)RAND_MAX) - 1.
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSetFillColorWithColor(context, [UIColor orangeColor].CGColor);
     CGContextFillEllipseInRect(context, rect);
+    
+    CGContextSetStrokeColorWithColor(context, [UIColor grayColor].CGColor);
+    CGContextSetLineWidth(context, 2.0);
+    CGContextBeginPath(context);
+    CGContextMoveToPoint(context, 0, 0);
+    for( NSUInteger vertexIndex = 0; vertexIndex < shape.count; vertexIndex++ ) {
+        cpVect point = [shape getVertex:vertexIndex];
+        CGContextAddLineToPoint(context, point.x, point.y);
+    }
+    CGContextStrokePath(context);
 }
 
 - (void) dealloc {
