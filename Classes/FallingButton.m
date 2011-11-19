@@ -58,19 +58,21 @@ static cpFloat frand_unit(){return 2.0f*((cpFloat)rand()/(cpFloat)RAND_MAX) - 1.
 }
 
 - (void)drawRect:(CGRect)rect {
+    CGFloat innerOffset = 6.0;
+    CGRect innerRect = CGRectMake(innerOffset/2.0, innerOffset/2.0, rect.size.width-innerOffset/2.0, rect.size.height-innerOffset/2.0);
+    
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSetFillColorWithColor(context, [UIColor orangeColor].CGColor);
-    CGContextFillEllipseInRect(context, rect);
-
-    CGContextSetStrokeColorWithColor(context, [UIColor redColor].CGColor);
-    CGContextSetLineWidth(context, 2.0);
-    CGContextBeginPath(context);
-    CGContextMoveToPoint(context, 0, 0);
-    CGContextAddLineToPoint(context, rect.size.width, 0);
-    CGContextAddLineToPoint(context, rect.size.width, rect.size.height);
-    CGContextAddLineToPoint(context, 0, rect.size.height);
-    CGContextAddLineToPoint(context, 0, 0);
-    CGContextStrokePath(context);
+    CGContextFillEllipseInRect(context, innerRect);
+    
+    CGContextSetFillColorWithColor(context, [UIColor colorWithRed:165.0/255.0 green:83.0/255.0 blue:0 alpha:1.0].CGColor);
+    CGContextFillEllipseInRect(context, CGRectMake(14, 15, 10, 10));
+    CGContextFillEllipseInRect(context, CGRectMake(31, 15, 10, 10));
+    CGContextFillEllipseInRect(context, CGRectMake(14, 31, 10, 10));
+    CGContextFillEllipseInRect(context, CGRectMake(31, 31, 10, 10));
+    
+    CGContextSetStrokeColorWithColor(context, [UIColor colorWithRed:165.0/255.0 green:83.0/255.0 blue:0 alpha:1.0].CGColor);
+    CGContextStrokeEllipseInRect(context, innerRect);
 }
 
 - (void) dealloc {

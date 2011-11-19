@@ -5,7 +5,7 @@
 #import "FallingButton.h"
 
 
-@interface ViewController : UIViewController <UIAccelerometerDelegate> {
+@interface ViewController : UIViewController {
 	CADisplayLink *displayLink;
 	ChipmunkSpace *space;
 	FallingButton *fallingButton;

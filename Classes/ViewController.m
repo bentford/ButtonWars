@@ -11,7 +11,6 @@ static NSString *borderType = @"borderType";
 
 	space = [[ChipmunkSpace alloc] init];
 	
-
 	[space addBounds:self.view.bounds thickness:2.0f elasticity:1.0f friction:1.0f layers:CP_ALL_LAYERS group:CP_NO_GROUP collisionType:borderType];
 	
 
@@ -35,12 +34,7 @@ static NSString *borderType = @"borderType";
 	// Set up the display link to control the timing of the animation.
 	displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(update)];
 	displayLink.frameInterval = 1;
-	[displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
-	
-	// Set up an accelerometer delegate.
-	UIAccelerometer *accel = [UIAccelerometer sharedAccelerometer];
-	accel.updateInterval = 1.0f/30.0f;
-	accel.delegate = self;
+	[displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];	
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -48,13 +42,6 @@ static NSString *borderType = @"borderType";
     
 	[displayLink invalidate];
 	displayLink = nil;
-	
-	[UIAccelerometer sharedAccelerometer].delegate = nil;
-}
-
-- (void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)accel {
-	// Setting the gravity based on the tilt of the device is easy.
-	space.gravity = cpvmult(cpv(accel.x, -accel.y), 100.0f);
 }
 
 - (void)update {
