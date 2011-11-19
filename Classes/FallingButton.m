@@ -3,12 +3,10 @@
 // place to put your controlling logic.
 
 #import "FallingButton.h"
-
-#define SIZE 100.0f
+#import <QuartzCore/QuartzCore.h>
 
 @implementation FallingButton
 
-@synthesize button;
 @synthesize touchedShapes;
 @synthesize chipmunkObjects;
 
@@ -23,26 +21,26 @@ static cpFloat frand_unit(){return 2.0f*((cpFloat)rand()/(cpFloat)RAND_MAX) - 1.
 }
 
 - (void)updatePosition {
-	button.transform = body.affineTransform;	
+	self.transform = body.affineTransform;
+    
 }
 
-- (id)init {
-	if( (self = [super init]) ) {
-		button = [UIButton buttonWithType:UIButtonTypeCustom];
-		[button setTitle:@"Click Me!" forState:UIControlStateNormal];
-		[button setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-		[button setBackgroundImage:[UIImage imageNamed:@"logo.png"] forState:UIControlStateNormal];
-		button.bounds = CGRectMake(0, 0, SIZE, SIZE);
-		
-		[button addTarget:self action:@selector(buttonClicked) forControlEvents:UIControlEventTouchDown];
-		
+- (id)initWithFrame:(CGRect)frame {
+    if( (self = [super initWithFrame:frame]) ) {	
+		self.backgroundColor = [UIColor clearColor];
+        self.opaque = NO;
+        self.layer.shadowOffset = CGSizeMake(0, 1);
+        self.layer.shadowOpacity = 0.5;
+        self.layer.shadowRadius = 2;
+        self.layer.shadowColor = [UIColor blackColor].CGColor;
+        
 		cpFloat mass = 1.0f;
-		cpFloat moment = cpMomentForBox(mass, SIZE, SIZE);
+		cpFloat moment = cpMomentForBox(mass, frame.size.width, frame.size.height);
 		
 		body = [[ChipmunkBody alloc] initWithMass:mass andMoment:moment];
 		body.pos = cpv(200.0f, 200.0f);
 
-		ChipmunkShape *shape = [ChipmunkPolyShape boxWithBody:body width:SIZE height:SIZE];
+		ChipmunkShape *shape = [ChipmunkPolyShape boxWithBody:body width:frame.size.width height:frame.size.height];
 		
 		shape.elasticity = 0.3f;
 		shape.friction = 0.3f;
@@ -54,9 +52,22 @@ static cpFloat frand_unit(){return 2.0f*((cpFloat)rand()/(cpFloat)RAND_MAX) - 1.
 	return self;
 }
 
-- (void) dealloc
-{
-	[button release];
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+//    UITouch *touch = [touches anyObject];
+    //CGPoint pos = [touch locationInView:self.superview];
+    
+//    body.pos = cpv(pos.x, pos.y);
+    //[body applyImpulse:cpv(-200, -200) offset:cpvzero];
+    [self buttonClicked];
+}
+
+- (void)drawRect:(CGRect)rect {
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, [UIColor orangeColor].CGColor);
+    CGContextFillEllipseInRect(context, rect);
+}
+
+- (void) dealloc {
 	[body release];
 	[chipmunkObjects release];
 	

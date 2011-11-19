@@ -12,7 +12,7 @@ static NSString *borderType = @"borderType";
 	space = [[ChipmunkSpace alloc] init];
 	
 
-	[space addBounds:self.view.bounds thickness:10.0f elasticity:1.0f friction:1.0f layers:CP_ALL_LAYERS group:CP_NO_GROUP collisionType:borderType];
+	[space addBounds:self.view.bounds thickness:2.0f elasticity:1.0f friction:1.0f layers:CP_ALL_LAYERS group:CP_NO_GROUP collisionType:borderType];
 	
 
 	[space addCollisionHandler:self
@@ -23,9 +23,8 @@ static NSString *borderType = @"borderType";
 		separate:@selector(separateCollision:space:)
 	];
 	
-	fallingButton = [[FallingButton alloc] init];
-	[self.view addSubview:fallingButton.button];
-	
+	fallingButton = [[FallingButton alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+	[self.view addSubview:fallingButton];
 
 	[space add:fallingButton];
 }
@@ -81,8 +80,6 @@ static NSString *borderType = @"borderType";
 	FallingButton *fb = buttonShape.data;
 	fb.touchedShapes++;
 	
-	self.view.backgroundColor = [UIColor grayColor];
-	
 	// begin and pre-solve callbacks MUST return a boolean.
 	// Returning false from a begin callback ignores a collision permanently.
 	// Returning false from a pre-solve callback ignores the collision for just one frame.
@@ -117,8 +114,7 @@ static CGFloat frand(){return (CGFloat)rand()/(CGFloat)RAND_MAX;}
 	
 	// If touchedShapes is 0, then we know the falling button isn't touching anything anymore.
 	if(fb.touchedShapes == 0){
-		// Let's set the background color to a random color so you can see each time the shape touches something new.
-		self.view.backgroundColor = [UIColor colorWithRed:frand() green:frand() blue:frand() alpha:1.0f];
+		
 	}
 }
 
