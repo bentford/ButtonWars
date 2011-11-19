@@ -26,6 +26,7 @@ static cpFloat frand_unit(){return 2.0f*((cpFloat)rand()/(cpFloat)RAND_MAX) - 1.
 
 - (id)initWithFrame:(CGRect)frame {
     if( (self = [super initWithFrame:frame]) ) {	
+        self.clipsToBounds = NO;
 		self.backgroundColor = [UIColor clearColor];
         self.opaque = NO;
         self.layer.shadowOffset = CGSizeMake(0, 1);
@@ -34,7 +35,8 @@ static cpFloat frand_unit(){return 2.0f*((cpFloat)rand()/(cpFloat)RAND_MAX) - 1.
         self.layer.shadowColor = [UIColor blackColor].CGColor;
         
 		cpFloat mass = 1.0f;
-		cpFloat moment = cpMomentForBox(mass, frame.size.width, frame.size.height);
+        // this is why it's crooked.
+		cpFloat moment = cpMomentForBox(mass, 0, frame.size.height);
 		
 		body = [[ChipmunkBody alloc] initWithMass:mass andMoment:moment];
 		body.pos = cpv(200.0f, 200.0f);
@@ -52,11 +54,7 @@ static cpFloat frand_unit(){return 2.0f*((cpFloat)rand()/(cpFloat)RAND_MAX) - 1.
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-//    UITouch *touch = [touches anyObject];
-    //CGPoint pos = [touch locationInView:self.superview];
-    
-//    body.pos = cpv(pos.x, pos.y);
-    //[body applyImpulse:cpv(-200, -200) offset:cpvzero];
+
     [self buttonClicked];
 }
 
@@ -64,6 +62,16 @@ static cpFloat frand_unit(){return 2.0f*((cpFloat)rand()/(cpFloat)RAND_MAX) - 1.
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSetFillColorWithColor(context, [UIColor orangeColor].CGColor);
     CGContextFillEllipseInRect(context, rect);
+
+    CGContextSetStrokeColorWithColor(context, [UIColor redColor].CGColor);
+    CGContextSetLineWidth(context, 2.0);
+    CGContextBeginPath(context);
+    CGContextMoveToPoint(context, 0, 0);
+    CGContextAddLineToPoint(context, rect.size.width, 0);
+    CGContextAddLineToPoint(context, rect.size.width, rect.size.height);
+    CGContextAddLineToPoint(context, 0, rect.size.height);
+    CGContextAddLineToPoint(context, 0, 0);
+    CGContextStrokePath(context);
     
     CGContextSetStrokeColorWithColor(context, [UIColor grayColor].CGColor);
     CGContextSetLineWidth(context, 2.0);
