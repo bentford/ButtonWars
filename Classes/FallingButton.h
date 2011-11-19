@@ -3,7 +3,7 @@
 #import "ObjectiveChipmunk.h"
 
 @interface FallingButton : UIView <ChipmunkObject> {
-	ChipmunkPolyShape *shape;
+	ChipmunkCircleShape *shape;
 	ChipmunkBody *body;
 	NSSet *chipmunkObjects;
 	

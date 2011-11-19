@@ -36,13 +36,12 @@ static cpFloat frand_unit(){return 2.0f*((cpFloat)rand()/(cpFloat)RAND_MAX) - 1.
         
 		cpFloat mass = 1.0f;
         // this is why it's crooked.
-		cpFloat moment = cpMomentForBox(mass, 0, frame.size.height);
+		cpFloat moment = cpMomentForCircle(mass, 0, frame.size.width, cpvzero);
 		
 		body = [[ChipmunkBody alloc] initWithMass:mass andMoment:moment];
-		body.pos = cpv(200.0f, 200.0f);
+		body.pos = cpv(frame.origin.x, frame.origin.y);
 
-		shape = [[ChipmunkPolyShape boxWithBody:body width:frame.size.width height:frame.size.height] retain];
-		
+		shape = [[ChipmunkCircleShape circleWithBody:body radius:frame.size.width offset:cpvzero] retain];
 		shape.elasticity = 0.3f;
 		shape.friction = 0.3f;
 		shape.collisionType = [FallingButton class];
@@ -71,16 +70,6 @@ static cpFloat frand_unit(){return 2.0f*((cpFloat)rand()/(cpFloat)RAND_MAX) - 1.
     CGContextAddLineToPoint(context, rect.size.width, rect.size.height);
     CGContextAddLineToPoint(context, 0, rect.size.height);
     CGContextAddLineToPoint(context, 0, 0);
-    CGContextStrokePath(context);
-    
-    CGContextSetStrokeColorWithColor(context, [UIColor grayColor].CGColor);
-    CGContextSetLineWidth(context, 2.0);
-    CGContextBeginPath(context);
-    CGContextMoveToPoint(context, 0, 0);
-    for( NSUInteger vertexIndex = 0; vertexIndex < shape.count; vertexIndex++ ) {
-        cpVect point = [shape getVertex:vertexIndex];
-        CGContextAddLineToPoint(context, point.x, point.y);
-    }
     CGContextStrokePath(context);
 }
 
