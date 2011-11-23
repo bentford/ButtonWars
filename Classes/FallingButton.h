@@ -1,21 +1,11 @@
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import "chipmunk.h"
 
-#import "ObjectiveChipmunk.h"
-
-@interface FallingButton : UIView <ChipmunkObject> {
-	ChipmunkCircleShape *shape;
-	ChipmunkBody *body;
-	NSSet *chipmunkObjects;
-	
-	int touchShapes;
-    
-    CGPoint previousPoint;
-    NSTimeInterval lastTimeStamp;
+@interface FallingButton : UIView {
+	cpShape *shape;
+	cpBody *body;
 }
-
-@property (readonly) NSSet *chipmunkObjects;
-@property int touchedShapes;
-
+@property (nonatomic, assign) cpShape *shape;
 - (void)updatePosition;
 
 @end
