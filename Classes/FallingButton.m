@@ -18,13 +18,14 @@ static cpFloat frand_unit(){return 2.0f*((cpFloat)rand()/(cpFloat)RAND_MAX) - 1.
 - (void)buttonClicked {
     NSLog(@"buttonClicked");
 	// Apply a random velcity change to the body when the button is clicked.
-	cpVect v = cpvmult(cpv(frand_unit(), frand_unit()), 300.0f);
+	cpVect v = cpvmult(cpv(frand_unit(), frand_unit()), 100);
 	body->v = cpvadd(body->v, v);
 	
 	body->w += 5.0f*frand_unit();
 }
 
 - (void)updatePosition {
+    NSLog(@"%1.0f %1.0f", body->p.x, body->p.y);
 	self.transform = [self transformWithBody:body];
 }
 
@@ -36,11 +37,14 @@ static cpFloat frand_unit(){return 2.0f*((cpFloat)rand()/(cpFloat)RAND_MAX) - 1.
         self.layer.shadowOpacity = 0.5;
         self.layer.shadowRadius = 2;
         self.layer.shadowColor = [UIColor blackColor].CGColor;
+        self.layer.shouldRasterize = YES;
+        
         self.userInteractionEnabled = YES;
+        
         
 		cpFloat mass = 1.0f;
 
-		cpFloat moment = cpMomentForCircle(mass, 0, frame.size.width, cpvzero);
+		cpFloat moment = cpMomentForCircle(mass, 0, 1, cpvzero);
 		
 		body = cpBodyNew(mass, moment);
 		body->p = cpv(frame.origin.x, frame.origin.y);
@@ -90,8 +94,8 @@ static cpFloat frand_unit(){return 2.0f*((cpFloat)rand()/(cpFloat)RAND_MAX) - 1.
 @implementation FallingButton(PrivateMethods)
 - (CGAffineTransform)transformWithBody:(cpBody *)theBody {
 
-    CGAffineTransform transform = CGAffineTransformRotate(CGAffineTransformIdentity, theBody->a);
-    transform = CGAffineTransformTranslate(transform, theBody->p.x, theBody->p.y);
+    //CGAffineTransform transform = CGAffineTransformRotate(CGAffineTransformIdentity, theBody->a);
+    CGAffineTransform transform = CGAffineTransformTranslate(CGAffineTransformIdentity, theBody->p.x, theBody->p.y);
     
     return transform;
 }

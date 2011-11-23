@@ -13,11 +13,16 @@ static NSString *borderType = @"borderType";
     cpSpaceSetIterations(space, 10);
     
     cpBody *floorBody = cpSpaceGetStaticBody(space);
-	cpShape *floorShape = cpBoxShapeNew(floorBody, self.view.frame.size.width, 10);
+
+	cpShape *floorShape = cpSegmentShapeNew(floorBody, cpv(0, 0), cpv(0, 480), 10);
 	cpShapeSetCollisionType(floorShape, kFloorCollisionType);
     cpSpaceAddShape(space, floorShape);
 
-		
+    floorShape = cpSegmentShapeNew(floorBody, cpv(320, 0), cpv(320, 480), 10);
+	cpShapeSetCollisionType(floorShape, kFloorCollisionType);
+    cpSpaceAddShape(space, floorShape);
+
+    
 	fallingButton = [[FallingButton alloc] initWithFrame:CGRectMake(10, 200, 50, 50)];
 	[self.view addSubview:fallingButton];
     cpSpaceAddShape(space, fallingButton.shape);
@@ -53,7 +58,7 @@ static NSString *borderType = @"borderType";
 
 
 void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
-    NSLog(@"postSolveCollision");
+
 	// We only care about the first frame of the collision.
 	// If the shapes have been colliding for more than one frame, return early.
 	if(!cpArbiterIsFirstContact(arbiter)) return;
