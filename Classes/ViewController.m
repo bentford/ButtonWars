@@ -13,15 +13,30 @@ static NSString *borderType = @"borderType";
     cpSpaceSetIterations(space, 10);
     
     cpBody *floorBody = cpSpaceGetStaticBody(space);
-
-	cpShape *floorShape = cpSegmentShapeNew(floorBody, cpv(0, 0), cpv(0, 480), 10);
+    NSLog(@"walls: %f, %f", floorBody->p.x, floorBody->p.y);
+	cpShape *floorShape = cpSegmentShapeNew(floorBody, cpv(0, 0), cpv(0, 480), 0);
+    cpShapeSetElasticity(floorShape, 1.0f);
+	cpShapeSetFriction(floorShape, 1.0f);
 	cpShapeSetCollisionType(floorShape, kFloorCollisionType);
     cpSpaceAddShape(space, floorShape);
 
-    floorShape = cpSegmentShapeNew(floorBody, cpv(320, 0), cpv(320, 480), 10);
+    floorShape = cpSegmentShapeNew(floorBody, cpv(320, 0), cpv(320, 480), 0);
+    cpShapeSetElasticity(floorShape, 1.0f);
+	cpShapeSetFriction(floorShape, 1.0f);
 	cpShapeSetCollisionType(floorShape, kFloorCollisionType);
     cpSpaceAddShape(space, floorShape);
 
+    floorShape = cpSegmentShapeNew(floorBody, cpv(0, 0), cpv(320, 0), 0);
+    cpShapeSetElasticity(floorShape, 1.0f);
+	cpShapeSetFriction(floorShape, 1.0f);
+	cpShapeSetCollisionType(floorShape, kFloorCollisionType);
+    cpSpaceAddShape(space, floorShape);
+    
+    floorShape = cpSegmentShapeNew(floorBody, cpv(0, 480), cpv(320, 480), 0);
+    cpShapeSetElasticity(floorShape, 1.0f);
+	cpShapeSetFriction(floorShape, 1.0f);
+	cpShapeSetCollisionType(floorShape, kFloorCollisionType);
+    cpSpaceAddShape(space, floorShape);
     
 	fallingButton = [[FallingButton alloc] initWithFrame:CGRectMake(10, 200, 50, 50)];
 	[self.view addSubview:fallingButton];
