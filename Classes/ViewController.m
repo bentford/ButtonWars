@@ -21,6 +21,7 @@ static NSString *borderType = @"borderType";
 	fallingButton = [[FallingButton alloc] initWithFrame:CGRectMake(10, 200, 50, 50)];
 	[self.view addSubview:fallingButton];
     cpSpaceAddShape(space, fallingButton.shape);
+    cpSpaceAddBody(space, fallingButton.body);
     
     cpSpaceAddCollisionHandler(space, 0, 1, NULL, NULL, &postSolveCollision, NULL, NULL);
 }
@@ -29,7 +30,7 @@ static NSString *borderType = @"borderType";
     [super viewDidAppear:animated];
     
 	// Set up the display link to control the timing of the animation.
-	displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(update)];
+	displayLink = [[CADisplayLink displayLinkWithTarget:self selector:@selector(update)] retain];
 	displayLink.frameInterval = 1;
 	[displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];	
 }
@@ -43,7 +44,6 @@ static NSString *borderType = @"borderType";
 
 - (void)update {
 	cpFloat dt = displayLink.duration * displayLink.frameInterval;
-    NSLog(@"dt: %f", dt);
 	cpSpaceStep(space, dt);
 	
 	[fallingButton updatePosition];

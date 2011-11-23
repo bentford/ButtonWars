@@ -11,6 +11,8 @@
 
 @implementation FallingButton
 @synthesize shape;
+@synthesize body;
+
 static cpFloat frand_unit(){return 2.0f*((cpFloat)rand()/(cpFloat)RAND_MAX) - 1.0f;}
 
 - (void)buttonClicked {
@@ -23,8 +25,7 @@ static cpFloat frand_unit(){return 2.0f*((cpFloat)rand()/(cpFloat)RAND_MAX) - 1.
 }
 
 - (void)updatePosition {
-    //NSLog(@"%1.2f, %1.2f", body->p.x, body->p.y);
-	//self.transform = [self transformWithBody:body];
+	self.transform = [self transformWithBody:body];
 }
 
 - (id)initWithFrame:(CGRect)frame {
@@ -44,7 +45,6 @@ static cpFloat frand_unit(){return 2.0f*((cpFloat)rand()/(cpFloat)RAND_MAX) - 1.
 		body = cpBodyNew(mass, moment);
 		body->p = cpv(frame.origin.x, frame.origin.y);
 
-        NSLog(@"%1.2f, %1.2f %1.2f", body->p.x, body->p.y, body->a);
         
 		shape = cpCircleShapeNew(body, frame.size.width/2.0, cpvzero);
 		shape->e = 0.3f;
