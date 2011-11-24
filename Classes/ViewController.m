@@ -74,13 +74,11 @@ static NSString *borderType = @"borderType";
 
 void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 
-	// We only care about the first frame of the collision.
-	// If the shapes have been colliding for more than one frame, return early.
-	if(!cpArbiterIsFirstContact(arbiter)) return;
+	if( cpArbiterIsFirstContact(arbiter) == NO ) 
+        return;
 	
-	// This method gets the impulse that was applied between the two objects to resolve
-	// the collision. We'll use the length of the impulse vector to approximate the sound
-	// volume to play for the collision.
+    NSLog(@"body a: %1.2f, %1.2f", arbiter->body_a_private->p.x, arbiter->body_a_private->p.y);
+    
 	cpFloat impulse = cpvlength(cpArbiterTotalImpulse(arbiter));
 	
 	float volume = MIN(impulse/500.0f, 1.0f);

@@ -18,7 +18,7 @@ static cpFloat frand_unit(){return 2.0f*((cpFloat)rand()/(cpFloat)RAND_MAX) - 1.
 - (void)buttonClicked {
     NSLog(@"buttonClicked");
 	// Apply a random velcity change to the body when the button is clicked.
-	cpVect v = cpv(-300,0);
+	cpVect v = cpv(-400,0);
 	body->v = cpvadd(body->v, v);
 	
 	body->w += 5.0f*frand_unit();
@@ -69,6 +69,7 @@ static cpFloat frand_unit(){return 2.0f*((cpFloat)rand()/(cpFloat)RAND_MAX) - 1.
 }
 
 - (void)drawRect:(CGRect)rect {
+    
     CGFloat innerOffset = 6.0;
     CGRect innerRect = CGRectMake(innerOffset/2.0, innerOffset/2.0, rect.size.width-innerOffset/2.0, rect.size.height-innerOffset/2.0);
     
@@ -97,7 +98,7 @@ static cpFloat frand_unit(){return 2.0f*((cpFloat)rand()/(cpFloat)RAND_MAX) - 1.
 - (CGAffineTransform)transformWithBody:(cpBody *)theBody {
 
     //CGAffineTransform transform = CGAffineTransformRotate(CGAffineTransformIdentity, theBody->a);
-    CGAffineTransform transform = CGAffineTransformTranslate(CGAffineTransformIdentity, theBody->p.x - self.frame.size.width/2.0, theBody->p.y);
+    CGAffineTransform transform = CGAffineTransformTranslate(CGAffineTransformIdentity, theBody->p.x - 35, theBody->p.y);
     
     return transform;
 }
