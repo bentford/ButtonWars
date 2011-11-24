@@ -6,12 +6,10 @@
 #import <QuartzCore/QuartzCore.h>
 
 @interface FallingButton(PrivateMethods)
-- (CGAffineTransform)transformWithBody:(cpBody *)body;
+
 @end
 
 @implementation FallingButton
-@synthesize shape;
-@synthesize body;
 
 static cpFloat frand_unit(){return 2.0f*((cpFloat)rand()/(cpFloat)RAND_MAX) - 1.0f;}
 
@@ -21,11 +19,6 @@ static cpFloat frand_unit(){return 2.0f*((cpFloat)rand()/(cpFloat)RAND_MAX) - 1.
     cpVect v = cpvmult(cpv(frand_unit(), frand_unit()), 300.0f);
 
 	cpBodyApplyImpulse(body, v, cpvzero);
-}
-
-- (void)updatePosition {
-	self.transform = [self transformWithBody:body];
-
 }
 
 - (id)initWithFrame:(CGRect)frame {
@@ -41,24 +34,6 @@ static cpFloat frand_unit(){return 2.0f*((cpFloat)rand()/(cpFloat)RAND_MAX) - 1.
         self.layer.shouldRasterize = YES;
         
         self.userInteractionEnabled = YES;
-        
-        
-		cpFloat mass = 1;
-
-		cpFloat moment = cpMomentForCircle(mass, 0, frame.size.width, cpvzero);
-		
-		body = cpBodyNew(mass, moment);
-		body->p = cpv(frame.origin.x, frame.origin.y);
-        self.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
-        width = frame.size.width;
-        
-		shape = cpCircleShapeNew(body, frame.size.width/2.0, cpvzero);
-		shape->e = 0.3f;
-		shape->u = 1;
-		shape->collision_type = 1;
-        shape->data = self;
-		
-		
 	}
 	return self;
 }
@@ -95,13 +70,5 @@ static cpFloat frand_unit(){return 2.0f*((cpFloat)rand()/(cpFloat)RAND_MAX) - 1.
 
 @end
 @implementation FallingButton(PrivateMethods)
-- (CGAffineTransform)transformWithBody:(cpBody *)theBody {
-    
-    //works
-    CGAffineTransform translate = CGAffineTransformMakeTranslation(theBody->p.x - width/2.0, theBody->p.y - width/2.0);    
-    CGAffineTransform transform = CGAffineTransformRotate(translate, theBody->a);
-     
-    
-    return transform;
-}
+
 @end

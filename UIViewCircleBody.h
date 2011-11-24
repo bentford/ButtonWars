@@ -18,4 +18,5 @@
 @property (nonatomic, assign) cpBody *body;
 @property (nonatomic, assign) cpShape *shape;
 
+- (void)updatePosition;
 @end
