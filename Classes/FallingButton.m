@@ -16,7 +16,7 @@
 static cpFloat frand_unit(){return 2.0f*((cpFloat)rand()/(cpFloat)RAND_MAX) - 1.0f;}
 
 - (void)buttonClicked {
-    NSLog(@"buttonClicked");
+
 	// Apply a random velcity change to the body when the button is clicked.
     cpVect v = cpvmult(cpv(frand_unit(), frand_unit()), 300.0f);
 	body->v = cpvadd(body->v, v);
@@ -26,7 +26,7 @@ static cpFloat frand_unit(){return 2.0f*((cpFloat)rand()/(cpFloat)RAND_MAX) - 1.
 
 - (void)updatePosition {
 	self.transform = [self transformWithBody:body];
-//    NSLog(@"body: %1.2f %1.2f", body->p.x, body->p.y);
+    //NSLog(@"body: %1.2f %1.2f", body->p.x, body->p.y);
 //    NSLog(@"frame: %1.2f %1.2f", self.transform.tx, self.transform.ty);
 
 }
@@ -72,7 +72,7 @@ static cpFloat frand_unit(){return 2.0f*((cpFloat)rand()/(cpFloat)RAND_MAX) - 1.
 
 - (void)drawRect:(CGRect)rect {
     
-    CGFloat innerOffset = 6.0;
+    CGFloat innerOffset = 0;
     CGRect innerRect = CGRectMake(innerOffset/2.0, innerOffset/2.0, rect.size.width-innerOffset/2.0, rect.size.height-innerOffset/2.0);
     
     CGContextRef context = UIGraphicsGetCurrentContext();
@@ -99,8 +99,27 @@ static cpFloat frand_unit(){return 2.0f*((cpFloat)rand()/(cpFloat)RAND_MAX) - 1.
 @implementation FallingButton(PrivateMethods)
 - (CGAffineTransform)transformWithBody:(cpBody *)theBody {
 
+    //CGAffineTransform center = CGAffineTransformMakeTranslation(- self.frame.size.width/20, - self.frame.size.width/20);
+
+    CGAffineTransform rotation = CGAffineTransformMakeRotation(theBody->a);
+    CGAffineTransform translate = CGAffineTransformMakeTranslation(theBody->p.x, theBody->p.y);
+    CGAffineTransform transform = CGAffineTransformConcat(rotation, translate);    
+    
+    CGAffineTransform transform2 = CGAffineTransformRotate(translate, theBody->a);
+    NSLog(@"equal: %d", CGAffineTransformEqualToTransform(transform2, transform));
+    // totally wrong
     //CGAffineTransform transform = CGAffineTransformRotate(CGAffineTransformIdentity, theBody->a);
-    CGAffineTransform transform = CGAffineTransformTranslate(CGAffineTransformIdentity, theBody->p.x - self.frame.size.width/2.0, theBody->p.y - self.frame.size.width/2.0);
+    //transform = CGAffineTransformTranslate(transform, theBody->p.x - self.frame.size.width/2.0, theBody->p.y - self.frame.size.width/2.0);    
+
+    //CGAffineTransform transform = CGAffineTransformTranslate(CGAffineTransformIdentity, theBody->p.x, theBody->p.y);
+    //transform = CGAffineTransformRotate(transform, theBody->a);
+
+    // wobbly
+    //CGAffineTransform transform = CGAffineTransformTranslate(CGAffineTransformIdentity, theBody->p.x - self.frame.size.width/2.0, theBody->p.y - self.frame.size.width/2.0);
+    //transform = CGAffineTransformRotate(transform, theBody->a);
+    
+    //CGAffineTransform transform = CGAffineTransformRotate(CGAffineTransformIdentity, theBody->a);
+     
     
     return transform;
 }

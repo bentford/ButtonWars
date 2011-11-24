@@ -13,7 +13,7 @@ static NSString *borderType = @"borderType";
     cpSpaceSetIterations(space, 10);
     
     cpBody *floorBody = cpSpaceGetStaticBody(space);
-    NSLog(@"walls: %f, %f", floorBody->p.x, floorBody->p.y);
+
 	cpShape *floorShape = cpSegmentShapeNew(floorBody, cpv(0, 0), cpv(0, 460), 0);
     cpShapeSetElasticity(floorShape, 1.0f);
 	cpShapeSetFriction(floorShape, 1.0f);
@@ -76,8 +76,6 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 
 	if( cpArbiterIsFirstContact(arbiter) == NO ) 
         return;
-	
-    NSLog(@"body a: %1.2f, %1.2f", arbiter->body_a_private->p.x, arbiter->body_a_private->p.y);
     
 	cpFloat impulse = cpvlength(cpArbiterTotalImpulse(arbiter));
 	
