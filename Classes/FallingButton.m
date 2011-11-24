@@ -53,6 +53,7 @@ static cpFloat frand_unit(){return 2.0f*((cpFloat)rand()/(cpFloat)RAND_MAX) - 1.
 		body = cpBodyNew(mass, moment);
 		body->p = cpv(frame.origin.x, frame.origin.y);
         self.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
+        width = frame.size.width;
         
 		shape = cpCircleShapeNew(body, frame.size.width/2.0, cpvzero);
 		shape->e = 0.3f;
@@ -72,8 +73,8 @@ static cpFloat frand_unit(){return 2.0f*((cpFloat)rand()/(cpFloat)RAND_MAX) - 1.
 
 - (void)drawRect:(CGRect)rect {
     
-    CGFloat innerOffset = 0;
-    CGRect innerRect = CGRectMake(innerOffset/2.0, innerOffset/2.0, rect.size.width-innerOffset/2.0, rect.size.height-innerOffset/2.0);
+    CGFloat innerOffset = 6;
+    CGRect innerRect = CGRectMake(innerOffset/2.0, innerOffset/2.0, rect.size.width-innerOffset, rect.size.height-innerOffset);
     
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSetFillColorWithColor(context, [UIColor orangeColor].CGColor);
@@ -98,9 +99,9 @@ static cpFloat frand_unit(){return 2.0f*((cpFloat)rand()/(cpFloat)RAND_MAX) - 1.
 @end
 @implementation FallingButton(PrivateMethods)
 - (CGAffineTransform)transformWithBody:(cpBody *)theBody {
-
+    
     //works
-    CGAffineTransform translate = CGAffineTransformMakeTranslation(theBody->p.x-25, theBody->p.y-25);    
+    CGAffineTransform translate = CGAffineTransformMakeTranslation(theBody->p.x - width/2.0, theBody->p.y - width/2.0);    
     CGAffineTransform transform = CGAffineTransformRotate(translate, theBody->a);
      
     
