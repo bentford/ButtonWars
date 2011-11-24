@@ -4,6 +4,7 @@
 @interface FallingButton : UIView {
 	cpShape *shape;
 	cpBody *body;
+    CGFloat width;
 }
 @property (nonatomic, assign) cpBody *body;
 @property (nonatomic, assign) cpShape *shape;

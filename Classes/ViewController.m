@@ -14,13 +14,13 @@ static NSString *borderType = @"borderType";
     
     cpBody *floorBody = cpSpaceGetStaticBody(space);
     NSLog(@"walls: %f, %f", floorBody->p.x, floorBody->p.y);
-	cpShape *floorShape = cpSegmentShapeNew(floorBody, cpv(0, 0), cpv(0, 480), 0);
+	cpShape *floorShape = cpSegmentShapeNew(floorBody, cpv(0, 0), cpv(0, 460), 0);
     cpShapeSetElasticity(floorShape, 1.0f);
 	cpShapeSetFriction(floorShape, 1.0f);
 	cpShapeSetCollisionType(floorShape, kFloorCollisionType);
     cpSpaceAddShape(space, floorShape);
 
-    floorShape = cpSegmentShapeNew(floorBody, cpv(320, 0), cpv(320, 480), 0);
+    floorShape = cpSegmentShapeNew(floorBody, cpv(320, 0), cpv(320, 460), 0);
     cpShapeSetElasticity(floorShape, 1.0f);
 	cpShapeSetFriction(floorShape, 1.0f);
 	cpShapeSetCollisionType(floorShape, kFloorCollisionType);
@@ -32,7 +32,7 @@ static NSString *borderType = @"borderType";
 	cpShapeSetCollisionType(floorShape, kFloorCollisionType);
     cpSpaceAddShape(space, floorShape);
     
-    floorShape = cpSegmentShapeNew(floorBody, cpv(0, 480), cpv(320, 480), 0);
+    floorShape = cpSegmentShapeNew(floorBody, cpv(0, 460), cpv(320, 460), 0);
     cpShapeSetElasticity(floorShape, 1.0f);
 	cpShapeSetFriction(floorShape, 1.0f);
 	cpShapeSetCollisionType(floorShape, kFloorCollisionType);
