@@ -99,31 +99,9 @@ static cpFloat frand_unit(){return 2.0f*((cpFloat)rand()/(cpFloat)RAND_MAX) - 1.
 @implementation FallingButton(PrivateMethods)
 - (CGAffineTransform)transformWithBody:(cpBody *)theBody {
 
-    //CGAffineTransform center = CGAffineTransformMakeTranslation(- self.frame.size.width/20, - self.frame.size.width/20);
-
-
-    CGAffineTransform rotation = CGAffineTransformMakeRotation(theBody->a);
-    CGAffineTransform translate = CGAffineTransformMakeTranslation(theBody->p.x-25, theBody->p.y-25);
-    CGAffineTransform transform = CGAffineTransformConcat(rotation, translate);    
-
-    
-    //CGAffineTransform transform2 = CGAffineTransformRotate(translate, theBody->a);
-    //NSLog(@"equal: %d", CGAffineTransformEqualToTransform(transform2, transform));
-    
-    
-    
-    // totally wrong
-    //CGAffineTransform transform = CGAffineTransformRotate(CGAffineTransformIdentity, theBody->a);
-    //transform = CGAffineTransformTranslate(transform, theBody->p.x - self.frame.size.width/2.0, theBody->p.y - self.frame.size.width/2.0);    
-
-    //CGAffineTransform transform = CGAffineTransformTranslate(CGAffineTransformIdentity, theBody->p.x, theBody->p.y);
-    //transform = CGAffineTransformRotate(transform, theBody->a);
-
-    // wobbly
-    //CGAffineTransform transform = CGAffineTransformTranslate(CGAffineTransformIdentity, theBody->p.x - self.frame.size.width/2.0, theBody->p.y - self.frame.size.width/2.0);
-    //transform = CGAffineTransformRotate(transform, theBody->a);
-    
-    //CGAffineTransform transform = CGAffineTransformRotate(CGAffineTransformIdentity, theBody->a);
+    //works
+    CGAffineTransform translate = CGAffineTransformMakeTranslation(theBody->p.x-25, theBody->p.y-25);    
+    CGAffineTransform transform = CGAffineTransformRotate(translate, theBody->a);
      
     
     return transform;
