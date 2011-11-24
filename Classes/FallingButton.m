@@ -19,15 +19,12 @@ static cpFloat frand_unit(){return 2.0f*((cpFloat)rand()/(cpFloat)RAND_MAX) - 1.
 
 	// Apply a random velcity change to the body when the button is clicked.
     cpVect v = cpvmult(cpv(frand_unit(), frand_unit()), 300.0f);
-	body->v = cpvadd(body->v, v);
-	
-	body->w += 5.0f*frand_unit();
+
+	cpBodyApplyImpulse(body, v, cpvzero);
 }
 
 - (void)updatePosition {
 	self.transform = [self transformWithBody:body];
-    //NSLog(@"body: %1.2f %1.2f", body->p.x, body->p.y);
-//    NSLog(@"frame: %1.2f %1.2f", self.transform.tx, self.transform.ty);
 
 }
 
@@ -46,9 +43,9 @@ static cpFloat frand_unit(){return 2.0f*((cpFloat)rand()/(cpFloat)RAND_MAX) - 1.
         self.userInteractionEnabled = YES;
         
         
-		cpFloat mass = 1.0f;
+		cpFloat mass = 1;
 
-		cpFloat moment = cpMomentForCircle(mass, 0, 1, cpvzero);
+		cpFloat moment = cpMomentForCircle(mass, 0, frame.size.width, cpvzero);
 		
 		body = cpBodyNew(mass, moment);
 		body->p = cpv(frame.origin.x, frame.origin.y);
@@ -57,7 +54,7 @@ static cpFloat frand_unit(){return 2.0f*((cpFloat)rand()/(cpFloat)RAND_MAX) - 1.
         
 		shape = cpCircleShapeNew(body, frame.size.width/2.0, cpvzero);
 		shape->e = 0.3f;
-		shape->u = 0.3f;
+		shape->u = 1;
 		shape->collision_type = 1;
         shape->data = self;
 		
