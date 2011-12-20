@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 45;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -15,6 +15,10 @@
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		28D7ACF80DDB3853001CB0EB /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* ViewController.m */; };
 		B5541645147EE63E00994AEB /* UIViewCircleBody.m in Sources */ = {isa = PBXBuildFile; fileRef = B5541644147EE63E00994AEB /* UIViewCircleBody.m */; };
+		B554164D147F7FE200994AEB /* UIViewBody.m in Sources */ = {isa = PBXBuildFile; fileRef = B554164C147F7FE200994AEB /* UIViewBody.m */; };
+		B5541650147F819300994AEB /* UIViewQuadBody.m in Sources */ = {isa = PBXBuildFile; fileRef = B554164F147F819200994AEB /* UIViewQuadBody.m */; };
+		B55416591482ACE600994AEB /* UIImageViewBody.m in Sources */ = {isa = PBXBuildFile; fileRef = B55416581482ACE600994AEB /* UIImageViewBody.m */; };
+		B554165C1482ADCB00994AEB /* UIImageViewCircleBody.m in Sources */ = {isa = PBXBuildFile; fileRef = B554165B1482ADCB00994AEB /* UIImageViewCircleBody.m */; };
 		B57E3581147877E90065B34F /* chipmunk.c in Sources */ = {isa = PBXBuildFile; fileRef = B57E3549147877E90065B34F /* chipmunk.c */; };
 		B57E358D147877E90065B34F /* cpArbiter.c in Sources */ = {isa = PBXBuildFile; fileRef = B57E3567147877E90065B34F /* cpArbiter.c */; };
 		B57E358E147877E90065B34F /* cpArray.c in Sources */ = {isa = PBXBuildFile; fileRef = B57E3569147877E90065B34F /* cpArray.c */; };
@@ -34,6 +38,7 @@
 		B57E359C147877E90065B34F /* cpSweep1D.c in Sources */ = {isa = PBXBuildFile; fileRef = B57E357D147877E90065B34F /* cpSweep1D.c */; };
 		B57E359D147877E90065B34F /* cpVect.c in Sources */ = {isa = PBXBuildFile; fileRef = B57E357E147877E90065B34F /* cpVect.c */; };
 		B5C0AE6E147AC61400F9EAFE /* constraints in Resources */ = {isa = PBXBuildFile; fileRef = B5C0AE6D147AC61400F9EAFE /* constraints */; };
+		B5FE1A9914A13D8C00022983 /* MainWindow-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5FE1A9814A13D8C00022983 /* MainWindow-iPad.xib */; };
 		D364564F12130B5800023C7E /* FallingButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D364564E12130B5800023C7E /* FallingButton.m */; };
 		D364569D121314C500023C7E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D364569C121314C500023C7E /* QuartzCore.framework */; };
 		D36457881213327700023C7E /* SimpleSound.m in Sources */ = {isa = PBXBuildFile; fileRef = D36457871213327700023C7E /* SimpleSound.m */; };
@@ -57,6 +62,15 @@
 		8D1107310486CEB800E47090 /* SimpleObjectiveChipmunk-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "SimpleObjectiveChipmunk-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		B5541643147EE63E00994AEB /* UIViewCircleBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIViewCircleBody.h; sourceTree = "<group>"; };
 		B5541644147EE63E00994AEB /* UIViewCircleBody.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIViewCircleBody.m; sourceTree = "<group>"; };
+		B554164B147F7FE200994AEB /* UIViewBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIViewBody.h; path = Classes/UIViewBody.h; sourceTree = "<group>"; };
+		B554164C147F7FE200994AEB /* UIViewBody.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIViewBody.m; path = Classes/UIViewBody.m; sourceTree = "<group>"; };
+		B554164E147F819200994AEB /* UIViewQuadBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIViewQuadBody.h; path = Classes/UIViewQuadBody.h; sourceTree = "<group>"; };
+		B554164F147F819200994AEB /* UIViewQuadBody.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIViewQuadBody.m; path = Classes/UIViewQuadBody.m; sourceTree = "<group>"; };
+		B5541651147F831A00994AEB /* UIViewChipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIViewChipmunk.h; sourceTree = "<group>"; };
+		B55416571482ACE600994AEB /* UIImageViewBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIImageViewBody.h; path = Classes/UIImageViewBody.h; sourceTree = "<group>"; };
+		B55416581482ACE600994AEB /* UIImageViewBody.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIImageViewBody.m; path = Classes/UIImageViewBody.m; sourceTree = "<group>"; };
+		B554165A1482ADCB00994AEB /* UIImageViewCircleBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIImageViewCircleBody.h; path = Classes/UIImageViewCircleBody.h; sourceTree = "<group>"; };
+		B554165B1482ADCB00994AEB /* UIImageViewCircleBody.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIImageViewCircleBody.m; path = Classes/UIImageViewCircleBody.m; sourceTree = "<group>"; };
 		B57E3549147877E90065B34F /* chipmunk.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = chipmunk.c; sourceTree = "<group>"; };
 		B57E354A147877E90065B34F /* chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk.h; sourceTree = "<group>"; };
 		B57E354B147877E90065B34F /* chipmunk_ffi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_ffi.h; sourceTree = "<group>"; };
@@ -90,6 +104,7 @@
 		B57E357F147877E90065B34F /* cpVect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpVect.h; sourceTree = "<group>"; };
 		B57E3580147877E90065B34F /* prime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prime.h; sourceTree = "<group>"; };
 		B5C0AE6D147AC61400F9EAFE /* constraints */ = {isa = PBXFileReference; lastKnownFileType = folder; path = constraints; sourceTree = "<group>"; };
+		B5FE1A9814A13D8C00022983 /* MainWindow-iPad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "MainWindow-iPad.xib"; path = "iPad/MainWindow-iPad.xib"; sourceTree = "<group>"; };
 		D364564D12130B5800023C7E /* FallingButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FallingButton.h; sourceTree = "<group>"; };
 		D364564E12130B5800023C7E /* FallingButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FallingButton.m; sourceTree = "<group>"; };
 		D364569C121314C500023C7E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -144,8 +159,17 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				B55416571482ACE600994AEB /* UIImageViewBody.h */,
+				B554165A1482ADCB00994AEB /* UIImageViewCircleBody.h */,
+				B554165B1482ADCB00994AEB /* UIImageViewCircleBody.m */,
+				B55416581482ACE600994AEB /* UIImageViewBody.m */,
+				B5541651147F831A00994AEB /* UIViewChipmunk.h */,
 				B5541643147EE63E00994AEB /* UIViewCircleBody.h */,
 				B5541644147EE63E00994AEB /* UIViewCircleBody.m */,
+				B554164B147F7FE200994AEB /* UIViewBody.h */,
+				B554164E147F819200994AEB /* UIViewQuadBody.h */,
+				B554164F147F819200994AEB /* UIViewQuadBody.m */,
+				B554164C147F7FE200994AEB /* UIViewBody.m */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -169,6 +193,7 @@
 			children = (
 				D36458981213420C00023C7E /* logo.png */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
+				B5FE1A9814A13D8C00022983 /* MainWindow-iPad.xib */,
 				8D1107310486CEB800E47090 /* SimpleObjectiveChipmunk-Info.plist */,
 			);
 			name = Resources;
@@ -252,8 +277,11 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "SimpleObjectiveChipmunk" */;
-			compatibilityVersion = "Xcode 3.1";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -279,6 +307,7 @@
 				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
 				D36458991213420C00023C7E /* logo.png in Resources */,
 				B5C0AE6E147AC61400F9EAFE /* constraints in Resources */,
+				B5FE1A9914A13D8C00022983 /* MainWindow-iPad.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -313,6 +342,10 @@
 				B57E359C147877E90065B34F /* cpSweep1D.c in Sources */,
 				B57E359D147877E90065B34F /* cpVect.c in Sources */,
 				B5541645147EE63E00994AEB /* UIViewCircleBody.m in Sources */,
+				B554164D147F7FE200994AEB /* UIViewBody.m in Sources */,
+				B5541650147F819300994AEB /* UIViewQuadBody.m in Sources */,
+				B55416591482ACE600994AEB /* UIImageViewBody.m in Sources */,
+				B554165C1482ADCB00994AEB /* UIImageViewCircleBody.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -330,11 +363,10 @@
 				GCC_PREFIX_HEADER = SimpleObjectiveChipmunk_Prefix.pch;
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "SimpleObjectiveChipmunk-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/Objective-Chipmunk-trial\"",
-				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = SimpleObjectiveChipmunk;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -347,11 +379,10 @@
 				GCC_PREFIX_HEADER = SimpleObjectiveChipmunk_Prefix.pch;
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "SimpleObjectiveChipmunk-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/Objective-Chipmunk-trial\"",
-				);
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = SimpleObjectiveChipmunk;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -366,7 +397,6 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
-				PREBINDING = NO;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 			};
@@ -383,7 +413,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PREBINDING = NO;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 			};

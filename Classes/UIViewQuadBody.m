@@ -1,24 +1,19 @@
 //
-//  UIViewCircleBody.m
+//  UIViewQuadBody.m
 //  SimpleObjectiveChipmunk
 //
 //  Created by Ben Ford on 11/24/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "UIViewCircleBody.h"
+#import "UIViewQuadBody.h"
 
-@interface UIViewCircleBody(PrivateMethods)
-
-@end
-
-@implementation UIViewCircleBody
+@implementation UIViewQuadBody
 
 - (id)initWithFrame:(CGRect)frame {
-    if( (self = [super initWithFrame:frame]) ) {
-    
+    if( self = [super initWithFrame:frame] ) {
 		cpFloat mass = 1;
-		cpFloat moment = cpMomentForCircle(mass, 0, frame.size.width, cpvzero);
+		cpFloat moment = cpMomentForBox(mass, frame.size.width, frame.size.height);
 		
 		body = cpBodyNew(mass, moment);
 		body->p = cpv(frame.origin.x, frame.origin.y);
@@ -27,7 +22,7 @@
         width = frame.size.width;
         height = frame.size.height;
         
-		shape = cpCircleShapeNew(body, frame.size.width/2.0, cpvzero);
+		shape = cpBoxShapeNew(body, width, height);
 		shape->e = 0.3;
 		shape->u = 0.2;
 		shape->collision_type = 1;
@@ -36,9 +31,12 @@
     return self;
 }
 
+- (void)drawRect:(CGRect)rect {
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGContextSetStrokeColorWithColor(context, [UIColor blackColor].CGColor);
+    CGContextSetLineWidth(context, 1.0);
+    CGContextStrokeRect(context, rect);
+}
 
-
-@end
-
-@implementation UIViewCircleBody(PrivateMethods)
 @end

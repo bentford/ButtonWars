@@ -1,6 +1,8 @@
 #import "ViewController.h"
 
 #import "SimpleSound.h"
+#import "UIViewQuadBody.h"
+#import "UIImageViewBody.h"
 
 static NSString *borderType = @"borderType";
 
@@ -44,6 +46,12 @@ static NSString *borderType = @"borderType";
     cpSpaceAddBody(space, fallingButton.body);
     
     cpSpaceAddCollisionHandler(space, 0, 1, NULL, NULL, &postSolveCollision, NULL, NULL);
+    
+    UIViewQuadBody *square = [[[UIViewQuadBody alloc] initWithFrame:CGRectMake(100, 200, 50, 50)] autorelease];
+    cpSpaceAddBody(space, square.body);
+    cpSpaceAddShape(space, square.shape);
+    [self.view addSubview:square];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -66,7 +74,11 @@ static NSString *borderType = @"borderType";
 	cpFloat dt = displayLink.duration * displayLink.frameInterval;
 	cpSpaceStep(space, dt);
 	
-	[fallingButton updatePosition];
+    for( UIView *aView in self.view.subviews ) {
+        if( [[aView class] isSubclassOfClass:[UIViewBody class]] == YES ||
+           [[aView class] isSubclassOfClass:[UIImageViewBody class]] == YES )
+            [(UIViewBody *)aView updatePosition];
+    }
 }
 
 #pragma mark - Collisions

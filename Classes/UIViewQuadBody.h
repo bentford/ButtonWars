@@ -1,5 +1,5 @@
 //
-//  UIViewCircleBody.h
+//  UIViewQuadBody.h
 //  SimpleObjectiveChipmunk
 //
 //  Created by Ben Ford on 11/24/11.
@@ -9,10 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "UIViewBody.h"
 
-@interface UIViewCircleBody : UIViewBody {
-
-}
-
-
+@interface UIViewQuadBody : UIViewBody
 
 @end

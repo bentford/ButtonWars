@@ -1,23 +1,17 @@
 //
-//  UIViewCircleBody.m
+//  UIImageViewCircleBody.m
 //  SimpleObjectiveChipmunk
 //
-//  Created by Ben Ford on 11/24/11.
+//  Created by Ben Ford on 11/27/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "UIViewCircleBody.h"
+#import "UIImageViewCircleBody.h"
 
-@interface UIViewCircleBody(PrivateMethods)
-
-@end
-
-@implementation UIViewCircleBody
-
+@implementation UIImageViewCircleBody
 - (id)initWithFrame:(CGRect)frame {
     if( (self = [super initWithFrame:frame]) ) {
-    
-		cpFloat mass = 1;
+        cpFloat mass = 1;
 		cpFloat moment = cpMomentForCircle(mass, 0, frame.size.width, cpvzero);
 		
 		body = cpBodyNew(mass, moment);
@@ -32,13 +26,8 @@
 		shape->u = 0.2;
 		shape->collision_type = 1;
         shape->data = self;
+
     }
     return self;
 }
-
-
-
-@end
-
-@implementation UIViewCircleBody(PrivateMethods)
 @end
