@@ -2,7 +2,8 @@
 
 #import "SimpleSound.h"
 #import "UIViewQuadBody.h"
-#import "UIImageViewBody.h"
+#import "BWButton.h"
+#import "BWShooter.h"
 
 static NSString *borderType = @"borderType";
 
@@ -16,42 +17,49 @@ static NSString *borderType = @"borderType";
     
     cpBody *floorBody = cpSpaceGetStaticBody(space);
 
-	cpShape *floorShape = cpSegmentShapeNew(floorBody, cpv(0, 0), cpv(0, 460), 0);
+    // left
+	cpShape *floorShape = cpSegmentShapeNew(floorBody, cpv(0, 0), cpv(0, self.view.bounds.size.height), 0);
     cpShapeSetElasticity(floorShape, 1.0f);
 	cpShapeSetFriction(floorShape, 1.0f);
 	cpShapeSetCollisionType(floorShape, kFloorCollisionType);
     cpSpaceAddShape(space, floorShape);
 
-    floorShape = cpSegmentShapeNew(floorBody, cpv(320, 0), cpv(320, 460), 0);
+    // right
+    floorShape = cpSegmentShapeNew(floorBody, cpv(self.view.bounds.size.width, 0), cpv(self.view.bounds.size.width, self.view.bounds.size.height), 0);
     cpShapeSetElasticity(floorShape, 1.0f);
 	cpShapeSetFriction(floorShape, 1.0f);
 	cpShapeSetCollisionType(floorShape, kFloorCollisionType);
     cpSpaceAddShape(space, floorShape);
 
-    floorShape = cpSegmentShapeNew(floorBody, cpv(0, 0), cpv(320, 0), 0);
+    // top
+    floorShape = cpSegmentShapeNew(floorBody, cpv(0, 0), cpv(self.view.bounds.size.width, 0), 0);
+    cpShapeSetElasticity(floorShape, 1.0f);
+	cpShapeSetFriction(floorShape, 1.0f);
+	cpShapeSetCollisionType(floorShape, kFloorCollisionType);
+    cpSpaceAddShape(space, floorShape);
+
+    // bottom
+    floorShape = cpSegmentShapeNew(floorBody, cpv(0, self.view.bounds.size.height), cpv(self.view.bounds.size.width, self.view.bounds.size.height), 0);
     cpShapeSetElasticity(floorShape, 1.0f);
 	cpShapeSetFriction(floorShape, 1.0f);
 	cpShapeSetCollisionType(floorShape, kFloorCollisionType);
     cpSpaceAddShape(space, floorShape);
     
-    floorShape = cpSegmentShapeNew(floorBody, cpv(0, 460), cpv(320, 460), 0);
-    cpShapeSetElasticity(floorShape, 1.0f);
-	cpShapeSetFriction(floorShape, 1.0f);
-	cpShapeSetCollisionType(floorShape, kFloorCollisionType);
-    cpSpaceAddShape(space, floorShape);
-    
-	fallingButton = [[FallingButton alloc] initWithFrame:CGRectMake(10, 200, 50, 50)];
-	[self.view addSubview:fallingButton];
-    cpSpaceAddShape(space, fallingButton.shape);
-    cpSpaceAddBody(space, fallingButton.body);
+
     
     cpSpaceAddCollisionHandler(space, 0, 1, NULL, NULL, &postSolveCollision, NULL, NULL);
+
+
+    BWShooter *shooter = [[[BWShooter alloc] initWithFrame:CGRectMake(0, 0, 270, 270)] autorelease];
+    [shooter setStaticBody:floorBody];
+//    shooter.center = CGPointMake(0, 0);
+    cpSpaceAddShape(space, shooter.shape);
+    [self.view addSubview:shooter];
     
-    UIViewQuadBody *square = [[[UIViewQuadBody alloc] initWithFrame:CGRectMake(100, 200, 50, 50)] autorelease];
-    cpSpaceAddBody(space, square.body);
-    cpSpaceAddShape(space, square.shape);
-    [self.view addSubview:square];
-    
+    BWButton *greenButton = [[[BWButton alloc] initWithFrame:CGRectMake(200, 400, 50, 50)] autorelease];
+    cpSpaceAddBody(space, greenButton.body);
+    cpSpaceAddShape(space, greenButton.shape);
+    [self.view addSubview:greenButton];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

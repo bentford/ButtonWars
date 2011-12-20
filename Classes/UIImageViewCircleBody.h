@@ -7,7 +7,11 @@
 //
 
 #import "UIImageViewBody.h"
+#import "chipmunk.h"
 
-@interface UIImageViewCircleBody : UIImageViewBody
+@interface UIImageViewCircleBody : UIImageViewBody {
+    
+}
 
+- (void)setStaticBody:(cpBody *)staticBody;
 @end

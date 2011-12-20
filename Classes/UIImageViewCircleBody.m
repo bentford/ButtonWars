@@ -9,6 +9,7 @@
 #import "UIImageViewCircleBody.h"
 
 @implementation UIImageViewCircleBody
+
 - (id)initWithFrame:(CGRect)frame {
     if( (self = [super initWithFrame:frame]) ) {
         cpFloat mass = 1;
@@ -29,5 +30,16 @@
 
     }
     return self;
+}
+
+- (void)setStaticBody:(cpBody *)staticBody {
+
+    body = staticBody;
+    
+    shape = cpCircleShapeNew(body, width/2.0, cpvzero);
+    shape->e = 0.3;
+    shape->u = 0.2;
+    shape->collision_type = 1;
+    shape->data = self;
 }
 @end
