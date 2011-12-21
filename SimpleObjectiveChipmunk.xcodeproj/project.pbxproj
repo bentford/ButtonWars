@@ -109,6 +109,7 @@
 		B57E357E147877E90065B34F /* cpVect.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpVect.c; sourceTree = "<group>"; };
 		B57E357F147877E90065B34F /* cpVect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpVect.h; sourceTree = "<group>"; };
 		B57E3580147877E90065B34F /* prime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prime.h; sourceTree = "<group>"; };
+		B586134414A1A5C800F7D9ED /* GameData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameData.h; sourceTree = "<group>"; };
 		B5C0AE6D147AC61400F9EAFE /* constraints */ = {isa = PBXFileReference; lastKnownFileType = folder; path = constraints; sourceTree = "<group>"; };
 		B5FE1A9814A13D8C00022983 /* MainWindow-iPad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "MainWindow-iPad.xib"; path = "iPad/MainWindow-iPad.xib"; sourceTree = "<group>"; };
 		B5FE1A9B14A13F9200022983 /* ButtonGreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonGreen.png; sourceTree = "<group>"; };
@@ -278,6 +279,7 @@
 				B5FE1AA014A1410100022983 /* BWButton.m */,
 				B5FE1AA214A143C800022983 /* BWShooter.h */,
 				B5FE1AA314A143C800022983 /* BWShooter.m */,
+				B586134414A1A5C800F7D9ED /* GameData.h */,
 			);
 			name = "Game Parts";
 			sourceTree = "<group>";

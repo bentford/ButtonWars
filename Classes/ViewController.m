@@ -50,20 +50,19 @@ static NSString *borderType = @"borderType";
     cpSpaceAddCollisionHandler(space, 0, 1, NULL, NULL, &postSolveCollision, NULL, NULL);
 
 
-    BWShooter *shooter = [[[BWShooter alloc] initWithFrame:CGRectMake(0, 0, 270, 270)] autorelease];
+    BWShooter *shooter = [[[BWShooter alloc] initWithFrame:CGRectMake(0, 0, 270, 270) color:ButtonColorGreen] autorelease];
     [shooter makeStaticBodyWithPosition:CGPointMake(self.view.bounds.size.width/2.0, 0)];
     shooter.gameDelegate = self;
     cpSpaceAddShape(space, shooter.shape);
     [self.view addSubview:shooter];
     
-    BWShooter *bottomShooter = [[[BWShooter alloc] initWithFrame:CGRectMake(0, 0, 270, 270)] autorelease];
+    BWShooter *bottomShooter = [[[BWShooter alloc] initWithFrame:CGRectMake(0, 0, 270, 270) color:ButtonColorOrange] autorelease];
     [bottomShooter makeStaticBodyWithPosition:CGPointMake(self.view.bounds.size.width/2.0, self.view.bounds.size.height)];
     bottomShooter.gameDelegate = self;
-    bottomShooter.tag = 1;
     cpSpaceAddShape(space, bottomShooter.shape);
     [self.view addSubview:bottomShooter];
     
-    BWButton *greenButton = [[[BWButton alloc] initWithFrame:CGRectMake(200, 400, 50, 50)] autorelease];
+    BWButton *greenButton = [[[BWButton alloc] initWithFrame:CGRectMake(500, 500, 50, 50) color:ButtonColorGreen] autorelease];
     cpSpaceAddBody(space, greenButton.body);
     cpSpaceAddShape(space, greenButton.shape);
     [self.view addSubview:greenButton];
@@ -122,11 +121,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 
 #pragma mark GameDelegate
 - (void)shootWithShooter:(BWShooter *)shooter {
-    BWButton *greenButton = [[[BWButton alloc] initWithFrame:CGRectMake(shooter.body->p.x, shooter.body->p.y, 50, 50)] autorelease];
-    
-    if( shooter.tag == 1)
-        greenButton.image = [UIImage imageNamed:@"ButtonOrange.png"];
-    
+    BWButton *greenButton = [[[BWButton alloc] initWithFrame:CGRectMake(shooter.body->p.x, shooter.body->p.y, 50, 50) color:shooter.buttonColor] autorelease];
     cpSpaceAddBody(space, greenButton.body);
     cpSpaceAddShape(space, greenButton.shape);
     [self.view addSubview:greenButton];

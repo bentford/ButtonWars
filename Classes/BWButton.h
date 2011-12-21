@@ -8,7 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import "UIImageViewCircleBody.h"
+#import "GameData.h"
 
-@interface BWButton : UIImageViewCircleBody
+@interface BWButton : UIImageViewCircleBody {
+    ButtonColor color;
+}
 
+- (id)initWithColor:(ButtonColor)aColor;
+- (id)initWithFrame:(CGRect)frame color:(ButtonColor)buttonColor;
 @end

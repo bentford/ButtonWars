@@ -20,7 +20,13 @@
 @synthesize gameDelegate;
 
 - (id)initWithFrame:(CGRect)frame {
+    NSAssert(NO, @"use initWithFrame:color:");
+    return nil;
+}
+
+- (id)initWithFrame:(CGRect)frame color:(ButtonColor)aButtonColor {    
     if( (self = [super initWithFrame:frame]) ) {
+        theButtonColor = aButtonColor;
         self.image = [UIImage imageNamed:@"GreenShooter.png"];
         self.userInteractionEnabled = YES;
         
@@ -104,6 +110,10 @@
     
     CGFloat final = touchedDegrees + bodyDegrees;
     cpBodySetAngle(self.body, RADIANS(final) );
+}
+
+- (ButtonColor)buttonColor {
+    return theButtonColor;
 }
 
 - (void)shootButton {
