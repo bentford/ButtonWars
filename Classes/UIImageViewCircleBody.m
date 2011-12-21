@@ -36,6 +36,8 @@
 
     body = staticBody;
     
+    cpShapeFree(shape);
+    
     shape = cpCircleShapeNew(body, width/2.0, cpvzero);
     shape->e = 0.3;
     shape->u = 0.2;

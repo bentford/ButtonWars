@@ -53,7 +53,6 @@ static NSString *borderType = @"borderType";
     BWShooter *shooter = [[[BWShooter alloc] initWithFrame:CGRectMake(0, 0, 270, 270)] autorelease];
     [shooter makeStaticBody:floorBody];
     shooter.gameDelegate = self;
-//    shooter.center = CGPointMake(0, 0);
     cpSpaceAddShape(space, shooter.shape);
     [self.view addSubview:shooter];
     
@@ -61,6 +60,10 @@ static NSString *borderType = @"borderType";
     cpSpaceAddBody(space, greenButton.body);
     cpSpaceAddShape(space, greenButton.shape);
     [self.view addSubview:greenButton];
+    
+    UISwipeGestureRecognizer *swipeCleanGesture = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeClean:)] autorelease];
+    
+    [self.view addGestureRecognizer:swipeCleanGesture];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -120,6 +123,29 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     cpVect v = cpvmult(cpvforangle(shooter.body->a), 1000.0f);
 	cpBodyApplyImpulse(greenButton.body, v, cpvzero);
 
+}
+#pragma mark -
+
+
+- (void)swipeClean:(UISwipeGestureRecognizer *)swipeGesture {
+    UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Remove all buttons?" message:@"" delegate:self cancelButtonTitle:@"Nope" otherButtonTitles:@"Remove", nil] autorelease];
+    [alert show];
+
+}
+
+#pragma mark UIAlertViewDelegate 
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if( buttonIndex == 0 )
+        return;
+    
+    for( UIView *potentialButton in self.view.subviews ) {
+        if( [potentialButton isKindOfClass:[BWButton class]] ) {
+            BWButton *buttonToRemove = (BWButton *)potentialButton;
+            cpSpaceRemoveShape(space, buttonToRemove.shape);
+            cpSpaceRemoveBody(space, buttonToRemove.body);
+            [potentialButton removeFromSuperview];
+        }
+    }
 }
 #pragma mark -
 

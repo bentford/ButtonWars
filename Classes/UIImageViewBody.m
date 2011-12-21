@@ -22,6 +22,12 @@
     
 }
 
+- (void)dealloc {
+    cpShapeFree(shape);
+    cpBodyFree(body);
+    
+    [super dealloc];
+}
 @end
 
 @implementation UIImageViewBody(PrivateMethods)
