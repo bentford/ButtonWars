@@ -125,25 +125,10 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     cpSpaceAddShape(space, bottomShooter.shape);
     [self.view addSubview:bottomShooter];
     
-    BWButton *greenButton = [[[BWButton alloc] initWithFrame:CGRectMake(500, 500, 50, 50) color:ButtonColorGreen] autorelease];
-    cpSpaceAddBody(space, greenButton.body);
-    cpSpaceAddShape(space, greenButton.shape);
-    [self.view addSubview:greenButton];
-    
     UISwipeGestureRecognizer *swipeCleanGesture = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeClean:)] autorelease];
     [self.view addGestureRecognizer:swipeCleanGesture];
     
-    [Random seed];
-    for( int scorePostCount = 0; scorePostCount < 20; scorePostCount++ ) {
-        NSUInteger randomX = [Random randomWithMin:50 max:(NSUInteger)self.view.bounds.size.width-50];
-        NSUInteger randomY = [Random randomWithMin:250 max:(NSUInteger)self.view.bounds.size.height-250];
-        
-        BWScorePost *scorePost = [[[BWScorePost alloc] initWithFrame:CGRectMake(560, 600, 60, 60)] autorelease];
-        [scorePost makeStaticBodyWithPosition:CGPointMake(randomX, randomY)];
-        cpSpaceAddShape(space, scorePost.shape);
-        [self.view addSubview:scorePost];
-
-    }
+    [self createScorePosts];
     
     topScore = [[UILabel alloc] initWithFrame:CGRectMake(100, 25, 100, 50)];
     topScore.text = @"0";
@@ -208,6 +193,17 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     if( buttonIndex == 0 )
         return;
     
+    [self removeButtons];
+    [self removeScorePosts];
+    [self createScorePosts];
+    
+    topScore.text = @"0";
+    bottomScore.text = @"0";
+
+}
+#pragma mark -
+
+- (void)removeButtons {
     for( UIView *potentialButton in self.view.subviews ) {
         if( [potentialButton isKindOfClass:[BWButton class]] ) {
             BWButton *buttonToRemove = (BWButton *)potentialButton;
@@ -215,10 +211,32 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
             cpSpaceRemoveBody(space, buttonToRemove.body);
             [potentialButton removeFromSuperview];
         }
+    }    
+}
+
+- (void)removeScorePosts {
+    for( UIView *potentialButton in self.view.subviews ) {
+        if( [potentialButton isKindOfClass:[BWScorePost class]] ) {
+            BWScorePost *buttonToRemove = (BWScorePost *)potentialButton;
+            cpSpaceRemoveShape(space, buttonToRemove.shape);
+            [potentialButton removeFromSuperview];
+        }
+    }        
+}
+
+- (void)createScorePosts {
+    [Random seed];
+    for( int scorePostCount = 0; scorePostCount < 20; scorePostCount++ ) {
+        NSUInteger randomX = [Random randomWithMin:50 max:(NSUInteger)self.view.bounds.size.width-50];
+        NSUInteger randomY = [Random randomWithMin:250 max:(NSUInteger)self.view.bounds.size.height-250];
+        
+        BWScorePost *scorePost = [[[BWScorePost alloc] initWithFrame:CGRectMake(560, 600, 60, 60)] autorelease];
+        [scorePost makeStaticBodyWithPosition:CGPointMake(randomX, randomY)];
+        cpSpaceAddShape(space, scorePost.shape);
+        [self.view addSubview:scorePost];
+        
     }
 }
-#pragma mark -
-
 - (void)dealloc {
 	[fallingButton release];
 	

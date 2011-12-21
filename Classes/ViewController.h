@@ -21,5 +21,9 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data);
 
 @property (nonatomic, retain) UILabel *topScore;
 @property (nonatomic, retain) UILabel *bottomScore;
+
+- (void)createScorePosts;
+- (void)removeButtons;
+- (void)removeScorePosts;
 @end
 
