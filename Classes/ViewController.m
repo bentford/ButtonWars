@@ -51,9 +51,10 @@ static NSString *borderType = @"borderType";
 
 
     BWShooter *shooter = [[[BWShooter alloc] initWithFrame:CGRectMake(0, 0, 270, 270)] autorelease];
-    [shooter makeStaticBody:floorBody];
+    [shooter makeStaticBody];
     shooter.gameDelegate = self;
     cpSpaceAddShape(space, shooter.shape);
+    shooter.body->p = cpv(self.view.bounds.size.width/2.0, 0);
     [self.view addSubview:shooter];
     
     BWButton *greenButton = [[[BWButton alloc] initWithFrame:CGRectMake(200, 400, 50, 50)] autorelease];
@@ -115,7 +116,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 
 #pragma mark GameDelegate
 - (void)shootWithShooter:(BWShooter *)shooter {
-    BWButton *greenButton = [[[BWButton alloc] initWithFrame:CGRectMake(0, 0, 50, 50)] autorelease];
+    BWButton *greenButton = [[[BWButton alloc] initWithFrame:CGRectMake(shooter.body->p.x, shooter.body->p.y, 50, 50)] autorelease];
     cpSpaceAddBody(space, greenButton.body);
     cpSpaceAddShape(space, greenButton.shape);
     [self.view addSubview:greenButton];

@@ -13,5 +13,6 @@
     
 }
 
+- (void)makeStaticBody;
 - (void)makeStaticBody:(cpBody *)staticBody;
 @end
