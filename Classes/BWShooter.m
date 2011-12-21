@@ -117,7 +117,6 @@
 }
 
 - (void)shootButton {
-    NSLog(@"shoot");
     [gameDelegate shootWithShooter:self];
 }
 @end

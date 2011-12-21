@@ -70,6 +70,7 @@ static NSString *borderType = @"borderType";
     UISwipeGestureRecognizer *swipeCleanGesture = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeClean:)] autorelease];
     
     [self.view addGestureRecognizer:swipeCleanGesture];
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {

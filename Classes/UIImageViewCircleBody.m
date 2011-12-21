@@ -35,7 +35,7 @@
 - (void)makeStaticBodyWithPosition:(CGPoint)position {
     cpShapeFree(shape);
     cpBodyFree(body);
-    body = cpBodyNew(INFINITY, INFINITY);
+    body = cpBodyNewStatic();
     body->p = position;
     
     shape = cpCircleShapeNew(body, width/2.0, cpvzero);

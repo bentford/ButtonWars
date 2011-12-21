@@ -11,4 +11,5 @@
 
 @interface UIViewQuadBody : UIViewBody
 
+- (void)makeStaticBody;
 @end
