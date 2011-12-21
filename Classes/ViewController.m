@@ -17,21 +17,26 @@ void postStepRemove(cpSpace *space, cpShape *shape, void *unused)
     [scorePost retain];
     [scorePost removeFromSuperview];
     
+    if( cpBodyIsStatic(shape->body) == NO )
+        cpSpaceRemoveBody(space, shape->body);
+    
     cpSpaceRemoveShape(space, shape);
     
     [scorePost release];
 }
 
-int beginCollision(cpArbiter *arb, cpSpace *space, void *unused) {
-    cpShape *a, *b; 
-    cpArbiterGetShapes(arb, &a, &b);
+void postStepRemove2(cpSpace *space, cpShape *shape, void *unused)
+{
+    UIView *scorePost = shape->data;
+    [scorePost retain];
+    [scorePost removeFromSuperview];
     
-    // Alternatively you can use the CP_ARBITER_GET_SHAPES() macro
-    //CP_ARBITER_GET_SHAPES(arb, a, b);
+    if( cpBodyIsStatic(shape->body) == NO )
+        cpSpaceRemoveBody(space, shape->body);
     
-    cpSpaceAddPostStepCallback(space, (cpPostStepFunc)postStepRemove, b, NULL);
+    cpSpaceRemoveShape(space, shape);
     
-    return 0;
+    [scorePost release];
 }
 
 void postSolveCollisionWithButtonAndScorePost(cpArbiter *arbiter, cpSpace *space, void *data) {
