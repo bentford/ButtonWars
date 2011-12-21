@@ -115,6 +115,7 @@
 		B5FE1AA214A143C800022983 /* BWShooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWShooter.h; sourceTree = "<group>"; };
 		B5FE1AA314A143C800022983 /* BWShooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWShooter.m; sourceTree = "<group>"; };
 		B5FE1AA514A143FC00022983 /* GreenShooter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GreenShooter.png; sourceTree = "<group>"; };
+		B5FE1AAB14A15C4300022983 /* GameDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameDelegate.h; sourceTree = "<group>"; };
 		D364564D12130B5800023C7E /* FallingButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FallingButton.h; sourceTree = "<group>"; };
 		D364564E12130B5800023C7E /* FallingButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FallingButton.m; sourceTree = "<group>"; };
 		D364569C121314C500023C7E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -150,6 +151,7 @@
 				B57E3548147877E90065B34F /* Chipmunk */,
 				1D3623240D0F684500981E51 /* AppDelegate.h */,
 				1D3623250D0F684500981E51 /* AppDelegate.m */,
+				B5FE1AAB14A15C4300022983 /* GameDelegate.h */,
 				28D7ACF60DDB3853001CB0EB /* ViewController.h */,
 				28D7ACF70DDB3853001CB0EB /* ViewController.m */,
 				D364564D12130B5800023C7E /* FallingButton.h */,

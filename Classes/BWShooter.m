@@ -7,6 +7,7 @@
 //
 
 #import "BWShooter.h"
+#import "BWButton.h"
 
 @interface BWShooter(PrivateMethods)
 - (void)tap:(UITapGestureRecognizer *)tapGesture;
@@ -16,6 +17,8 @@
 @end
 
 @implementation BWShooter
+@synthesize gameDelegate;
+
 - (id)initWithFrame:(CGRect)frame {
     if( (self = [super initWithFrame:frame]) ) {
         self.image = [UIImage imageNamed:@"GreenShooter.png"];
@@ -105,5 +108,6 @@
 
 - (void)shootButton {
     NSLog(@"shoot");
+    [gameDelegate shootWithShooter:self];
 }
 @end

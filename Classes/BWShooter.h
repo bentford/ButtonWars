@@ -8,9 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import "UIImageViewCircleBody.h"
+#import "GameDelegate.h"
 
 @interface BWShooter : UIImageViewCircleBody {
     NSUInteger panCounter;
+    id<GameDelegate> gameDelegate;
 }
+
+@property (nonatomic, assign) id<GameDelegate> gameDelegate;
 
 @end
