@@ -32,11 +32,11 @@
     return self;
 }
 
-- (void)makeStaticBody {
+- (void)makeStaticBodyWithPosition:(CGPoint)position {
     cpShapeFree(shape);
     cpBodyFree(body);
     body = cpBodyNew(INFINITY, INFINITY);
-    
+    body->p = position;
     
     shape = cpCircleShapeNew(body, width/2.0, cpvzero);
     shape->e = 0.3;

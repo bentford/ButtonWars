@@ -13,6 +13,6 @@
     
 }
 
-- (void)makeStaticBody;
+- (void)makeStaticBodyWithPosition:(CGPoint)position;
 - (void)makeStaticBody:(cpBody *)staticBody;
 @end

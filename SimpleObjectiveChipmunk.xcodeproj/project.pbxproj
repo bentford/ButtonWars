@@ -44,6 +44,7 @@
 		B5FE1AA414A143C800022983 /* BWShooter.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FE1AA314A143C800022983 /* BWShooter.m */; };
 		B5FE1AA614A143FC00022983 /* GreenShooter.png in Resources */ = {isa = PBXBuildFile; fileRef = B5FE1AA514A143FC00022983 /* GreenShooter.png */; };
 		B5FE1AAD14A1607900022983 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = B5FE1AAC14A1607900022983 /* Icon-72.png */; };
+		B5FE1ABB14A1753F00022983 /* ButtonOrange.png in Resources */ = {isa = PBXBuildFile; fileRef = B5FE1ABA14A1753F00022983 /* ButtonOrange.png */; };
 		D364564F12130B5800023C7E /* FallingButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D364564E12130B5800023C7E /* FallingButton.m */; };
 		D364569D121314C500023C7E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D364569C121314C500023C7E /* QuartzCore.framework */; };
 		D36457881213327700023C7E /* SimpleSound.m in Sources */ = {isa = PBXBuildFile; fileRef = D36457871213327700023C7E /* SimpleSound.m */; };
@@ -118,6 +119,7 @@
 		B5FE1AA514A143FC00022983 /* GreenShooter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GreenShooter.png; sourceTree = "<group>"; };
 		B5FE1AAB14A15C4300022983 /* GameDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameDelegate.h; sourceTree = "<group>"; };
 		B5FE1AAC14A1607900022983 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
+		B5FE1ABA14A1753F00022983 /* ButtonOrange.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonOrange.png; sourceTree = "<group>"; };
 		D364564D12130B5800023C7E /* FallingButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FallingButton.h; sourceTree = "<group>"; };
 		D364564E12130B5800023C7E /* FallingButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FallingButton.m; sourceTree = "<group>"; };
 		D364569C121314C500023C7E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -262,6 +264,7 @@
 		B5FE1A9A14A13ED900022983 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				B5FE1ABA14A1753F00022983 /* ButtonOrange.png */,
 				B5FE1AA514A143FC00022983 /* GreenShooter.png */,
 				B5FE1A9B14A13F9200022983 /* ButtonGreen.png */,
 			);
@@ -356,6 +359,7 @@
 				B5FE1A9C14A13F9200022983 /* ButtonGreen.png in Resources */,
 				B5FE1AA614A143FC00022983 /* GreenShooter.png in Resources */,
 				B5FE1AAD14A1607900022983 /* Icon-72.png in Resources */,
+				B5FE1ABB14A1753F00022983 /* ButtonOrange.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
