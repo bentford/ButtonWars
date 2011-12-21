@@ -33,6 +33,7 @@
 }
 
 - (void)makeStaticBodyWithPosition:(CGPoint)position {
+    
     cpShapeFree(shape);
     cpBodyFree(body);
     body = cpBodyNewStatic();

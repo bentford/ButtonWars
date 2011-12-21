@@ -9,6 +9,53 @@
 
 static NSString *borderType = @"borderType";
 
+#pragma mark - Collisions
+
+void postStepRemove(cpSpace *space, cpShape *shape, void *unused)
+{
+    UIView *scorePost = shape->data;
+    [scorePost retain];
+    [scorePost removeFromSuperview];
+    
+    cpSpaceRemoveShape(space, shape);
+    
+    [scorePost release];
+}
+
+int beginCollision(cpArbiter *arb, cpSpace *space, void *unused) {
+    cpShape *a, *b; 
+    cpArbiterGetShapes(arb, &a, &b);
+    
+    // Alternatively you can use the CP_ARBITER_GET_SHAPES() macro
+    //CP_ARBITER_GET_SHAPES(arb, a, b);
+    
+    cpSpaceAddPostStepCallback(space, (cpPostStepFunc)postStepRemove, b, NULL);
+    
+    return 0;
+}
+
+void postSolveCollisionWithButtonAndScorePost(cpArbiter *arbiter, cpSpace *space, void *data) {
+    CP_ARBITER_GET_SHAPES(arbiter, a, b);
+    
+    cpSpaceAddPostStepCallback(space, (cpPostStepFunc)postStepRemove, b, NULL);
+}
+
+void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
+    
+	if( cpArbiterIsFirstContact(arbiter) == NO ) 
+        return;
+    
+	cpFloat impulse = cpvlength(cpArbiterTotalImpulse(arbiter));
+	
+	float volume = MIN(impulse/500.0f, 1.0f);
+	if(volume > 0.05f){
+		[SimpleSound playSoundWithVolume:volume];
+	}
+}
+
+
+#pragma mark -
+
 @implementation ViewController
 
 - (void)viewDidLoad {
@@ -49,8 +96,8 @@ static NSString *borderType = @"borderType";
     
 
     
-    cpSpaceAddCollisionHandler(space, 0, 1, NULL, NULL, &postSolveCollision, NULL, NULL);
-
+    cpSpaceAddCollisionHandler(space, 0, 1, NULL, NULL, (cpCollisionPostSolveFunc)postSolveCollision, NULL, NULL);
+    cpSpaceAddCollisionHandler(space, 1, 2, NULL, NULL, (cpCollisionPostSolveFunc)postSolveCollisionWithButtonAndScorePost, NULL, NULL);
 
     BWShooter *shooter = [[[BWShooter alloc] initWithFrame:CGRectMake(0, 0, 270, 270) color:ButtonColorGreen] autorelease];
     [shooter makeStaticBodyWithPosition:CGPointMake(self.view.bounds.size.width/2.0, 0)];
@@ -113,26 +160,6 @@ static NSString *borderType = @"borderType";
             [(UIViewBody *)aView updatePosition];
     }
 }
-
-#pragma mark - Collisions
-
-
-void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
-
-	if( cpArbiterIsFirstContact(arbiter) == NO ) 
-        return;
-    
-	cpFloat impulse = cpvlength(cpArbiterTotalImpulse(arbiter));
-	
-	float volume = MIN(impulse/500.0f, 1.0f);
-	if(volume > 0.05f){
-		[SimpleSound playSoundWithVolume:volume];
-	}
-}
-
-
-#pragma mark -
-
 
 #pragma mark GameDelegate
 - (void)shootWithShooter:(BWShooter *)shooter {
