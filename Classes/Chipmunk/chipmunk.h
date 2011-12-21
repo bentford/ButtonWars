@@ -76,6 +76,9 @@ void cpMessage(const char *condition, const char *file, int line, int isError, i
 	#define cpfree free
 #endif
 
+#define RADIANS(degrees) ((degrees * (float)M_PI) / 180.0f)
+#define DEGREES(radians) (radians * (180.0f / (float)M_PI))
+
 typedef struct cpArray cpArray;
 typedef struct cpHashSet cpHashSet;
 

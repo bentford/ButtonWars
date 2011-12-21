@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "UIImageViewCircleBody.h"
 
-@interface BWShooter : UIImageViewCircleBody
+@interface BWShooter : UIImageViewCircleBody {
+    NSUInteger panCounter;
+}
 
 @end

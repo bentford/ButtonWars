@@ -50,8 +50,8 @@ static NSString *borderType = @"borderType";
     cpSpaceAddCollisionHandler(space, 0, 1, NULL, NULL, &postSolveCollision, NULL, NULL);
 
 
-    BWShooter *shooter = [[[BWShooter alloc] initWithFrame:CGRectMake(0, 0, 270, 270)] autorelease];
-    [shooter setStaticBody:floorBody];
+    BWShooter *shooter = [[[BWShooter alloc] initWithFrame:CGRectMake(500, 500, 270, 270)] autorelease];
+    //[shooter setStaticBody:floorBody position:CGPointMake(500, 500)];
 //    shooter.center = CGPointMake(0, 0);
     cpSpaceAddShape(space, shooter.shape);
     [self.view addSubview:shooter];

@@ -32,7 +32,7 @@
     return self;
 }
 
-- (void)setStaticBody:(cpBody *)staticBody {
+- (void)setStaticBody:(cpBody *)staticBody position:(CGPoint)position {
 
     body = staticBody;
     
