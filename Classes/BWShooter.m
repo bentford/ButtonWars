@@ -12,6 +12,7 @@
 - (void)tap:(UITapGestureRecognizer *)tapGesture;
 - (void)touch:(UITouch *)touch;
 - (void)pan:(UIPanGestureRecognizer *)panGesture;
+- (void)shootButton;
 @end
 
 @implementation BWShooter
@@ -29,6 +30,10 @@
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     UITouch *touch = [touches anyObject];
     [self touch:touch];
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    [self shootButton];
 }
 @end
 
@@ -66,6 +71,9 @@
 }
 
 - (void)pan:(UIPanGestureRecognizer *)panGesture {
+    if( panGesture.state == UIGestureRecognizerStateEnded )
+        [self shootButton];
+    
     panCounter++;
     
     if( panCounter % 3 != 0 )
@@ -92,7 +100,10 @@
         bodyDegrees -= 360;
     
     CGFloat final = touchedDegrees + bodyDegrees;
-    NSLog(@"degrees: %f = %f + %f", final, touchedDegrees, bodyDegrees);
     cpBodySetAngle(self.body, RADIANS(final) );
+}
+
+- (void)shootButton {
+    NSLog(@"shoot");
 }
 @end
