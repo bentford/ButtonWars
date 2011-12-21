@@ -44,6 +44,11 @@
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     [self shootButton];
 }
+
+- (ButtonColor)buttonColor {
+    return theButtonColor;
+}
+
 @end
 
 @implementation BWShooter(PrivateMethods)
@@ -110,10 +115,6 @@
     
     CGFloat final = touchedDegrees + bodyDegrees;
     cpBodySetAngle(self.body, RADIANS(final) );
-}
-
-- (ButtonColor)buttonColor {
-    return theButtonColor;
 }
 
 - (void)shootButton {
