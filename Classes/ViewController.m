@@ -4,6 +4,8 @@
 #import "UIViewQuadBody.h"
 #import "BWButton.h"
 #import "BWShooter.h"
+#import "BWScorePost.h"
+#import "Random.h"
 
 static NSString *borderType = @"borderType";
 
@@ -68,8 +70,20 @@ static NSString *borderType = @"borderType";
     [self.view addSubview:greenButton];
     
     UISwipeGestureRecognizer *swipeCleanGesture = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeClean:)] autorelease];
-    
     [self.view addGestureRecognizer:swipeCleanGesture];
+    
+    [Random seed];
+    for( int scorePostCount = 0; scorePostCount < 10; scorePostCount++ ) {
+        NSUInteger randomX = [Random randomWithMin:50 max:(NSUInteger)self.view.bounds.size.width-50];
+        NSUInteger randomY = [Random randomWithMin:250 max:(NSUInteger)self.view.bounds.size.height-250];
+        
+        BWScorePost *scorePost = [[[BWScorePost alloc] initWithFrame:CGRectMake(560, 600, 60, 60)] autorelease];
+        [scorePost makeStaticBodyWithPosition:CGPointMake(randomX, randomY)];
+        cpSpaceAddShape(space, scorePost.shape);
+        [self.view addSubview:scorePost];
+
+    }
+    
 
 }
 
