@@ -7,9 +7,10 @@
 //
 
 #import "BWButton.h"
-static cpFloat frand_unit(){return 2.0f*((cpFloat)rand()/(cpFloat)RAND_MAX) - 1.0f;}
+
 
 @implementation BWButton
+@synthesize color;
 
 - (id)initWithFrame:(CGRect)frame {
     NSAssert(NO, @"use initWithFrame:color:");

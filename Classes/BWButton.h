@@ -16,4 +16,6 @@
 
 - (id)initWithColor:(ButtonColor)aColor;
 - (id)initWithFrame:(CGRect)frame color:(ButtonColor)buttonColor;
+
+@property (nonatomic, readonly) ButtonColor color;
 @end

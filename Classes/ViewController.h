@@ -14,7 +14,12 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data);
 	CADisplayLink *displayLink;
 	cpSpace *space;
 	FallingButton *fallingButton;
+    
+    UILabel *topScore;
+    UILabel *bottomScore;
 }
 
+@property (nonatomic, retain) UILabel *topScore;
+@property (nonatomic, retain) UILabel *bottomScore;
 @end
 

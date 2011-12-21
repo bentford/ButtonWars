@@ -13,7 +13,7 @@ static NSString *borderType = @"borderType";
 
 void postStepRemove(cpSpace *space, cpShape *shape, void *unused)
 {
-    UIView *scorePost = shape->data;
+    BWScorePost *scorePost = shape->data;
     [scorePost retain];
     [scorePost removeFromSuperview];
     
@@ -41,6 +41,13 @@ void postStepRemove2(cpSpace *space, cpShape *shape, void *unused)
 
 void postSolveCollisionWithButtonAndScorePost(cpArbiter *arbiter, cpSpace *space, void *data) {
     CP_ARBITER_GET_SHAPES(arbiter, a, b);
+    BWButton *button = a->data;
+    ViewController *viewController = data;
+    
+    if( button.color == ButtonColorGreen )
+        viewController.topScore.text = [NSString stringWithFormat:@"%d", [viewController.topScore.text intValue] + 1];
+    else
+        viewController.bottomScore.text = [NSString stringWithFormat:@"%d", [viewController.bottomScore.text intValue] + 1];
     
     cpSpaceAddPostStepCallback(space, (cpPostStepFunc)postStepRemove, b, NULL);
 }
@@ -62,6 +69,8 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 #pragma mark -
 
 @implementation ViewController
+@synthesize topScore;
+@synthesize bottomScore;
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
@@ -102,7 +111,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 
     
     cpSpaceAddCollisionHandler(space, 0, 1, NULL, NULL, (cpCollisionPostSolveFunc)postSolveCollision, NULL, NULL);
-    cpSpaceAddCollisionHandler(space, 1, 2, NULL, NULL, (cpCollisionPostSolveFunc)postSolveCollisionWithButtonAndScorePost, NULL, NULL);
+    cpSpaceAddCollisionHandler(space, 1, 2, NULL, NULL, (cpCollisionPostSolveFunc)postSolveCollisionWithButtonAndScorePost, NULL, self);
 
     BWShooter *shooter = [[[BWShooter alloc] initWithFrame:CGRectMake(0, 0, 270, 270) color:ButtonColorGreen] autorelease];
     [shooter makeStaticBodyWithPosition:CGPointMake(self.view.bounds.size.width/2.0, 0)];
@@ -125,7 +134,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     [self.view addGestureRecognizer:swipeCleanGesture];
     
     [Random seed];
-    for( int scorePostCount = 0; scorePostCount < 10; scorePostCount++ ) {
+    for( int scorePostCount = 0; scorePostCount < 20; scorePostCount++ ) {
         NSUInteger randomX = [Random randomWithMin:50 max:(NSUInteger)self.view.bounds.size.width-50];
         NSUInteger randomY = [Random randomWithMin:250 max:(NSUInteger)self.view.bounds.size.height-250];
         
@@ -136,7 +145,15 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 
     }
     
-
+    topScore = [[UILabel alloc] initWithFrame:CGRectMake(100, 25, 100, 50)];
+    topScore.text = @"0";
+    topScore.font = [UIFont boldSystemFontOfSize:24];    
+    [self.view addSubview:topScore];
+    
+    bottomScore = [[UILabel alloc] initWithFrame:CGRectMake(100, self.view.bounds.size.height-75, 100, 50)];
+    bottomScore.text = @"0";
+    bottomScore.font = [UIFont boldSystemFontOfSize:24];
+    [self.view addSubview:bottomScore];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
