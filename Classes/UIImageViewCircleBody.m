@@ -34,16 +34,19 @@
 
 - (void)makeStaticBodyWithPosition:(CGPoint)position {
     
-    cpShapeFree(shape);
     cpBodyFree(body);
     body = cpBodyNewStatic();
     body->p = position;
     
-    shape = cpCircleShapeNew(body, width/2.0, cpvzero);
-    shape->e = 0.3;
-    shape->u = 0.2;
-    shape->collision_type = 1;
-    shape->data = self;
+    cpShape *oldShape = shape;
+    
+    shape = cpCircleShapeNew(body, cpCircleShapeGetRadius(oldShape), cpvzero);
+    shape->e = cpShapeGetElasticity(oldShape);
+    shape->u = cpShapeGetFriction(oldShape);
+    shape->collision_type = cpShapeGetCollisionType(oldShape);
+    shape->data = cpShapeGetUserData(oldShape);
+    
+    cpShapeFree(oldShape);
 }
 
 - (void)makeStaticBody:(cpBody *)staticBody {
