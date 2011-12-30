@@ -26,6 +26,7 @@
         else if( color == ButtonColorOrange )
             self.image = [UIImage imageNamed:@"ButtonOrange.png"];
         
+        cpShapeSetElasticity(self.shape, 0.7);
         self.userInteractionEnabled = NO;        
     }
     return self;

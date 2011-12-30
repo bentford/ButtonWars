@@ -5,6 +5,7 @@
 #import "BWButton.h"
 #import "BWShooter.h"
 #import "BWScorePost.h"
+#import "BWBumper.h"
 #import "Random.h"
 
 static NSString *borderType = @"borderType";
@@ -139,6 +140,8 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     bottomScore.text = @"0";
     bottomScore.font = [UIFont boldSystemFontOfSize:24];
     [self.view addSubview:bottomScore];
+    
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -236,7 +239,13 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
         [self.view addSubview:scorePost];
         
     }
+    
+    BWBumper *bumper = [[[BWBumper alloc] init] autorelease];
+    [bumper makeStaticBodyWithPosition:CGPointMake(250, 500)];
+    cpSpaceAddShape(space, bumper.shape);
+    [self.view addSubview:bumper];
 }
+
 - (void)dealloc {
 	[fallingButton release];
 	

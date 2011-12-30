@@ -14,6 +14,8 @@
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		28D7ACF80DDB3853001CB0EB /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28D7ACF70DDB3853001CB0EB /* ViewController.m */; };
+		B5248B0914AD47C20058903D /* Bumper.png in Resources */ = {isa = PBXBuildFile; fileRef = B5248B0814AD47C20058903D /* Bumper.png */; };
+		B5248B0D14AD47E20058903D /* BWBumper.m in Sources */ = {isa = PBXBuildFile; fileRef = B5248B0C14AD47E20058903D /* BWBumper.m */; };
 		B5541645147EE63E00994AEB /* UIViewCircleBody.m in Sources */ = {isa = PBXBuildFile; fileRef = B5541644147EE63E00994AEB /* UIViewCircleBody.m */; };
 		B554164D147F7FE200994AEB /* UIViewBody.m in Sources */ = {isa = PBXBuildFile; fileRef = B554164C147F7FE200994AEB /* UIViewBody.m */; };
 		B5541650147F819300994AEB /* UIViewQuadBody.m in Sources */ = {isa = PBXBuildFile; fileRef = B554164F147F819200994AEB /* UIViewQuadBody.m */; };
@@ -69,6 +71,9 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* SimpleObjectiveChipmunk_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleObjectiveChipmunk_Prefix.pch; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* SimpleObjectiveChipmunk-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "SimpleObjectiveChipmunk-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		B5248B0814AD47C20058903D /* Bumper.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Bumper.png; sourceTree = "<group>"; };
+		B5248B0B14AD47E20058903D /* BWBumper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWBumper.h; sourceTree = "<group>"; };
+		B5248B0C14AD47E20058903D /* BWBumper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWBumper.m; sourceTree = "<group>"; };
 		B5541643147EE63E00994AEB /* UIViewCircleBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIViewCircleBody.h; path = ../UIViewCircleBody.h; sourceTree = "<group>"; };
 		B5541644147EE63E00994AEB /* UIViewCircleBody.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIViewCircleBody.m; path = ../UIViewCircleBody.m; sourceTree = "<group>"; };
 		B554164B147F7FE200994AEB /* UIViewBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIViewBody.h; sourceTree = "<group>"; };
@@ -273,6 +278,7 @@
 		B5FE1A9A14A13ED900022983 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				B5248B0814AD47C20058903D /* Bumper.png */,
 				B5FE1AC814A2626B00022983 /* WoodScorePost.png */,
 				B5FE1ABA14A1753F00022983 /* ButtonOrange.png */,
 				B5FE1AA514A143FC00022983 /* GreenShooter.png */,
@@ -293,6 +299,8 @@
 				B5FE1ACC14A2628B00022983 /* BWScorePost.m */,
 				B5FE1AD114A265E900022983 /* Random.h */,
 				B5FE1AD214A265E900022983 /* Random.m */,
+				B5248B0B14AD47E20058903D /* BWBumper.h */,
+				B5248B0C14AD47E20058903D /* BWBumper.m */,
 			);
 			name = "Game Parts";
 			sourceTree = "<group>";
@@ -376,6 +384,7 @@
 				B5FE1AAD14A1607900022983 /* Icon-72.png in Resources */,
 				B5FE1ABB14A1753F00022983 /* ButtonOrange.png in Resources */,
 				B5FE1AC914A2626B00022983 /* WoodScorePost.png in Resources */,
+				B5248B0914AD47C20058903D /* Bumper.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -418,6 +427,7 @@
 				B5FE1AA414A143C800022983 /* BWShooter.m in Sources */,
 				B5FE1ACD14A2628B00022983 /* BWScorePost.m in Sources */,
 				B5FE1AD314A265EA00022983 /* Random.m in Sources */,
+				B5248B0D14AD47E20058903D /* BWBumper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
