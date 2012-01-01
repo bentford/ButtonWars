@@ -53,6 +53,15 @@ void postSolveCollisionWithButtonAndScorePost(cpArbiter *arbiter, cpSpace *space
     cpSpaceAddPostStepCallback(space, (cpPostStepFunc)postStepRemove, b, NULL);
 }
 
+void postSolveCollisionWithButtonAndBumper(cpArbiter *arbiter, cpSpace *space, void *data) {
+    CP_ARBITER_GET_SHAPES(arbiter, a, b);
+    BWBumper *bumper = b->data;
+    NSLog(@"here");
+    [UIView animateWithDuration:0.1 animations:^{
+        bumper.frame = CGRectMake(bumper.frame.origin.x+20, bumper.frame.origin.y+20, bumper.frame.size.width, bumper.frame.size.height); 
+    }];
+}
+
 void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     
 	if( cpArbiterIsFirstContact(arbiter) == NO ) 
@@ -113,6 +122,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     
     cpSpaceAddCollisionHandler(space, 0, 1, NULL, NULL, (cpCollisionPostSolveFunc)postSolveCollision, NULL, NULL);
     cpSpaceAddCollisionHandler(space, 1, 2, NULL, NULL, (cpCollisionPostSolveFunc)postSolveCollisionWithButtonAndScorePost, NULL, self);
+    cpSpaceAddCollisionHandler(space, 1, 3, NULL, NULL, (cpCollisionPostSolveFunc)postSolveCollisionWithButtonAndBumper, NULL, self);    
 
     BWShooter *shooter = [[[BWShooter alloc] initWithFrame:CGRectMake(0, 0, 270, 270) color:ButtonColorGreen] autorelease];
     [shooter makeStaticBodyWithPosition:CGPointMake(self.view.bounds.size.width/2.0, 0)];
@@ -140,6 +150,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     bottomScore.text = @"0";
     bottomScore.font = [UIFont boldSystemFontOfSize:24];
     [self.view addSubview:bottomScore];
+    
     
     
 }
@@ -240,14 +251,14 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
         
     }
     
-    BWBumper *bumper = [[[BWBumper alloc] init] autorelease];
+    [bumper release];
+    bumper = [[BWBumper alloc] init];
     [bumper makeStaticBodyWithPosition:CGPointMake(250, 500)];
     cpSpaceAddShape(space, bumper.shape);
     [self.view addSubview:bumper];
 }
 
 - (void)dealloc {
-	[fallingButton release];
 	
 	[super dealloc];
 }

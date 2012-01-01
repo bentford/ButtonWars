@@ -14,6 +14,7 @@
     if( (self = [super initWithFrame:CGRectMake(0, 0, 100, 100)]) ) {
         self.image = [UIImage imageNamed:@"Bumper.png"];
         cpShapeSetElasticity(self.shape, 1.0);
+        cpShapeSetCollisionType(self.shape, 3);
     }
     return self;
 }

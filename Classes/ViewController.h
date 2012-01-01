@@ -10,10 +10,12 @@
 
 void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data);
 
+@class BWBumper;
 @interface ViewController : UIViewController <GameDelegate> {
 	CADisplayLink *displayLink;
 	cpSpace *space;
-	FallingButton *fallingButton;
+    
+    BWBumper *bumper;
     
     UILabel *topScore;
     UILabel *bottomScore;
