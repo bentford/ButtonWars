@@ -8,6 +8,8 @@
 #import "BWBumper.h"
 #import "Random.h"
 #import <QuartzCore/QuartzCore.h>
+#import "UIImageViewBody2.h"
+#import "BWBodyLayer.h"
 
 static NSString *borderType = @"borderType";
 
@@ -156,8 +158,29 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     bottomScore.font = [UIFont boldSystemFontOfSize:24];
     [self.view addSubview:bottomScore];
     
+//    UIImageViewBody2 *buttonTest = [[[UIImageViewBody2 alloc] initWithFrame:CGRectMake(50, 50, 50, 50)] autorelease];
+//    buttonTest.image = [UIImage imageNamed:@"ButtonGreen.png"];
+//    [self.view addSubview:buttonTest];
+//    NSLog(@"setting center property");
+//    buttonTest.center = CGPointMake(100, 100);
     
+    buttonTest2 = [[BWBodyLayer alloc] init];
+    buttonTest2.frame = CGRectMake(200, 200, 50, 50);
+    buttonTest2.contents = (id)[UIImage imageNamed:@"ButtonGreen.png"].CGImage;
+//    cpSpaceAddBody(space, buttonTest2.body);
+//    cpSpaceAddShape(space, buttonTest2.shape);
+    [self.view.layer addSublayer:buttonTest2];
+
     
+    [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(moveButton:) userInfo:nil repeats:YES];
+}
+
+- (void)moveButton:(NSTimer *)timer {
+    
+    cpBodySetPos(buttonTest2.body, cpv(buttonTest2.body->p.x+10,buttonTest2.body->p.y));
+    NSLog(@"body: %@, layer: %@", NSStringFromCGPoint(buttonTest2.body->p), NSStringFromCGPoint(buttonTest2.position));
+    
+    //cpBodySetAngle(buttonTest2.body, buttonTest2.body->a+10);
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -185,6 +208,10 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
            [[aView class] isSubclassOfClass:[UIImageViewBody class]] == YES )
             [(UIViewBody *)aView updatePosition];
     }
+    
+    for( CALayer *aLayer in self.view.layer.sublayers ) 
+        if( [aLayer isKindOfClass:[BWBodyLayer class]] == YES )
+            [(BWBodyLayer *)aLayer updatePosition];
 }
 
 #pragma mark GameDelegate
@@ -244,6 +271,8 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 }
 
 - (void)createScorePosts {
+    return;
+    
     [Random seed];
     for( int scorePostCount = 0; scorePostCount < 20; scorePostCount++ ) {
         NSUInteger randomX = [Random randomWithMin:50 max:(NSUInteger)self.view.bounds.size.width-50];
