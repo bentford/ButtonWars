@@ -7,6 +7,7 @@
 #import "BWScorePost.h"
 #import "BWBumper.h"
 #import "Random.h"
+#import <QuartzCore/QuartzCore.h>
 
 static NSString *borderType = @"borderType";
 
@@ -56,10 +57,14 @@ void postSolveCollisionWithButtonAndScorePost(cpArbiter *arbiter, cpSpace *space
 void postSolveCollisionWithButtonAndBumper(cpArbiter *arbiter, cpSpace *space, void *data) {
     CP_ARBITER_GET_SHAPES(arbiter, a, b);
     BWBumper *bumper = b->data;
-    NSLog(@"here");
-    [UIView animateWithDuration:0.1 animations:^{
-        bumper.frame = CGRectMake(bumper.frame.origin.x+20, bumper.frame.origin.y+20, bumper.frame.size.width, bumper.frame.size.height); 
-    }];
+    
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"bodyPosition.x"];
+    animation.fromValue = [NSNumber numberWithInt:1.0];
+    animation.toValue = [NSNumber numberWithInt:3.0];
+    animation.duration = 0.1;
+    [bumper.layer addAnimation:animation forKey:@"bodyPosition.x"];
+    
+    cpBodySetPos(bumper.body, CGPointMake(cpBodyGetPos(bumper.body).x+20, cpBodyGetPos(bumper.body).y));
 }
 
 void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
@@ -253,7 +258,9 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     
     [bumper release];
     bumper = [[BWBumper alloc] init];
-    [bumper makeStaticBodyWithPosition:CGPointMake(250, 500)];
+    //[bumper makeStaticBodyWithPosition:CGPointMake(250, 500)];
+    cpBodySetPos(bumper.body, CGPointMake(250, 500));
+    cpSpaceAddBody(space, bumper.body);
     cpSpaceAddShape(space, bumper.shape);
     [self.view addSubview:bumper];
 }

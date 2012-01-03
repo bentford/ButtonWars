@@ -22,6 +22,15 @@
     
 }
 
+- (void)setCenter:(CGPoint)newCenterPoint {
+    NSLog(@"setCenter: %@", NSStringFromCGPoint(newCenterPoint));
+    cpBodySetPos(self.body, newCenterPoint);
+}
+
+- (CGPoint)center {
+    return cpBodyGetPos(self.body);
+}
+
 - (void)dealloc {
     cpShapeFree(shape);
     cpBodyFree(body);
