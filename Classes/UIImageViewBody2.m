@@ -14,4 +14,8 @@
 + (Class)layerClass {
     return [BWBodyLayer class];
 }
+
+- (BWBodyLayer *)bodyLayer {
+    return (BWBodyLayer *)self.layer;
+}
 @end

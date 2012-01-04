@@ -156,11 +156,13 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     bottomScore.font = [UIFont boldSystemFontOfSize:24];
     [self.view addSubview:bottomScore];
     
-//    UIImageViewBody2 *buttonTest = [[[UIImageViewBody2 alloc] initWithFrame:CGRectMake(50, 50, 50, 50)] autorelease];
-//    buttonTest.image = [UIImage imageNamed:@"ButtonGreen.png"];
-//    [self.view addSubview:buttonTest];
-//    NSLog(@"setting center property");
-//    buttonTest.center = CGPointMake(100, 100);
+    UIImageViewBody2 *buttonTest = [[[UIImageViewBody2 alloc] initWithFrame:CGRectMake(0, 0, 50, 50)] autorelease];
+    buttonTest.image = [UIImage imageNamed:@"ButtonGreen.png"];
+    [self.view addSubview:buttonTest];
+    cpSpaceAddBody(space, buttonTest.bodyLayer.body);
+    cpSpaceAddShape(space, buttonTest.bodyLayer.shape);
+    
+    
     
     buttonTest2 = [[BWBodyLayer alloc] init];
     buttonTest2.frame = CGRectMake(0, 0, 50, 50);
@@ -171,11 +173,11 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     [self.view.layer addSublayer:buttonTest2];
     cpBodySetPos(buttonTest2.body, cpv(400, 400));
     
-    [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(moveButton:) userInfo:nil repeats:NO];
+    //[NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(moveButton:) userInfo:nil repeats:NO];
 }
 
 - (void)moveButton:(NSTimer *)timer {
-    cpBodyApplyImpulse(buttonTest2.body, cpv(400, 400), cpvzero);
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
