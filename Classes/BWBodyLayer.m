@@ -16,6 +16,13 @@
 @synthesize body;
 @synthesize shape;
 
++ (BOOL)needsDisplayForKey:(NSString *)key {
+    if( [key isEqualToString:@"bodyPosition"] ) 
+        return YES;
+    
+    return [super needsDisplayForKey:key];
+}
+
 - (id)initWithLayer:(id)layer {
     if( (self = [super initWithLayer:layer] ) ) {
         if( [layer isKindOfClass:[BWBodyLayer class]] == YES ) {

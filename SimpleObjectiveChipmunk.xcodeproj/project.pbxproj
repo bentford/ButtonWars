@@ -376,11 +376,11 @@
 		B5FE1A9E14A140C500022983 /* Chipmunk Parts */ = {
 			isa = PBXGroup;
 			children = (
+				B5541651147F831A00994AEB /* UIViewChipmunk.h */,
 				B55416571482ACE600994AEB /* UIImageViewBody.h */,
 				B55416581482ACE600994AEB /* UIImageViewBody.m */,
 				B554165A1482ADCB00994AEB /* UIImageViewCircleBody.h */,
 				B554165B1482ADCB00994AEB /* UIImageViewCircleBody.m */,
-				B5541651147F831A00994AEB /* UIViewChipmunk.h */,
 				B5541643147EE63E00994AEB /* UIViewCircleBody.h */,
 				B5541644147EE63E00994AEB /* UIViewCircleBody.m */,
 				B554164B147F7FE200994AEB /* UIViewBody.h */,
