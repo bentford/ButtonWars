@@ -11,4 +11,5 @@
 
 @interface BWBumper : UIImageViewCircleBody
 
+- (void)setupWithSpace:(cpSpace *)space position:(CGPoint)position;
 @end

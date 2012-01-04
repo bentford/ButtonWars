@@ -38,7 +38,7 @@
 
 - (id)init {
     if( (self = [super init]) ) {
-        NSLog(@"layer init");
+
         body = cpBodyNew(1.0, cpMomentForCircle(1.0, 0, 1.0, cpvzero));
         shape = cpCircleShapeNew(body, 1.0, cpvzero);
         cpShapeSetElasticity(shape, 0.7);
@@ -51,7 +51,6 @@
 
 - (void)setFrame:(CGRect)frame {
     [super setFrame:frame];
-    NSLog(@"setFrame: %@", NSStringFromCGRect(frame));
     
     width = frame.size.width;
     height = frame.size.height;
@@ -74,7 +73,6 @@
 
 - (void)setBounds:(CGRect)bounds {
     [super setBounds:bounds];
-    NSLog(@"setBounds: %@", NSStringFromCGRect(bounds));
     width = bounds.size.width;
     height = bounds.size.height;
     
@@ -119,7 +117,7 @@
 @implementation BWBodyLayer(PrivateMethods)
 - (CATransform3D)transformWithBody:(cpBody *)theBody {
     //works
-    CATransform3D translate = CATransform3DMakeTranslation(theBody->p.x-25, theBody->p.y-25, 0);
+    CATransform3D translate = CATransform3DMakeTranslation(theBody->p.x-width/2.0, theBody->p.y-height/2.0, 0);
     
     CATransform3D transform = CATransform3DRotate(translate, theBody->a, 0, 0, 1);
     

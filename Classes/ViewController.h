@@ -30,5 +30,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data);
 - (void)createScorePosts;
 - (void)removeButtons;
 - (void)removeScorePosts;
+
+- (void)resetBumper:(BWBumper *)theBumper;
 @end
 

@@ -59,12 +59,13 @@ void postSolveCollisionWithButtonAndScorePost(cpArbiter *arbiter, cpSpace *space
 void postSolveCollisionWithButtonAndBumper(cpArbiter *arbiter, cpSpace *space, void *data) {
     CP_ARBITER_GET_SHAPES(arbiter, a, b);
     BWBumper *bumper = b->data;
+    BWButton *button = a->data;
+    ViewController *viewController = data;
     
-    [UIView animateWithDuration:.1 animations:^{
-       // I want to animate a custom property on the view.  Is this possible? 
-    }];
+    cpBodySetPos( bumper.body, cpv(cpBodyGetPos(bumper.body).x+10, cpBodyGetPos(bumper.body).y) );
+    [viewController performSelector:@selector(resetBumper:) withObject:bumper afterDelay:0.1];
     
-    cpBodySetPos(bumper.body, CGPointMake(cpBodyGetPos(bumper.body).x+20, cpBodyGetPos(bumper.body).y));
+    cpBodyApplyImpulse(button.body, cpv(500, 0), cpvzero);
 }
 
 void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
@@ -163,21 +164,6 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     cpSpaceAddShape(space, buttonTest.bodyLayer.shape);
     
     
-    
-    buttonTest2 = [[BWBodyLayer alloc] init];
-    buttonTest2.frame = CGRectMake(0, 0, 50, 50);
-    buttonTest2.contents = (id)[UIImage imageNamed:@"ButtonGreen.png"].CGImage;
-    
-    cpSpaceAddBody(space, buttonTest2.body);
-    cpSpaceAddShape(space, buttonTest2.shape);
-    [self.view.layer addSublayer:buttonTest2];
-    cpBodySetPos(buttonTest2.body, cpv(400, 400));
-    
-    //[NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(moveButton:) userInfo:nil repeats:NO];
-}
-
-- (void)moveButton:(NSTimer *)timer {
-    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -221,6 +207,15 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     cpVect v = cpvmult(cpvforangle(shooter.body->a), 1000.0f);
 	cpBodyApplyImpulse(greenButton.body, v, cpvzero);
 
+//    UIImageViewBody2 *greenButton = [[[UIImageViewBody2 alloc] initWithFrame:CGRectMake(0, 0, 50, 50)] autorelease];
+//    greenButton.image = [UIImage imageNamed:@"ButtonGreen.png"];
+//    [self.view addSubview:greenButton];
+//    cpBodySetPos(greenButton.bodyLayer.body, shooter.body->p);
+//    cpSpaceAddBody(space, greenButton.bodyLayer.body);
+//    cpSpaceAddShape(space, greenButton.bodyLayer.shape);
+//    
+//    cpVect v = cpvmult(cpvforangle(shooter.body->a), 1000.0f);
+//    cpBodyApplyImpulse(greenButton.bodyLayer.body, v, cpvzero);
 }
 #pragma mark -
 
@@ -268,26 +263,27 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 }
 
 - (void)createScorePosts {
-    return;
-    [Random seed];
-    for( int scorePostCount = 0; scorePostCount < 20; scorePostCount++ ) {
-        NSUInteger randomX = [Random randomWithMin:50 max:(NSUInteger)self.view.bounds.size.width-50];
-        NSUInteger randomY = [Random randomWithMin:250 max:(NSUInteger)self.view.bounds.size.height-250];
-        
-        BWScorePost *scorePost = [[[BWScorePost alloc] initWithFrame:CGRectMake(560, 600, 60, 60)] autorelease];
-        [scorePost makeStaticBodyWithPosition:CGPointMake(randomX, randomY)];
-        cpSpaceAddShape(space, scorePost.shape);
-        [self.view addSubview:scorePost];
-        
-    }
+
+//    [Random seed];
+//    for( int scorePostCount = 0; scorePostCount < 20; scorePostCount++ ) {
+//        NSUInteger randomX = [Random randomWithMin:50 max:(NSUInteger)self.view.bounds.size.width-50];
+//        NSUInteger randomY = [Random randomWithMin:250 max:(NSUInteger)self.view.bounds.size.height-250];
+//        
+//        BWScorePost *scorePost = [[[BWScorePost alloc] initWithFrame:CGRectMake(560, 600, 60, 60)] autorelease];
+//        [scorePost makeStaticBodyWithPosition:CGPointMake(randomX, randomY)];
+//        cpSpaceAddShape(space, scorePost.shape);
+//        [self.view addSubview:scorePost];
+//        
+//    }
     
     [bumper release];
     bumper = [[BWBumper alloc] init];
-    //[bumper makeStaticBodyWithPosition:CGPointMake(250, 500)];
-    cpBodySetPos(bumper.body, CGPointMake(250, 500));
-    cpSpaceAddBody(space, bumper.body);
-    cpSpaceAddShape(space, bumper.shape);
+    [bumper setupWithSpace:space position:CGPointMake(250, 500)];
     [self.view addSubview:bumper];
+}
+
+- (void)resetBumper:(BWBumper *)theBumper {
+    cpBodySetPos( theBumper.body, cpv(cpBodyGetPos(theBumper.body).x-10, cpBodyGetPos(bumper.body).y) );
 }
 
 - (void)dealloc {
