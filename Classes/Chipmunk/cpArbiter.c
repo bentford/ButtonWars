@@ -23,7 +23,7 @@
 #include <math.h>
 
 #include "chipmunk_private.h"
-#include "constraints/util.h"
+#include "util.h"
 
 cpContact*
 cpContactInit(cpContact *con, cpVect p, cpVect n, cpFloat dist, cpHashValue hash)

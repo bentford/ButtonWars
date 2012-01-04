@@ -24,7 +24,7 @@
 #include <math.h>
 
 #include "chipmunk_private.h"
-#include "constraints/util.h"
+#include "util.h"
 
 // initialized in cpInitChipmunk()
 cpBody cpStaticBodySingleton;
