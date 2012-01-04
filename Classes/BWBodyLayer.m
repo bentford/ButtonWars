@@ -121,9 +121,9 @@
     //works
     CATransform3D translate = CATransform3DMakeTranslation(theBody->p.x-25, theBody->p.y-25, 0);
     
-    //CATransform3D transform = CATransform3DRotate(translate, theBody->a, 0, 0, 1);
+    CATransform3D transform = CATransform3DRotate(translate, theBody->a, 0, 0, 1);
     
     
-    return translate;
+    return transform;
 }
 @end
