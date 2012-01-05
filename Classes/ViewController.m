@@ -267,7 +267,12 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
             BWScorePost *buttonToRemove = (BWScorePost *)potentialButton;
             cpSpaceRemoveShape(space, buttonToRemove.shape);
             [potentialButton removeFromSuperview];
+        } else if( [potentialButton isKindOfClass:[BWBumper class]] ) {
+            BWBumper *buttonToRemove = (BWBumper *)potentialButton;
+            cpSpaceRemoveShape(space, buttonToRemove.chipmunkLayer.shape);
+            [potentialButton removeFromSuperview];
         }
+        
     }        
 }
 
@@ -284,10 +289,12 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 //        [self.view addSubview:scorePost];
 //        
 //    }
-    
-    [bumper release];
-    bumper = [[BWBumper alloc] init];
+    BWBumper *bumper = [[[BWBumper alloc] init] autorelease];
     [bumper setupWithSpace:space position:CGPointMake(250, 500)];
+    [self.view addSubview:bumper];
+    
+    bumper = [[[BWBumper alloc] init] autorelease];
+    [bumper setupWithSpace:space position:CGPointMake(500, 500)];
     [self.view addSubview:bumper];
 }
 

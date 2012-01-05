@@ -16,8 +16,6 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data);
 	CADisplayLink *displayLink;
 	cpSpace *space;
     
-    BWBumper *bumper;
-    
     UILabel *topScore;
     UILabel *bottomScore;
     
