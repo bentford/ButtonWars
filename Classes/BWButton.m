@@ -7,29 +7,18 @@
 //
 
 #import "BWButton.h"
-
+#import "BWChipmunkLayer.h"
 
 @implementation BWButton
 @synthesize color;
 
++ (Class)layerClass {
+    return [BWChipmunkLayer class];
+}
+
 - (id)initWithFrame:(CGRect)frame {
     NSAssert(NO, @"use initWithFrame:color:");
     return nil;
-}
-
-- (id)initWithFrame:(CGRect)frame color:(ButtonColor)buttonColor {
-    if( (self = [super initWithFrame:frame]) ) {
-        
-        color = buttonColor;
-        if( color == ButtonColorGreen )
-            self.image = [UIImage imageNamed:@"ButtonGreen.png"];
-        else if( color == ButtonColorOrange )
-            self.image = [UIImage imageNamed:@"ButtonOrange.png"];
-        
-        cpShapeSetElasticity(self.shape, 0.7);
-        self.userInteractionEnabled = NO;        
-    }
-    return self;
 }
 
 - (id)initWithColor:(ButtonColor)aColor {
@@ -41,8 +30,20 @@
         else if( color == ButtonColorOrange )
             self.image = [UIImage imageNamed:@"ButtonOrange.png"];
         
-        self.userInteractionEnabled = NO;        
+        self.userInteractionEnabled = NO;
+        
+        cpShapeSetUserData(self.chipmunkLayer.shape, self);
     }
     return self;
+}
+
+- (BWChipmunkLayer *)chipmunkLayer {
+    return (BWChipmunkLayer *)self.layer;
+}
+
+- (void)setupWithSpace:(cpSpace *)space position:(CGPoint)position {
+    cpBodySetPos(self.chipmunkLayer.body, position);
+    cpSpaceAddBody(space, self.chipmunkLayer.body);
+    cpSpaceAddShape(space, self.chipmunkLayer.shape);
 }
 @end

@@ -7,15 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "UIImageViewCircleBody.h"
 #import "GameData.h"
+#import "ChipmunkLayerView.h"
 
-@interface BWButton : UIImageViewCircleBody {
+@interface BWButton : UIImageView <ChipmunkLayerView> {
     ButtonColor color;
 }
 
 - (id)initWithColor:(ButtonColor)aColor;
-- (id)initWithFrame:(CGRect)frame color:(ButtonColor)buttonColor;
 
 @property (nonatomic, readonly) ButtonColor color;
 @end
