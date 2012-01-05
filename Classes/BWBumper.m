@@ -10,6 +10,7 @@
 #import "BWChipmunkLayer.h"
 
 @implementation BWBumper
+@synthesize isBumping;
 
 + (Class)layerClass {
     return [BWChipmunkLayer class];
@@ -24,6 +25,8 @@
         
         cpBodySetUserData(self.chipmunkLayer.body, self);
         cpShapeSetUserData(self.chipmunkLayer.shape, self);
+        
+        isBumping = NO;
     }
     return self;
 }

@@ -10,7 +10,9 @@
 #import "ChipmunkLayerView.h"
 
 
-@interface BWBumper : UIImageView <ChipmunkLayerView>
+@interface BWBumper : UIImageView <ChipmunkLayerView> 
+
+@property (nonatomic, assign) BOOL isBumping;
 
 - (void)setupWithSpace:(cpSpace *)space position:(CGPoint)position;
 @end

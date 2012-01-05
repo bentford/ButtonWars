@@ -61,11 +61,28 @@ void postSolveCollisionWithButtonAndBumper(cpArbiter *arbiter, cpSpace *space, v
     BWBumper *bumper = b->data;
     BWButton *button = a->data;
     ViewController *viewController = data;
+     
+
+    cpVect collisionVector = cpvnormalize(cpvsub(cpBodyGetPos(bumper.chipmunkLayer.body), cpBodyGetPos(button.body)));
+    cpVect invertedCollisionVector = cpvrotate(collisionVector, cpvforangle(M_PI));
+    cpVect impulseVector = cpvmult(invertedCollisionVector, 500);
+    cpVect bounceVector = cpvmult(invertedCollisionVector, 10);
     
-    cpBodySetPos( bumper.chipmunkLayer.body, cpv(cpBodyGetPos(bumper.chipmunkLayer.body).x+10, cpBodyGetPos(bumper.chipmunkLayer.body).y) );
-    [viewController performSelector:@selector(resetBumper:) withObject:bumper afterDelay:0.1];
+    // bounce button away
+    cpBodyApplyImpulse(button.body, impulseVector, cpvzero);
     
-    cpBodyApplyImpulse(button.body, cpv(500, 0), cpvzero);
+    
+    
+    if( bumper.isBumping == YES )
+        return;
+
+    // bounce the bumper if it's not bumping
+    bumper.isBumping = YES;
+    cpVect jumpPosition = cpvadd(cpBodyGetPos(bumper.chipmunkLayer.body), bounceVector);
+    cpVect resetPosition = cpBodyGetPos(bumper.chipmunkLayer.body);
+    cpBodySetPos(bumper.chipmunkLayer.body, jumpPosition);
+    NSArray *parameters = [NSArray arrayWithObjects:bumper, [NSValue valueWithCGPoint:resetPosition], nil];
+    [viewController performSelector:@selector(resetBumper:) withObject:parameters afterDelay:0.1];
 }
 
 void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
@@ -156,15 +173,6 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     bottomScore.text = @"0";
     bottomScore.font = [UIFont boldSystemFontOfSize:24];
     [self.view addSubview:bottomScore];
-    
-    UIImageViewBody2 *buttonTest = [[[UIImageViewBody2 alloc] initWithFrame:CGRectMake(0, 0, 50, 50)] autorelease];
-    buttonTest.image = [UIImage imageNamed:@"ButtonGreen.png"];
-    [self.view addSubview:buttonTest];
-    cpSpaceAddBody(space, buttonTest.bodyLayer.body);
-    cpSpaceAddShape(space, buttonTest.bodyLayer.shape);
-    cpBodySetPos(buttonTest.bodyLayer.body, cpv(100,100));
-    
-    NSLog(@"frame: %@, bounds: %@", NSStringFromCGRect(buttonTest.frame), NSStringFromCGRect(buttonTest.bounds));
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -283,8 +291,11 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     [self.view addSubview:bumper];
 }
 
-- (void)resetBumper:(BWBumper *)theBumper {
-    cpBodySetPos( theBumper.chipmunkLayer.body, cpv(cpBodyGetPos(theBumper.chipmunkLayer.body).x-10, cpBodyGetPos(bumper.chipmunkLayer.body).y) );
+- (void)resetBumper:(NSArray *)parameters {
+    BWBumper *theBumper = [parameters objectAtIndex:0];
+    cpVect resetPosition = [(NSValue *)[parameters objectAtIndex:1] CGPointValue];
+    cpBodySetPos(theBumper.chipmunkLayer.body, resetPosition);
+    theBumper.isBumping = NO;
 }
 
 - (void)dealloc {
