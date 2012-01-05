@@ -21,23 +21,6 @@ void postStepRemove(cpSpace *space, cpShape *shape, void *unused)
     [scorePost retain];
     [scorePost removeFromSuperview];
     
-    if( cpBodyIsStatic(shape->body) == NO )
-        cpSpaceRemoveBody(space, shape->body);
-    
-    cpSpaceRemoveShape(space, shape);
-    
-    [scorePost release];
-}
-
-void postStepRemove2(cpSpace *space, cpShape *shape, void *unused)
-{
-    UIView *scorePost = shape->data;
-    [scorePost retain];
-    [scorePost removeFromSuperview];
-    
-    if( cpBodyIsStatic(shape->body) == NO )
-        cpSpaceRemoveBody(space, shape->body);
-    
     cpSpaceRemoveShape(space, shape);
     
     [scorePost release];
@@ -215,16 +198,6 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 
     cpVect v = cpvmult(cpvforangle(shooter.body->a), 1000.0f);
 	cpBodyApplyImpulse(greenButton.body, v, cpvzero);
-
-//    UIImageViewBody2 *greenButton = [[[UIImageViewBody2 alloc] initWithFrame:CGRectMake(0, 0, 50, 50)] autorelease];
-//    greenButton.image = [UIImage imageNamed:@"ButtonGreen.png"];
-//    [self.view addSubview:greenButton];
-//    cpBodySetPos(greenButton.bodyLayer.body, shooter.body->p);
-//    cpSpaceAddBody(space, greenButton.bodyLayer.body);
-//    cpSpaceAddShape(space, greenButton.bodyLayer.shape);
-//    
-//    cpVect v = cpvmult(cpvforangle(shooter.body->a), 1000.0f);
-//    cpBodyApplyImpulse(greenButton.bodyLayer.body, v, cpvzero);
 }
 #pragma mark -
 
@@ -265,7 +238,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     for( UIView *potentialButton in self.view.subviews ) {
         if( [potentialButton isKindOfClass:[BWScorePost class]] ) {
             BWScorePost *buttonToRemove = (BWScorePost *)potentialButton;
-            cpSpaceRemoveShape(space, buttonToRemove.shape);
+            cpSpaceRemoveShape(space, buttonToRemove.chipmunkLayer.shape);
             [potentialButton removeFromSuperview];
         } else if( [potentialButton isKindOfClass:[BWBumper class]] ) {
             BWBumper *buttonToRemove = (BWBumper *)potentialButton;
@@ -278,17 +251,11 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 
 - (void)createScorePosts {
 
-//    [Random seed];
-//    for( int scorePostCount = 0; scorePostCount < 20; scorePostCount++ ) {
-//        NSUInteger randomX = [Random randomWithMin:50 max:(NSUInteger)self.view.bounds.size.width-50];
-//        NSUInteger randomY = [Random randomWithMin:250 max:(NSUInteger)self.view.bounds.size.height-250];
-//        
-//        BWScorePost *scorePost = [[[BWScorePost alloc] initWithFrame:CGRectMake(560, 600, 60, 60)] autorelease];
-//        [scorePost makeStaticBodyWithPosition:CGPointMake(randomX, randomY)];
-//        cpSpaceAddShape(space, scorePost.shape);
-//        [self.view addSubview:scorePost];
-//        
-//    }
+    [Random seed];
+
+    [self createScorePostsWithQuantity:5 inRect:CGRectMake(10, 50, self.view.bounds.size.width/2.0, self.view.bounds.size.height/2.0)];
+    [self createScorePostsWithQuantity:5 inRect:CGRectMake(10, self.view.bounds.size.height/2.0, self.view.bounds.size.width/2.0, self.view.bounds.size.height/2.0)];
+    
     BWBumper *bumper = [[[BWBumper alloc] init] autorelease];
     [bumper setupWithSpace:space position:CGPointMake(250, 500)];
     [self.view addSubview:bumper];
@@ -303,6 +270,15 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     cpVect resetPosition = [(NSValue *)[parameters objectAtIndex:1] CGPointValue];
     cpBodySetPos(theBumper.chipmunkLayer.body, resetPosition);
     theBumper.isBumping = NO;
+}
+
+- (void)createScorePostsWithQuantity:(NSUInteger)quantity inRect:(CGRect)insideRect {
+    for( int i = 0; i < quantity; i++ ) {
+        
+        BWScorePost *scorePost = [[[BWScorePost alloc] init] autorelease];
+        [scorePost setupWithSpace:space position:[Random randomPointInRect:insideRect]];
+        [self.view addSubview:scorePost];
+    }
 }
 
 - (void)dealloc {

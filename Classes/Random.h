@@ -12,4 +12,5 @@
 
 + (void)seed;
 + (NSUInteger)randomWithMin:(NSUInteger)min max:(NSUInteger)max;
++ (CGPoint)randomPointInRect:(CGRect)insideRect;
 @end

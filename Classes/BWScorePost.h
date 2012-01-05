@@ -7,9 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "UIImageViewCircleBody.h"
-#import "GameData.h"
+#import "ChipmunkLayerView.h"
 
-@interface BWScorePost : UIImageViewCircleBody
+@interface BWScorePost : UIImageView <ChipmunkLayerView>
 
 @end

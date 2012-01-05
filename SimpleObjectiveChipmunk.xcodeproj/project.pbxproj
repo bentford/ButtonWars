@@ -52,6 +52,7 @@
 		B5E7503F14B447C60021AFC0 /* cpRotaryLimitJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = B5E7503414B447C60021AFC0 /* cpRotaryLimitJoint.c */; };
 		B5E7504014B447C60021AFC0 /* cpSimpleMotor.c in Sources */ = {isa = PBXBuildFile; fileRef = B5E7503514B447C60021AFC0 /* cpSimpleMotor.c */; };
 		B5E7504114B447C60021AFC0 /* cpSlideJoint.c in Sources */ = {isa = PBXBuildFile; fileRef = B5E7503614B447C60021AFC0 /* cpSlideJoint.c */; };
+		B5E7505314B58E7A0021AFC0 /* Peg.png in Resources */ = {isa = PBXBuildFile; fileRef = B5E7505214B58E7A0021AFC0 /* Peg.png */; };
 		B5FE1A9914A13D8C00022983 /* MainWindow-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5FE1A9814A13D8C00022983 /* MainWindow-iPad.xib */; };
 		B5FE1A9C14A13F9200022983 /* ButtonGreen.png in Resources */ = {isa = PBXBuildFile; fileRef = B5FE1A9B14A13F9200022983 /* ButtonGreen.png */; };
 		B5FE1AA114A1410100022983 /* BWButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FE1AA014A1410100022983 /* BWButton.m */; };
@@ -158,6 +159,7 @@
 		B5E7503414B447C60021AFC0 /* cpRotaryLimitJoint.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cpRotaryLimitJoint.c; path = constraints/cpRotaryLimitJoint.c; sourceTree = "<group>"; };
 		B5E7503514B447C60021AFC0 /* cpSimpleMotor.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cpSimpleMotor.c; path = constraints/cpSimpleMotor.c; sourceTree = "<group>"; };
 		B5E7503614B447C60021AFC0 /* cpSlideJoint.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cpSlideJoint.c; path = constraints/cpSlideJoint.c; sourceTree = "<group>"; };
+		B5E7505214B58E7A0021AFC0 /* Peg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Peg.png; sourceTree = "<group>"; };
 		B5FE1A9814A13D8C00022983 /* MainWindow-iPad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "MainWindow-iPad.xib"; path = "iPad/MainWindow-iPad.xib"; sourceTree = "<group>"; };
 		B5FE1A9B14A13F9200022983 /* ButtonGreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonGreen.png; sourceTree = "<group>"; };
 		B5FE1A9F14A1410100022983 /* BWButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWButton.h; sourceTree = "<group>"; };
@@ -347,6 +349,7 @@
 		B5FE1A9A14A13ED900022983 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				B5E7505214B58E7A0021AFC0 /* Peg.png */,
 				B5248B0814AD47C20058903D /* Bumper.png */,
 				B5FE1AC814A2626B00022983 /* WoodScorePost.png */,
 				B5FE1ABA14A1753F00022983 /* ButtonOrange.png */,
@@ -458,6 +461,7 @@
 				B5FE1ABB14A1753F00022983 /* ButtonOrange.png in Resources */,
 				B5FE1AC914A2626B00022983 /* WoodScorePost.png in Resources */,
 				B5248B0914AD47C20058903D /* Bumper.png in Resources */,
+				B5E7505314B58E7A0021AFC0 /* Peg.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

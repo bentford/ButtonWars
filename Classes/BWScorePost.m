@@ -7,15 +7,36 @@
 //
 
 #import "BWScorePost.h"
+#import "BWChipmunkLayer.h"
 
 @implementation BWScorePost
-- (id)initWithFrame:(CGRect)frame {
-    if( (self = [super initWithFrame:frame]) ) {
+
++ (Class)layerClass {
+    return [BWChipmunkLayer class];
+}
+
+- (id)init {
+    if( (self = [super initWithFrame:CGRectMake(0, 0, 25, 25)]) ) {
         
-        self.image = [UIImage imageNamed:@"WoodScorePost.png"];
-		cpShapeSetCollisionType(self.shape, 2);
-        
+        self.image = [UIImage imageNamed:@"Peg.png"];
+		cpShapeSetCollisionType(self.chipmunkLayer.shape, 2);
+        cpShapeSetUserData(self.chipmunkLayer.shape, self);
     }
     return self;
 }
+
+- (id)initWithFrame:(CGRect)frame {
+    NSAssert(NO, @"use init instead");
+    return nil;
+}
+
+- (BWChipmunkLayer *)chipmunkLayer {
+    return (BWChipmunkLayer *)self.layer;
+}
+
+- (void)setupWithSpace:(cpSpace *)space position:(CGPoint)position {
+    cpBodySetPos(self.chipmunkLayer.body, position);
+    cpSpaceAddShape(space, self.chipmunkLayer.shape);
+}
+
 @end

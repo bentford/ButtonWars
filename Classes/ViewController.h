@@ -30,5 +30,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data);
 - (void)removeScorePosts;
 
 - (void)resetBumper:(BWBumper *)theBumper;
+
+- (void)createScorePostsWithQuantity:(NSUInteger)quantity inRect:(CGRect)insideRect;
 @end
 
