@@ -33,6 +33,7 @@
             cpBodySetAngle(body, cpBodyGetAngle(bodyLayer.body));
             cpBodySetMass(body, cpBodyGetMass(bodyLayer.body));
             cpBodySetMoment(body, cpBodyGetMoment(bodyLayer.body));
+            cpBodySetUserData(body, cpBodyGetUserData(bodyLayer.body));
             
             shape = cpCircleShapeNew(body, cpCircleShapeGetRadius(bodyLayer.shape), cpvzero);
             cpShapeSetFriction(shape, cpShapeGetFriction(bodyLayer.shape));

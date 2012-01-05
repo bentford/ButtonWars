@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UIImageViewCircleBody.h"
+#import "ChipmunkLayerView.h"
 
-@interface BWBumper : UIImageViewCircleBody
+
+@interface BWBumper : UIImageView <ChipmunkLayerView>
 
 - (void)setupWithSpace:(cpSpace *)space position:(CGPoint)position;
 @end

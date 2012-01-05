@@ -62,7 +62,7 @@ void postSolveCollisionWithButtonAndBumper(cpArbiter *arbiter, cpSpace *space, v
     BWButton *button = a->data;
     ViewController *viewController = data;
     
-    cpBodySetPos( bumper.body, cpv(cpBodyGetPos(bumper.body).x+10, cpBodyGetPos(bumper.body).y) );
+    cpBodySetPos( bumper.chipmunkLayer.body, cpv(cpBodyGetPos(bumper.chipmunkLayer.body).x+10, cpBodyGetPos(bumper.chipmunkLayer.body).y) );
     [viewController performSelector:@selector(resetBumper:) withObject:bumper afterDelay:0.1];
     
     cpBodyApplyImpulse(button.body, cpv(500, 0), cpvzero);
@@ -264,7 +264,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 }
 
 - (void)createScorePosts {
-    return;
+
 //    [Random seed];
 //    for( int scorePostCount = 0; scorePostCount < 20; scorePostCount++ ) {
 //        NSUInteger randomX = [Random randomWithMin:50 max:(NSUInteger)self.view.bounds.size.width-50];
@@ -284,7 +284,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 }
 
 - (void)resetBumper:(BWBumper *)theBumper {
-    cpBodySetPos( theBumper.body, cpv(cpBodyGetPos(theBumper.body).x-10, cpBodyGetPos(bumper.body).y) );
+    cpBodySetPos( theBumper.chipmunkLayer.body, cpv(cpBodyGetPos(theBumper.chipmunkLayer.body).x-10, cpBodyGetPos(bumper.chipmunkLayer.body).y) );
 }
 
 - (void)dealloc {

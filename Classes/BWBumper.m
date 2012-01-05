@@ -7,15 +7,23 @@
 //
 
 #import "BWBumper.h"
+#import "BWChipmunkLayer.h"
 
 @implementation BWBumper
+
++ (Class)layerClass {
+    return [BWChipmunkLayer class];
+}
 
 - (id)init {
     if( (self = [super initWithFrame:CGRectMake(0, 0, 100, 100)]) ) {
         self.image = [UIImage imageNamed:@"Bumper.png"];
-        cpShapeSetElasticity(self.shape, 1.0);
-        cpShapeSetCollisionType(self.shape, 3);
-        cpBodySetMass(self.body, 100.0);
+        cpShapeSetElasticity(self.chipmunkLayer.shape, 1.0);
+        cpShapeSetCollisionType(self.chipmunkLayer.shape, 3);
+        cpBodySetMass(self.chipmunkLayer.body, 100.0);
+        
+        cpBodySetUserData(self.chipmunkLayer.body, self);
+        cpShapeSetUserData(self.chipmunkLayer.shape, self);
     }
     return self;
 }
@@ -25,9 +33,13 @@
     return nil;
 }
 
+- (BWChipmunkLayer *)chipmunkLayer {
+    return (BWChipmunkLayer *)self.layer;
+}
+
 - (void)setupWithSpace:(cpSpace *)space position:(CGPoint)position {
-    cpBodySetPos(self.body, position);
-    cpSpaceAddShape(space, self.shape);
+    cpBodySetPos(self.chipmunkLayer.body, position);
+    cpSpaceAddShape(space, self.chipmunkLayer.shape);
 }
 
 @end

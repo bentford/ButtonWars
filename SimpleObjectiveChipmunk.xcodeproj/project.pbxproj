@@ -88,7 +88,7 @@
 		B5248B0C14AD47E20058903D /* BWBumper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWBumper.m; sourceTree = "<group>"; };
 		B5248CF014B2F4110058903D /* UIImageViewBody2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageViewBody2.h; sourceTree = "<group>"; };
 		B5248CF114B2F4110058903D /* UIImageViewBody2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImageViewBody2.m; sourceTree = "<group>"; };
-		B5248CF414B2F4490058903D /* BWChipmunkLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; path = BWChipmunkLayer.h; sourceTree = "<group>"; };
+		B5248CF414B2F4490058903D /* BWChipmunkLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWChipmunkLayer.h; sourceTree = "<group>"; };
 		B5248CF514B2F4490058903D /* BWChipmunkLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWChipmunkLayer.m; sourceTree = "<group>"; };
 		B5248CF714B445280058903D /* cpConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cpConstraint.h; path = constraints/cpConstraint.h; sourceTree = "<group>"; };
 		B5248CF814B445280058903D /* cpDampedRotarySpring.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cpDampedRotarySpring.h; path = constraints/cpDampedRotarySpring.h; sourceTree = "<group>"; };
@@ -146,6 +146,7 @@
 		B57E357F147877E90065B34F /* cpVect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cpVect.h; sourceTree = "<group>"; };
 		B57E3580147877E90065B34F /* prime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prime.h; sourceTree = "<group>"; };
 		B586134414A1A5C800F7D9ED /* GameData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameData.h; sourceTree = "<group>"; };
+		B5AC6DF814B521B70084E1C7 /* ChipmunkLayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChipmunkLayerView.h; sourceTree = "<group>"; };
 		B5E7502C14B447C60021AFC0 /* cpConstraint.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cpConstraint.c; path = constraints/cpConstraint.c; sourceTree = "<group>"; };
 		B5E7502D14B447C60021AFC0 /* cpDampedRotarySpring.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cpDampedRotarySpring.c; path = constraints/cpDampedRotarySpring.c; sourceTree = "<group>"; };
 		B5E7502E14B447C60021AFC0 /* cpDampedSpring.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cpDampedSpring.c; path = constraints/cpDampedSpring.c; sourceTree = "<group>"; };
@@ -391,6 +392,7 @@
 				B5248CF114B2F4110058903D /* UIImageViewBody2.m */,
 				B5248CF414B2F4490058903D /* BWChipmunkLayer.h */,
 				B5248CF514B2F4490058903D /* BWChipmunkLayer.m */,
+				B5AC6DF814B521B70084E1C7 /* ChipmunkLayerView.h */,
 			);
 			name = "Chipmunk Parts";
 			sourceTree = "<group>";
