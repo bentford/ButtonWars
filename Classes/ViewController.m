@@ -130,11 +130,11 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     cpSpaceAddCollisionHandler(space, 1, 2, NULL, NULL, (cpCollisionPostSolveFunc)postSolveCollisionWithButtonAndScorePost, NULL, self);
     cpSpaceAddCollisionHandler(space, 1, 3, NULL, NULL, (cpCollisionPostSolveFunc)postSolveCollisionWithButtonAndBumper, NULL, self);    
 
-    BWShooter *shooter = [[[BWShooter alloc] initWithFrame:CGRectMake(0, 0, 270, 270) color:ButtonColorGreen] autorelease];
-    [shooter makeStaticBodyWithPosition:CGPointMake(self.view.bounds.size.width/2.0, 0)];
-    shooter.gameDelegate = self;
-    cpSpaceAddShape(space, shooter.shape);
-    [self.view addSubview:shooter];
+//    BWShooter *shooter = [[[BWShooter alloc] initWithFrame:CGRectMake(0, 0, 270, 270) color:ButtonColorGreen] autorelease];
+//    [shooter makeStaticBodyWithPosition:CGPointMake(self.view.bounds.size.width/2.0, 0)];
+//    shooter.gameDelegate = self;
+//    cpSpaceAddShape(space, shooter.shape);
+//    [self.view addSubview:shooter];
     
     BWShooter *bottomShooter = [[[BWShooter alloc] initWithFrame:CGRectMake(0, 0, 270, 270) color:ButtonColorOrange] autorelease];
     [bottomShooter makeStaticBodyWithPosition:CGPointMake(self.view.bounds.size.width/2.0, self.view.bounds.size.height)];
@@ -147,10 +147,10 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     
     [self createScorePosts];
     
-    topScore = [[UILabel alloc] initWithFrame:CGRectMake(100, 25, 100, 50)];
-    topScore.text = @"0";
-    topScore.font = [UIFont boldSystemFontOfSize:24];    
-    [self.view addSubview:topScore];
+//    topScore = [[UILabel alloc] initWithFrame:CGRectMake(100, 25, 100, 50)];
+//    topScore.text = @"0";
+//    topScore.font = [UIFont boldSystemFontOfSize:24];    
+//    [self.view addSubview:topScore];
     
     bottomScore = [[UILabel alloc] initWithFrame:CGRectMake(100, self.view.bounds.size.height-75, 100, 50)];
     bottomScore.text = @"0";
