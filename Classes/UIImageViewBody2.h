@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-@class BWBodyLayer;
+@class BWChipmunkLayer;
 @interface UIImageViewBody2 : UIImageView
 
-- (BWBodyLayer *)bodyLayer;
+- (BWChipmunkLayer *)bodyLayer;
 @end

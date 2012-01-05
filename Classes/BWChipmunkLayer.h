@@ -9,7 +9,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "chipmunk.h"
 
-@interface BWBodyLayer : CALayer {
+@interface BWChipmunkLayer : CALayer {
     cpShape *shape;
     cpBody *body;
     

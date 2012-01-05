@@ -17,7 +17,7 @@
 		B5248B0914AD47C20058903D /* Bumper.png in Resources */ = {isa = PBXBuildFile; fileRef = B5248B0814AD47C20058903D /* Bumper.png */; };
 		B5248B0D14AD47E20058903D /* BWBumper.m in Sources */ = {isa = PBXBuildFile; fileRef = B5248B0C14AD47E20058903D /* BWBumper.m */; };
 		B5248CF214B2F4110058903D /* UIImageViewBody2.m in Sources */ = {isa = PBXBuildFile; fileRef = B5248CF114B2F4110058903D /* UIImageViewBody2.m */; };
-		B5248CF614B2F4490058903D /* BWBodyLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B5248CF514B2F4490058903D /* BWBodyLayer.m */; };
+		B5248CF614B2F4490058903D /* BWChipmunkLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B5248CF514B2F4490058903D /* BWChipmunkLayer.m */; };
 		B5541645147EE63E00994AEB /* UIViewCircleBody.m in Sources */ = {isa = PBXBuildFile; fileRef = B5541644147EE63E00994AEB /* UIViewCircleBody.m */; };
 		B554164D147F7FE200994AEB /* UIViewBody.m in Sources */ = {isa = PBXBuildFile; fileRef = B554164C147F7FE200994AEB /* UIViewBody.m */; };
 		B5541650147F819300994AEB /* UIViewQuadBody.m in Sources */ = {isa = PBXBuildFile; fileRef = B554164F147F819200994AEB /* UIViewQuadBody.m */; };
@@ -88,8 +88,8 @@
 		B5248B0C14AD47E20058903D /* BWBumper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWBumper.m; sourceTree = "<group>"; };
 		B5248CF014B2F4110058903D /* UIImageViewBody2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageViewBody2.h; sourceTree = "<group>"; };
 		B5248CF114B2F4110058903D /* UIImageViewBody2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImageViewBody2.m; sourceTree = "<group>"; };
-		B5248CF414B2F4490058903D /* BWBodyLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWBodyLayer.h; sourceTree = "<group>"; };
-		B5248CF514B2F4490058903D /* BWBodyLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWBodyLayer.m; sourceTree = "<group>"; };
+		B5248CF414B2F4490058903D /* BWChipmunkLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; path = BWChipmunkLayer.h; sourceTree = "<group>"; };
+		B5248CF514B2F4490058903D /* BWChipmunkLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWChipmunkLayer.m; sourceTree = "<group>"; };
 		B5248CF714B445280058903D /* cpConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cpConstraint.h; path = constraints/cpConstraint.h; sourceTree = "<group>"; };
 		B5248CF814B445280058903D /* cpDampedRotarySpring.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cpDampedRotarySpring.h; path = constraints/cpDampedRotarySpring.h; sourceTree = "<group>"; };
 		B5248CF914B445280058903D /* cpDampedSpring.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cpDampedSpring.h; path = constraints/cpDampedSpring.h; sourceTree = "<group>"; };
@@ -389,8 +389,8 @@
 				B554164C147F7FE200994AEB /* UIViewBody.m */,
 				B5248CF014B2F4110058903D /* UIImageViewBody2.h */,
 				B5248CF114B2F4110058903D /* UIImageViewBody2.m */,
-				B5248CF414B2F4490058903D /* BWBodyLayer.h */,
-				B5248CF514B2F4490058903D /* BWBodyLayer.m */,
+				B5248CF414B2F4490058903D /* BWChipmunkLayer.h */,
+				B5248CF514B2F4490058903D /* BWChipmunkLayer.m */,
 			);
 			name = "Chipmunk Parts";
 			sourceTree = "<group>";
@@ -500,7 +500,7 @@
 				B5FE1AD314A265EA00022983 /* Random.m in Sources */,
 				B5248B0D14AD47E20058903D /* BWBumper.m in Sources */,
 				B5248CF214B2F4110058903D /* UIImageViewBody2.m in Sources */,
-				B5248CF614B2F4490058903D /* BWBodyLayer.m in Sources */,
+				B5248CF614B2F4490058903D /* BWChipmunkLayer.m in Sources */,
 				B5E7503714B447C60021AFC0 /* cpConstraint.c in Sources */,
 				B5E7503814B447C60021AFC0 /* cpDampedRotarySpring.c in Sources */,
 				B5E7503914B447C60021AFC0 /* cpDampedSpring.c in Sources */,

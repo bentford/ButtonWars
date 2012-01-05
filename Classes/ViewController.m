@@ -9,7 +9,7 @@
 #import "Random.h"
 #import <QuartzCore/QuartzCore.h>
 #import "UIImageViewBody2.h"
-#import "BWBodyLayer.h"
+#import "BWChipmunkLayer.h"
 
 static NSString *borderType = @"borderType";
 
@@ -162,8 +162,9 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     [self.view addSubview:buttonTest];
     cpSpaceAddBody(space, buttonTest.bodyLayer.body);
     cpSpaceAddShape(space, buttonTest.bodyLayer.shape);
+    cpBodySetPos(buttonTest.bodyLayer.body, cpv(100,100));
     
-    
+    NSLog(@"frame: %@, bounds: %@", NSStringFromCGRect(buttonTest.frame), NSStringFromCGRect(buttonTest.bounds));
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -193,8 +194,8 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     }
     
     for( CALayer *aLayer in self.view.layer.sublayers ) 
-        if( [aLayer isKindOfClass:[BWBodyLayer class]] == YES )
-            [(BWBodyLayer *)aLayer updatePosition];
+        if( [aLayer isKindOfClass:[BWChipmunkLayer class]] == YES )
+            [(BWChipmunkLayer *)aLayer updatePosition];
 }
 
 #pragma mark GameDelegate
@@ -263,7 +264,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 }
 
 - (void)createScorePosts {
-
+    return;
 //    [Random seed];
 //    for( int scorePostCount = 0; scorePostCount < 20; scorePostCount++ ) {
 //        NSUInteger randomX = [Random randomWithMin:50 max:(NSUInteger)self.view.bounds.size.width-50];

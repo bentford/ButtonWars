@@ -11,7 +11,7 @@
 void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data);
 
 @class BWBumper;
-@class BWBodyLayer;
+@class BWChipmunkLayer;
 @interface ViewController : UIViewController <GameDelegate> {
 	CADisplayLink *displayLink;
 	cpSpace *space;
@@ -21,7 +21,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data);
     UILabel *topScore;
     UILabel *bottomScore;
     
-    BWBodyLayer *buttonTest2;
+    BWChipmunkLayer *buttonTest2;
 }
 
 @property (nonatomic, retain) UILabel *topScore;

@@ -6,13 +6,13 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "BWBodyLayer.h"
+#import "BWChipmunkLayer.h"
 
-@interface BWBodyLayer(PrivateMethods)
+@interface BWChipmunkLayer(PrivateMethods)
 - (CATransform3D)transformWithBody:(cpBody *)theBody;
 @end
 
-@implementation BWBodyLayer
+@implementation BWChipmunkLayer
 @synthesize body;
 @synthesize shape;
 
@@ -25,8 +25,8 @@
 
 - (id)initWithLayer:(id)layer {
     if( (self = [super initWithLayer:layer] ) ) {
-        if( [layer isKindOfClass:[BWBodyLayer class]] == YES ) {
-            BWBodyLayer *bodyLayer = (BWBodyLayer *)layer;
+        if( [layer isKindOfClass:[BWChipmunkLayer class]] == YES ) {
+            BWChipmunkLayer *bodyLayer = (BWChipmunkLayer *)layer;
             
             body = cpBodyNew(cpBodyGetMass(bodyLayer.body), cpBodyGetMoment(bodyLayer.body));
             cpBodySetPos(body, cpBodyGetPos(bodyLayer.body));
@@ -57,36 +57,27 @@
 }
 
 - (void)setFrame:(CGRect)frame {
-    [super setFrame:frame];
     
     width = frame.size.width;
     height = frame.size.height;
     
-    cpBodySetPos(self.body, CGPointMake(frame.origin.x+width/2.0, frame.origin.y+height/2.0));
-
-    if( frame.size.width != cpCircleShapeGetRadius(self.shape) || frame.size.height != cpCircleShapeGetRadius(self.shape) ) {
-
-        cpShape *newShape = cpCircleShapeNew(self.body, frame.size.width/2.0, cpvzero);
-        cpBodySetMoment(body, cpMomentForCircle(1.0, 0.0, frame.size.width/2.0, cpvzero));
-        
-        cpShapeSetFriction(newShape, cpShapeGetFriction(self.shape));
-        cpShapeSetElasticity(newShape, cpShapeGetElasticity(self.shape));
-        cpShapeSetCollisionType(newShape, cpShapeGetCollisionType(self.shape));
-        
-        cpShapeFree(self.shape);
-        self.shape = newShape;
-    }
+    self.bounds = CGRectMake(0, 0, frame.size.width, frame.size.height);
+    self.position = frame.origin;
 }
 
-- (void)setBounds:(CGRect)bounds {
-    [super setBounds:bounds];
-    width = bounds.size.width;
-    height = bounds.size.height;
+- (CGRect)frame {
+    return CGRectMake(self.position.x, self.position.y, self.bounds.size.width, self.bounds.size.height);
+}
+
+- (void)setBounds:(CGRect)newBounds {
+    [super setBounds:newBounds];
+    width = newBounds.size.width;
+    height = newBounds.size.height;
     
-    if( bounds.size.width != cpCircleShapeGetRadius(self.shape) || bounds.size.height != cpCircleShapeGetRadius(self.shape) ) {
+    if( newBounds.size.width != cpCircleShapeGetRadius(self.shape) || newBounds.size.height != cpCircleShapeGetRadius(self.shape) ) {
         
-        cpShape *newShape = cpCircleShapeNew(self.body, bounds.size.width/2.0, cpvzero);
-        cpBodySetMoment(body, cpMomentForCircle(1.0, 0.0, bounds.size.width/2.0, cpvzero));
+        cpShape *newShape = cpCircleShapeNew(self.body, newBounds.size.width/2.0, cpvzero);
+        cpBodySetMoment(body, cpMomentForCircle(1.0, 0.0, newBounds.size.width/2.0, cpvzero));
         
         cpShapeSetFriction(newShape, cpShapeGetFriction(self.shape));
         cpShapeSetElasticity(newShape, cpShapeGetElasticity(self.shape));
@@ -98,9 +89,12 @@
 }
 
 - (void)setPosition:(CGPoint)position {
-    [super setPosition:position];
     
     cpBodySetPos(body, position);
+}
+
+- (CGPoint)position {
+    return cpBodyGetPos(body);
 }
 
 - (void)updatePosition {
@@ -121,13 +115,11 @@
 }
 @end
 
-@implementation BWBodyLayer(PrivateMethods)
+@implementation BWChipmunkLayer(PrivateMethods)
 - (CATransform3D)transformWithBody:(cpBody *)theBody {
-    //works
-    CATransform3D translate = CATransform3DMakeTranslation(theBody->p.x-width/2.0, theBody->p.y-height/2.0, 0);
     
+    CATransform3D translate = CATransform3DMakeTranslation(theBody->p.x, theBody->p.y, 0);
     CATransform3D transform = CATransform3DRotate(translate, theBody->a, 0, 0, 1);
-    
     
     return transform;
 }

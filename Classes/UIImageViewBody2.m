@@ -7,15 +7,15 @@
 //
 
 #import "UIImageViewBody2.h"
-#import "BWBodyLayer.h"
+#import "BWChipmunkLayer.h"
 
 @implementation UIImageViewBody2
 
 + (Class)layerClass {
-    return [BWBodyLayer class];
+    return [BWChipmunkLayer class];
 }
 
-- (BWBodyLayer *)bodyLayer {
-    return (BWBodyLayer *)self.layer;
+- (BWChipmunkLayer *)bodyLayer {
+    return (BWChipmunkLayer *)self.layer;
 }
 @end
