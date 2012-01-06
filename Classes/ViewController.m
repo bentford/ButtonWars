@@ -69,8 +69,9 @@ void postSolveCollisionWithButtonAndShooter(cpArbiter *arbiter, cpSpace *space, 
 
     CP_ARBITER_GET_SHAPES(arbiter, a, b);
     BWButton *button = a->data;
+    BWShooter *shooter = b->data;
     
-    if( button.canDie == YES )
+    if( button.canDie == YES && button.color == shooter.buttonColor )
         cpSpaceAddPostStepCallback(space, (cpPostStepFunc)postStepRemoveButton, a, NULL);
 }
 
