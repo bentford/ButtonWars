@@ -7,40 +7,21 @@
 //
 
 #import "UIViewQuadBody.h"
+#import "BWBoxChipmunkLayer.h"
+#import "BWSegmentChipmunkLayer.h"
 
 @implementation UIViewQuadBody
 
-- (id)initWithFrame:(CGRect)frame {
-    if( self = [super initWithFrame:frame] ) {
-		cpFloat mass = 1;
-		cpFloat moment = cpMomentForBox(mass, frame.size.width, frame.size.height);
-		
-		body = cpBodyNew(mass, moment);
-		body->p = cpv(frame.origin.x, frame.origin.y);
-        self.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
-        
-        width = frame.size.width;
-        height = frame.size.height;
-        
-		shape = cpBoxShapeNew(body, width, height);
-		shape->e = 0.3;
-		shape->u = 0.2;
-		shape->collision_type = 1;
-        shape->data = self;
-    }
-    return self;
++ (Class)layerClass {
+    return [BWSegmentChipmunkLayer class];
 }
 
-- (void)makeStaticBody {
-    cpShapeFree(shape);
-    cpBodyFree(body);
-    body = cpBodyNewStatic();
-    
-    shape = cpCircleShapeNew(body, width/2.0, cpvzero);
-    shape->e = 0.3;
-    shape->u = 0.2;
-    shape->collision_type = 1;
-    shape->data = self;
+- (id)initWithFrame:(CGRect)frame {
+    if( self = [super initWithFrame:frame] ) {
+		cpShapeSetUserData(self.chipmunkLayer.shape, self);
+        
+    }
+    return self;
 }
 
 - (void)drawRect:(CGRect)rect {
@@ -51,4 +32,13 @@
     CGContextStrokeRect(context, rect);
 }
 
+- (BWChipmunkLayer *)chipmunkLayer {
+    return (BWChipmunkLayer *)self.layer;
+}
+
+- (void)setupWithSpace:(cpSpace *)space position:(CGPoint)position {
+    cpBodySetPos(self.chipmunkLayer.body, position);
+    //cpSpaceAddBody(space, self.chipmunkLayer.body);
+    cpSpaceAddShape(space, self.chipmunkLayer.shape);
+}
 @end

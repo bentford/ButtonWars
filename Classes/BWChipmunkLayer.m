@@ -27,6 +27,14 @@
     return cpCircleShapeNew(theBody, shapeSize.width/2.0, cpvzero);
 }
 
++ (CGFloat)momentForBodyWithSize:(CGSize)momentSize mass:(CGFloat)mass {
+    return cpMomentForCircle(mass, 0, momentSize.width/2.0, cpvzero);
+}
+
++ (cpBody *)bodyWithMass:(CGFloat)mass size:(CGSize)size {
+    return cpBodyNew(mass, [[self class] momentForBodyWithSize:size mass:mass]);
+}
+
 - (id)initWithLayer:(id)layer {
     if( (self = [super initWithLayer:layer] ) ) {
         if( [layer isKindOfClass:[BWChipmunkLayer class]] == YES ) {
@@ -51,7 +59,7 @@
 - (id)init {
     if( (self = [super init]) ) {
 
-        body = cpBodyNew(1.0, cpMomentForCircle(1.0, 0, 1.0, cpvzero));
+        body = [[self class] bodyWithMass:1.0 size:CGSizeMake(1.0, 1.0)];
         shape = [[self class] shapeWithBody:body size:CGSizeMake(1.0, 1.0)];
         cpShapeSetElasticity(shape, 0.7);
         cpShapeSetFriction(shape, 0.2);
@@ -76,13 +84,11 @@
 
 - (void)setBounds:(CGRect)newBounds {
     [super setBounds:newBounds];
-    width = newBounds.size.width;
-    height = newBounds.size.height;
     
-    if( newBounds.size.width != cpCircleShapeGetRadius(self.shape) || newBounds.size.height != cpCircleShapeGetRadius(self.shape) ) {
+    if( newBounds.size.width != width || newBounds.size.height != height ) {
         
         cpShape *newShape = [[self class] shapeWithBody:body size:newBounds.size];
-        cpBodySetMoment(body, cpMomentForCircle(1.0, 0.0, newBounds.size.width/2.0, cpvzero));
+        cpBodySetMoment(body, [[self class] momentForBodyWithSize:newBounds.size mass:cpBodyGetMass(body)]);
         
         cpShapeSetFriction(newShape, cpShapeGetFriction(self.shape));
         cpShapeSetElasticity(newShape, cpShapeGetElasticity(self.shape));
@@ -91,6 +97,9 @@
         cpShapeFree(self.shape);
         self.shape = newShape;
     }
+    
+    width = newBounds.size.width;
+    height = newBounds.size.height;
 }
 
 - (void)setPosition:(CGPoint)position {

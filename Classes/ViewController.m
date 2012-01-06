@@ -194,6 +194,12 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     bottomScore.text = @"0";
     bottomScore.font = [UIFont boldSystemFontOfSize:24];
     [self.view addSubview:bottomScore];
+    
+    UIViewQuadBody *wallOne = [[[UIViewQuadBody alloc] initWithFrame:CGRectMake(0, 0, 20, 200)] autorelease];
+    //cpBodySetAngle(wallOne.chipmunkLayer.body, M_PI-2);
+    cpShapeSetCollisionType(wallOne.chipmunkLayer.shape, 0);
+    [wallOne setupWithSpace:space position:CGPointMake(100, 300)];
+    [self.view addSubview:wallOne];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -302,7 +308,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 
     [Random seed];
 
-    [self createScorePostsWithQuantity:10 inRect:CGRectMake(10, 50, self.view.bounds.size.width, self.view.bounds.size.height/2.0 - 50)];
+    [self createScorePostsWithQuantity:10 inRect:CGRectMake(10, 150, self.view.bounds.size.width, self.view.bounds.size.height/2.0 - 150)];
     [self createScorePostsWithQuantity:10 inRect:CGRectMake(10, self.view.bounds.size.height/2.0, self.view.bounds.size.width, self.view.bounds.size.height/2.0 - 150)];
     
     BWBumper *bumper = [[[BWBumper alloc] init] autorelease];

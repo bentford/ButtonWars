@@ -24,4 +24,6 @@
 - (void)updatePosition;
 
 + (cpShape *)shapeWithBody:(cpBody *)theBody size:(CGSize)shapeSize;
++ (cpBody *)bodyWithMass:(CGFloat)mass size:(CGSize)size;
++ (CGFloat)momentForBodyWithSize:(CGSize)momentSize mass:(CGFloat)mass;
 @end

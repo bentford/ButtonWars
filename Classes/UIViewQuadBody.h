@@ -7,9 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UIViewBody.h"
+#import "ChipmunkLayerView.h"
 
-@interface UIViewQuadBody : UIViewBody
+@interface UIViewQuadBody : UIView <ChipmunkLayerView>
 
-- (void)makeStaticBody;
 @end
