@@ -195,11 +195,15 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     bottomScore.font = [UIFont boldSystemFontOfSize:24];
     [self.view addSubview:bottomScore];
     
-    UIViewQuadBody *wallOne = [[[UIViewQuadBody alloc] initWithFrame:CGRectMake(0, 0, 20, 200)] autorelease];
-    //cpBodySetAngle(wallOne.chipmunkLayer.body, M_PI-2);
-    cpShapeSetCollisionType(wallOne.chipmunkLayer.shape, 0);
-    [wallOne setupWithSpace:space position:CGPointMake(100, 300)];
-    [self.view addSubview:wallOne];
+    UIViewQuadBody *wall = [[[UIViewQuadBody alloc] initWithFrame:CGRectMake(0, 0, 20, 200)] autorelease];
+    cpBodySetAngle(wall.chipmunkLayer.body, M_PI-2);
+    [wall setupWithSpace:space position:CGPointMake(100, 400)];
+    [self.view addSubview:wall];
+    
+    wall = [[[UIViewQuadBody alloc] initWithFrame:CGRectMake(0, 0, 20, 200)] autorelease];
+    cpBodySetAngle(wall.chipmunkLayer.body, M_PI-2);
+    [wall setupWithSpace:space position:CGPointMake(self.view.bounds.size.width-100, self.view.bounds.size.height-400)];
+    [self.view addSubview:wall];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

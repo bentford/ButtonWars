@@ -7,29 +7,31 @@
 //
 
 #import "UIViewQuadBody.h"
-#import "BWBoxChipmunkLayer.h"
-#import "BWSegmentChipmunkLayer.h"
+#import "BWStaticBoxChipmunkLayer.h"
 
 @implementation UIViewQuadBody
 
 + (Class)layerClass {
-    return [BWSegmentChipmunkLayer class];
+    return [BWStaticBoxChipmunkLayer class];
 }
 
 - (id)initWithFrame:(CGRect)frame {
     if( self = [super initWithFrame:frame] ) {
 		cpShapeSetUserData(self.chipmunkLayer.shape, self);
         
+        cpShapeSetCollisionType(self.chipmunkLayer.shape, 0);
+        cpShapeSetElasticity(self.chipmunkLayer.shape, 1.0);
+        cpShapeSetFriction(self.chipmunkLayer.shape, 1.0);
     }
     return self;
 }
 
 - (void)drawRect:(CGRect)rect {
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    CGContextSetStrokeColorWithColor(context, [UIColor blackColor].CGColor);
-    CGContextSetLineWidth(context, 1.0);
-    CGContextStrokeRect(context, rect);
+//    CGContextRef context = UIGraphicsGetCurrentContext();
+//    
+//    CGContextSetStrokeColorWithColor(context, [UIColor blackColor].CGColor);
+//    CGContextSetLineWidth(context, 1.0);
+//    CGContextStrokeRect(context, rect);
 }
 
 - (BWChipmunkLayer *)chipmunkLayer {
