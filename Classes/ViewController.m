@@ -26,6 +26,21 @@ void postStepRemove(cpSpace *space, cpShape *shape, void *unused)
     [scorePost release];
 }
 
+int beginCollisionWithButtonAndScorePost(cpArbiter *arbiter, cpSpace *space, void *data) {
+    CP_ARBITER_GET_SHAPES(arbiter, a, b);
+    BWButton *button = a->data;
+    ViewController *viewController = data;
+    
+    if( button.color == ButtonColorGreen )
+        viewController.topScore.text = [NSString stringWithFormat:@"%d", [viewController.topScore.text intValue] + 1];
+    else
+        viewController.bottomScore.text = [NSString stringWithFormat:@"%d", [viewController.bottomScore.text intValue] + 1];
+    
+    cpSpaceAddPostStepCallback(space, (cpPostStepFunc)postStepRemove, b, NULL);
+    
+    return 0;
+}
+
 void postSolveCollisionWithButtonAndScorePost(cpArbiter *arbiter, cpSpace *space, void *data) {
     CP_ARBITER_GET_SHAPES(arbiter, a, b);
     BWButton *button = a->data;
@@ -125,9 +140,10 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     cpSpaceAddShape(space, floorShape);
     
 
-    
+
     cpSpaceAddCollisionHandler(space, 0, 1, NULL, NULL, (cpCollisionPostSolveFunc)postSolveCollision, NULL, NULL);
-    cpSpaceAddCollisionHandler(space, 1, 2, NULL, NULL, (cpCollisionPostSolveFunc)postSolveCollisionWithButtonAndScorePost, NULL, self);
+//    cpSpaceAddCollisionHandler(space, 1, 2, NULL, NULL, (cpCollisionPostSolveFunc)postSolveCollisionWithButtonAndScorePost, NULL, self);
+    cpSpaceAddCollisionHandler(space, 1, 2, (cpCollisionBeginFunc)beginCollisionWithButtonAndScorePost, NULL, NULL, NULL, self);
     cpSpaceAddCollisionHandler(space, 1, 3, NULL, NULL, (cpCollisionPostSolveFunc)postSolveCollisionWithButtonAndBumper, NULL, self);    
 
 //    BWShooter *shooter = [[[BWShooter alloc] initWithFrame:CGRectMake(0, 0, 270, 270) color:ButtonColorGreen] autorelease];
@@ -141,6 +157,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     bottomShooter.gameDelegate = self;
     cpSpaceAddShape(space, bottomShooter.shape);
     [self.view addSubview:bottomShooter];
+    [bottomShooter updatePosition];
     
     UISwipeGestureRecognizer *swipeCleanGesture = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeClean:)] autorelease];
     [self.view addGestureRecognizer:swipeCleanGesture];
@@ -187,6 +204,14 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     for( CALayer *aLayer in self.view.layer.sublayers ) 
         if( [aLayer isKindOfClass:[BWChipmunkLayer class]] == YES )
             [(BWChipmunkLayer *)aLayer updatePosition];
+    
+    if( frameCounter % 5 == 0 ) {
+        frameCounter = 0;
+        for( UIView *aView in self.view.subviews ) 
+            if( [aView isKindOfClass:[BWButton class]] == YES )
+                [(BWButton *)aView guideTowardPoint:CGPointMake(self.view.bounds.size.width/2.0, self.view.bounds.size.height)];
+    }
+    frameCounter++;
 }
 
 #pragma mark GameDelegate
@@ -252,8 +277,8 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 
     [Random seed];
 
-    [self createScorePostsWithQuantity:5 inRect:CGRectMake(10, 50, self.view.bounds.size.width/2.0, self.view.bounds.size.height/2.0)];
-    [self createScorePostsWithQuantity:5 inRect:CGRectMake(10, self.view.bounds.size.height/2.0, self.view.bounds.size.width/2.0, self.view.bounds.size.height/2.0)];
+    [self createScorePostsWithQuantity:10 inRect:CGRectMake(10, 50, self.view.bounds.size.width, self.view.bounds.size.height/2.0 - 50)];
+    [self createScorePostsWithQuantity:10 inRect:CGRectMake(10, self.view.bounds.size.height/2.0, self.view.bounds.size.width, self.view.bounds.size.height/2.0 - 150)];
     
     BWBumper *bumper = [[[BWBumper alloc] init] autorelease];
     [bumper setupWithSpace:space position:CGPointMake(250, 500)];
@@ -277,6 +302,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
         BWScorePost *scorePost = [[[BWScorePost alloc] init] autorelease];
         [scorePost setupWithSpace:space position:[Random randomPointInRect:insideRect]];
         [self.view addSubview:scorePost];
+        [scorePost.chipmunkLayer updatePosition];
     }
 }
 

@@ -20,6 +20,8 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data);
     UILabel *bottomScore;
     
     BWChipmunkLayer *buttonTest2;
+    
+    NSUInteger frameCounter;
 }
 
 @property (nonatomic, retain) UILabel *topScore;

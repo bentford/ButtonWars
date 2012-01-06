@@ -17,4 +17,6 @@
 - (id)initWithColor:(ButtonColor)aColor;
 
 @property (nonatomic, readonly) ButtonColor color;
+
+- (void)guideTowardPoint:(CGPoint)guidePoint;
 @end

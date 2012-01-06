@@ -46,4 +46,13 @@
     cpSpaceAddBody(space, self.chipmunkLayer.body);
     cpSpaceAddShape(space, self.chipmunkLayer.shape);
 }
+
+- (void)guideTowardPoint:(CGPoint)guidePoint {
+    CGFloat currentVelocity = cpvlength(cpBodyGetVel(self.chipmunkLayer.body));
+    
+    cpVect guideVector = cpvnormalize(cpvsub(guidePoint, cpBodyGetPos(self.chipmunkLayer.body)));
+    cpVect impulseVector = cpvmult(guideVector, 10000/currentVelocity);
+    
+    cpBodyApplyImpulse(self.chipmunkLayer.body, impulseVector, cpvzero);
+}
 @end

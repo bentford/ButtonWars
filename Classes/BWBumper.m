@@ -43,6 +43,7 @@
 - (void)setupWithSpace:(cpSpace *)space position:(CGPoint)position {
     cpBodySetPos(self.chipmunkLayer.body, position);
     cpSpaceAddShape(space, self.chipmunkLayer.shape);
+    [self.chipmunkLayer updatePosition];
 }
 
 @end
