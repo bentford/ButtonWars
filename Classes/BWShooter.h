@@ -19,6 +19,7 @@
 
 @property (nonatomic, assign) id<GameDelegate> gameDelegate;
 @property (nonatomic, readonly) ButtonColor buttonColor;
+@property (nonatomic, assign) NSUInteger activeButtonCount;
 
 - (id)initWithFrame:(CGRect)frame color:(ButtonColor)aButtonColor;
 @end

@@ -18,6 +18,7 @@
 
 @implementation BWShooter
 @synthesize gameDelegate;
+@synthesize activeButtonCount;
 
 - (id)initWithFrame:(CGRect)frame {
     NSAssert(NO, @"use initWithFrame:color:");

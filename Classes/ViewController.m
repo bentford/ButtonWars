@@ -71,8 +71,10 @@ void postSolveCollisionWithButtonAndShooter(cpArbiter *arbiter, cpSpace *space, 
     BWButton *button = a->data;
     BWShooter *shooter = b->data;
     
-    if( button.canDie == YES && button.color == shooter.buttonColor )
+    if( button.canDie == YES && button.color == shooter.buttonColor ) {
+        shooter.activeButtonCount--;
         cpSpaceAddPostStepCallback(space, (cpPostStepFunc)postStepRemoveButton, a, NULL);
+    }
 }
 
 void postSolveCollisionWithButtonAndBumper(cpArbiter *arbiter, cpSpace *space, void *data) {
@@ -113,7 +115,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 	
 	float volume = MIN(impulse/500.0f, 1.0f);
 	if(volume > 0.05f){
-		[SimpleSound playSoundWithVolume:volume];
+		//[SimpleSound playSoundWithVolume:volume];
 	}
 }
 
@@ -252,6 +254,11 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 
 #pragma mark GameDelegate
 - (void)shootWithShooter:(BWShooter *)shooter {
+    
+    if( shooter.activeButtonCount >= 3 )
+        return;
+    
+    shooter.activeButtonCount++;
     BWButton *greenButton = [[[BWButton alloc] initWithColor:shooter.buttonColor] autorelease];
     [greenButton setupWithSpace:space position:CGPointMake(shooter.body->p.x, shooter.body->p.y)];
     [self.view addSubview:greenButton];
