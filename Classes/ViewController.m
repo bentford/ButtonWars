@@ -10,6 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "UIImageViewBody2.h"
 #import "BWChipmunkLayer.h"
+#import "UIViewBody.h"
 
 static NSString *borderType = @"borderType";
 
