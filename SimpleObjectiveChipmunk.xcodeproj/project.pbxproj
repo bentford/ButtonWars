@@ -66,7 +66,6 @@
 		B5FE1AC914A2626B00022983 /* WoodScorePost.png in Resources */ = {isa = PBXBuildFile; fileRef = B5FE1AC814A2626B00022983 /* WoodScorePost.png */; };
 		B5FE1ACD14A2628B00022983 /* BWScorePost.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FE1ACC14A2628B00022983 /* BWScorePost.m */; };
 		B5FE1AD314A265EA00022983 /* Random.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FE1AD214A265E900022983 /* Random.m */; };
-		D364564F12130B5800023C7E /* FallingButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D364564E12130B5800023C7E /* FallingButton.m */; };
 		D364569D121314C500023C7E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D364569C121314C500023C7E /* QuartzCore.framework */; };
 		D36457881213327700023C7E /* SimpleSound.m in Sources */ = {isa = PBXBuildFile; fileRef = D36457871213327700023C7E /* SimpleSound.m */; };
 		D3645799121334F000023C7E /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3645798121334F000023C7E /* OpenAL.framework */; };
@@ -184,8 +183,6 @@
 		B5FE1ACC14A2628B00022983 /* BWScorePost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWScorePost.m; sourceTree = "<group>"; };
 		B5FE1AD114A265E900022983 /* Random.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Random.h; sourceTree = "<group>"; };
 		B5FE1AD214A265E900022983 /* Random.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Random.m; sourceTree = "<group>"; };
-		D364564D12130B5800023C7E /* FallingButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FallingButton.h; sourceTree = "<group>"; };
-		D364564E12130B5800023C7E /* FallingButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FallingButton.m; sourceTree = "<group>"; };
 		D364569C121314C500023C7E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		D36457861213326700023C7E /* SimpleSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleSound.h; sourceTree = "<group>"; };
 		D36457871213327700023C7E /* SimpleSound.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleSound.m; sourceTree = "<group>"; };
@@ -222,8 +219,6 @@
 				B5FE1AAB14A15C4300022983 /* GameDelegate.h */,
 				28D7ACF60DDB3853001CB0EB /* ViewController.h */,
 				28D7ACF70DDB3853001CB0EB /* ViewController.m */,
-				D364564D12130B5800023C7E /* FallingButton.h */,
-				D364564E12130B5800023C7E /* FallingButton.m */,
 				D36457861213326700023C7E /* SimpleSound.h */,
 				D36457871213327700023C7E /* SimpleSound.m */,
 			);
@@ -490,7 +485,6 @@
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
 				28D7ACF80DDB3853001CB0EB /* ViewController.m in Sources */,
-				D364564F12130B5800023C7E /* FallingButton.m in Sources */,
 				D36457881213327700023C7E /* SimpleSound.m in Sources */,
 				B57E3581147877E90065B34F /* chipmunk.c in Sources */,
 				B57E358D147877E90065B34F /* cpArbiter.c in Sources */,
