@@ -23,6 +23,10 @@
     return [super needsDisplayForKey:key];
 }
 
++ (cpShape *)shapeWithBody:(cpBody *)theBody size:(CGSize)shapeSize {
+    return cpCircleShapeNew(theBody, shapeSize.width/2.0, cpvzero);
+}
+
 - (id)initWithLayer:(id)layer {
     if( (self = [super initWithLayer:layer] ) ) {
         if( [layer isKindOfClass:[BWChipmunkLayer class]] == YES ) {
@@ -35,7 +39,7 @@
             cpBodySetMoment(body, cpBodyGetMoment(bodyLayer.body));
             cpBodySetUserData(body, cpBodyGetUserData(bodyLayer.body));
             
-            shape = cpCircleShapeNew(body, cpCircleShapeGetRadius(bodyLayer.shape), cpvzero);
+            shape = [[self class] shapeWithBody:body size:CGSizeMake(width, height)];
             cpShapeSetFriction(shape, cpShapeGetFriction(bodyLayer.shape));
             cpShapeSetElasticity(shape, cpShapeGetElasticity(bodyLayer.shape));
             cpShapeSetCollisionType(shape, cpShapeGetCollisionType(bodyLayer.shape));
@@ -48,7 +52,7 @@
     if( (self = [super init]) ) {
 
         body = cpBodyNew(1.0, cpMomentForCircle(1.0, 0, 1.0, cpvzero));
-        shape = cpCircleShapeNew(body, 1.0, cpvzero);
+        shape = [[self class] shapeWithBody:body size:CGSizeMake(1.0, 1.0)];
         cpShapeSetElasticity(shape, 0.7);
         cpShapeSetFriction(shape, 0.2);
         
@@ -77,7 +81,7 @@
     
     if( newBounds.size.width != cpCircleShapeGetRadius(self.shape) || newBounds.size.height != cpCircleShapeGetRadius(self.shape) ) {
         
-        cpShape *newShape = cpCircleShapeNew(self.body, newBounds.size.width/2.0, cpvzero);
+        cpShape *newShape = [[self class] shapeWithBody:body size:newBounds.size];
         cpBodySetMoment(body, cpMomentForCircle(1.0, 0.0, newBounds.size.width/2.0, cpvzero));
         
         cpShapeSetFriction(newShape, cpShapeGetFriction(self.shape));

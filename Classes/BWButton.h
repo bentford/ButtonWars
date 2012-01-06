@@ -12,11 +12,13 @@
 
 @interface BWButton : UIImageView <ChipmunkLayerView> {
     ButtonColor color;
+    BOOL canDie;
 }
 
 - (id)initWithColor:(ButtonColor)aColor;
 
 @property (nonatomic, readonly) ButtonColor color;
+@property (nonatomic, readonly) BOOL canDie;
 
 - (void)guideTowardPoint:(CGPoint)guidePoint;
 @end

@@ -9,6 +9,10 @@
 #import "BWButton.h"
 #import "BWChipmunkLayer.h"
 
+@interface BWButton(PrivateMethods)
+- (void)stopDeathPrevention;
+@end
+
 @implementation BWButton
 @synthesize color;
 
@@ -33,6 +37,9 @@
         self.userInteractionEnabled = NO;
         
         cpShapeSetUserData(self.chipmunkLayer.shape, self);
+        canDie = NO;
+        
+        [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(stopDeathPrevention) userInfo:nil repeats:NO];
     }
     return self;
 }
@@ -54,5 +61,15 @@
     cpVect impulseVector = cpvmult(guideVector, 10000/currentVelocity);
     
     cpBodyApplyImpulse(self.chipmunkLayer.body, impulseVector, cpvzero);
+}
+
+- (BOOL)canDie {
+    return canDie;
+}
+@end
+
+@implementation BWButton(PrivateMethods)
+- (void)stopDeathPrevention {
+    canDie = YES;
 }
 @end

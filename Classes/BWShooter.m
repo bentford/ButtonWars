@@ -29,9 +29,12 @@
         theButtonColor = aButtonColor;
         self.image = [UIImage imageNamed:@"GreenShooter.png"];
         self.userInteractionEnabled = YES;
+        self.contentMode = UIViewContentModeScaleToFill;
         
         UIPanGestureRecognizer *pan = [[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)] autorelease];
-        [self addGestureRecognizer:pan];        
+        [self addGestureRecognizer:pan];
+        
+        cpShapeSetCollisionType(self.shape, 4);
     }
     return self;
 }

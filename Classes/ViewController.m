@@ -26,6 +26,17 @@ void postStepRemove(cpSpace *space, cpShape *shape, void *unused)
     [scorePost release];
 }
 
+void postStepRemoveButton(cpSpace *space, cpShape *shape, void *unused) {
+    BWButton *button = shape->data;
+    [button retain];
+    [button removeFromSuperview];
+    
+    cpSpaceRemoveBody(space, button.chipmunkLayer.body);
+    cpSpaceRemoveShape(space, shape);
+    
+    [button release];
+}
+
 int beginCollisionWithButtonAndScorePost(cpArbiter *arbiter, cpSpace *space, void *data) {
     CP_ARBITER_GET_SHAPES(arbiter, a, b);
     BWButton *button = a->data;
@@ -52,6 +63,15 @@ void postSolveCollisionWithButtonAndScorePost(cpArbiter *arbiter, cpSpace *space
         viewController.bottomScore.text = [NSString stringWithFormat:@"%d", [viewController.bottomScore.text intValue] + 1];
     
     cpSpaceAddPostStepCallback(space, (cpPostStepFunc)postStepRemove, b, NULL);
+}
+
+void postSolveCollisionWithButtonAndShooter(cpArbiter *arbiter, cpSpace *space, void *data) {
+
+    CP_ARBITER_GET_SHAPES(arbiter, a, b);
+    BWButton *button = a->data;
+    
+    if( button.canDie == YES )
+        cpSpaceAddPostStepCallback(space, (cpPostStepFunc)postStepRemoveButton, a, NULL);
 }
 
 void postSolveCollisionWithButtonAndBumper(cpArbiter *arbiter, cpSpace *space, void *data) {
@@ -145,14 +165,15 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 //    cpSpaceAddCollisionHandler(space, 1, 2, NULL, NULL, (cpCollisionPostSolveFunc)postSolveCollisionWithButtonAndScorePost, NULL, self);
     cpSpaceAddCollisionHandler(space, 1, 2, (cpCollisionBeginFunc)beginCollisionWithButtonAndScorePost, NULL, NULL, NULL, self);
     cpSpaceAddCollisionHandler(space, 1, 3, NULL, NULL, (cpCollisionPostSolveFunc)postSolveCollisionWithButtonAndBumper, NULL, self);    
-
-//    BWShooter *shooter = [[[BWShooter alloc] initWithFrame:CGRectMake(0, 0, 270, 270) color:ButtonColorGreen] autorelease];
-//    [shooter makeStaticBodyWithPosition:CGPointMake(self.view.bounds.size.width/2.0, 0)];
-//    shooter.gameDelegate = self;
-//    cpSpaceAddShape(space, shooter.shape);
-//    [self.view addSubview:shooter];
+    cpSpaceAddCollisionHandler(space, 1, 4, NULL, NULL, (cpCollisionPostSolveFunc)postSolveCollisionWithButtonAndShooter, NULL, self);
     
-    BWShooter *bottomShooter = [[[BWShooter alloc] initWithFrame:CGRectMake(0, 0, 270, 270) color:ButtonColorOrange] autorelease];
+    BWShooter *shooter = [[[BWShooter alloc] initWithFrame:CGRectMake(0, 0, 170, 170) color:ButtonColorGreen] autorelease];
+    [shooter makeStaticBodyWithPosition:CGPointMake(self.view.bounds.size.width/2.0, 0)];
+    shooter.gameDelegate = self;
+    cpSpaceAddShape(space, shooter.shape);
+    [self.view addSubview:shooter];
+    
+    BWShooter *bottomShooter = [[[BWShooter alloc] initWithFrame:CGRectMake(0, 0, 170, 170) color:ButtonColorOrange] autorelease];
     [bottomShooter makeStaticBodyWithPosition:CGPointMake(self.view.bounds.size.width/2.0, self.view.bounds.size.height)];
     bottomShooter.gameDelegate = self;
     cpSpaceAddShape(space, bottomShooter.shape);
@@ -164,10 +185,10 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     
     [self createScorePosts];
     
-//    topScore = [[UILabel alloc] initWithFrame:CGRectMake(100, 25, 100, 50)];
-//    topScore.text = @"0";
-//    topScore.font = [UIFont boldSystemFontOfSize:24];    
-//    [self.view addSubview:topScore];
+    topScore = [[UILabel alloc] initWithFrame:CGRectMake(100, 25, 100, 50)];
+    topScore.text = @"0";
+    topScore.font = [UIFont boldSystemFontOfSize:24];    
+    [self.view addSubview:topScore];
     
     bottomScore = [[UILabel alloc] initWithFrame:CGRectMake(100, self.view.bounds.size.height-75, 100, 50)];
     bottomScore.text = @"0";
@@ -208,8 +229,12 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     if( frameCounter % 5 == 0 ) {
         frameCounter = 0;
         for( UIView *aView in self.view.subviews ) 
-            if( [aView isKindOfClass:[BWButton class]] == YES )
-                [(BWButton *)aView guideTowardPoint:CGPointMake(self.view.bounds.size.width/2.0, self.view.bounds.size.height)];
+            if( [aView isKindOfClass:[BWButton class]] == YES ) {
+                if( ((BWButton *)aView).color == ButtonColorGreen )
+                    [(BWButton *)aView guideTowardPoint:CGPointMake(self.view.bounds.size.width/2.0, 0)];
+                else
+                    [(BWButton *)aView guideTowardPoint:CGPointMake(self.view.bounds.size.width/2.0, self.view.bounds.size.height)];
+            }
     }
     frameCounter++;
 }

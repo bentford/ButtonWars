@@ -23,4 +23,5 @@
 
 - (void)updatePosition;
 
++ (cpShape *)shapeWithBody:(cpBody *)theBody size:(CGSize)shapeSize;
 @end
