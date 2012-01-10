@@ -352,11 +352,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     
     
     [self createScorePostsWithTextMapNamed:@"Level_1"];
-    
-//    [Random seed];
-//    [self createScorePostsWithQuantity:10 inRect:CGRectMake(10, 150, self.view.bounds.size.width, self.view.bounds.size.height/2.0 - 150)];
-//    [self createScorePostsWithQuantity:10 inRect:CGRectMake(10, self.view.bounds.size.height/2.0, self.view.bounds.size.width, self.view.bounds.size.height/2.0 - 150)];
-    
+       
     BWBumper *bumper = [[[BWBumper alloc] init] autorelease];
     [bumper setupWithSpace:space position:CGPointMake(250, 500)];
     [self.view addSubview:bumper];
