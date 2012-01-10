@@ -168,14 +168,14 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 
     // top
     floorShape = cpSegmentShapeNew(floorBody, cpv(0, 0), cpv(self.view.bounds.size.width, 0), 0);
-    cpShapeSetElasticity(floorShape, 0.1f);
+    cpShapeSetElasticity(floorShape, 0.4f);
 	cpShapeSetFriction(floorShape, 1.0f);
 	cpShapeSetCollisionType(floorShape, kFloorCollisionType);
     cpSpaceAddShape(space, floorShape);
 
     // bottom
     floorShape = cpSegmentShapeNew(floorBody, cpv(0, self.view.bounds.size.height), cpv(self.view.bounds.size.width, self.view.bounds.size.height), 0);
-    cpShapeSetElasticity(floorShape, 0.1f);
+    cpShapeSetElasticity(floorShape, 0.4f);
 	cpShapeSetFriction(floorShape, 1.0f);
 	cpShapeSetCollisionType(floorShape, kFloorCollisionType);
     cpSpaceAddShape(space, floorShape);
@@ -347,7 +347,13 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     countdown = 0;
     
     [Random seed];
-
+    NSString *levelMap = @"\
+               s              \n\
+                              \n\
+                              \n\
+";
+    [self createScorePostsWithTextMap:levelMap];
+    
     [self createScorePostsWithQuantity:10 inRect:CGRectMake(10, 150, self.view.bounds.size.width, self.view.bounds.size.height/2.0 - 150)];
     [self createScorePostsWithQuantity:10 inRect:CGRectMake(10, self.view.bounds.size.height/2.0, self.view.bounds.size.width, self.view.bounds.size.height/2.0 - 150)];
     
@@ -377,6 +383,10 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
         [self.view addSubview:scorePost];
         [scorePost.chipmunkLayer updatePosition];
     }
+}
+
+- (void)createScorePostsWithTextMap:(NSString *)textMap {
+    
 }
 
 - (void)checkForWinner {
