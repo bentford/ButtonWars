@@ -44,5 +44,6 @@
 - (void)startCountdownForColor:(ButtonColor)winningColor;
 - (void)iterateCountdown:(NSTimer *)countdownTimer;
 - (void)checkForWinner;
+- (void)stopCountdownForColor:(ButtonColor)theColor;
 @end
 

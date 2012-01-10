@@ -51,7 +51,7 @@ int beginCollisionWithButtonAndScorePost(cpArbiter *arbiter, cpSpace *space, voi
             NSUInteger score = fmaxf([viewController.bottomScore.text intValue] - 1, 0);
             viewController.bottomScore.text = [NSString stringWithFormat:@"%d", score];
         }
-        
+        [viewController checkForWinner];
     } 
     if( button.color == ButtonColorOrange && scorePost.buttonColor != ButtonColorOrange ) {
         viewController.bottomScore.text = [NSString stringWithFormat:@"%d", [viewController.bottomScore.text intValue] + 1];
@@ -60,6 +60,7 @@ int beginCollisionWithButtonAndScorePost(cpArbiter *arbiter, cpSpace *space, voi
             NSUInteger score = fmaxf([viewController.topScore.text intValue] - 1, 0);
             viewController.topScore.text = [NSString stringWithFormat:@"%d", score];
         }
+        [viewController checkForWinner];
     }
     
     scorePost.buttonColor = button.color;
@@ -278,7 +279,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 #pragma mark GameDelegate
 - (void)shootWithShooter:(BWShooter *)shooter {
     
-    if( shooter.activeButtonCount >= 3 )
+    if( shooter.activeButtonCount >= 1 )
         return;
     
     shooter.activeButtonCount++;
@@ -385,8 +386,13 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 - (void)checkForWinner {
     if( [topScore.text intValue] >= 15 )
         [self startCountdownForColor:ButtonColorGreen];
-    if( [bottomScore.text intValue] >= 15 )
+    else if( currentWinner == ButtonColorGreen )
+        [self stopCountdownForColor:ButtonColorGreen];
+    
+    if( [bottomScore.text intValue] >= 3 )
         [self startCountdownForColor:ButtonColorOrange];
+    else if( currentWinner == ButtonColorOrange )
+        [self stopCountdownForColor:ButtonColorOrange];
 }
 
 - (void)startCountdownForColor:(ButtonColor)winningColor {
@@ -401,6 +407,19 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     
     countdown = 0;
     winnerTimer = [[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(iterateCountdown:) userInfo:[NSNumber numberWithInt:winningColor] repeats:YES] retain];
+}
+
+- (void)stopCountdownForColor:(ButtonColor)theColor {
+
+    currentWinner = ButtonColorNotSet;
+
+    [winnerTimer invalidate];
+    [winnerTimer release];
+    winnerTimer = nil;
+    
+    countdown = 0;
+    
+    countdownLabel.text = @"";
 }
 
 - (void)iterateCountdown:(NSTimer *)countdownTimer {
