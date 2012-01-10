@@ -51,7 +51,7 @@ int beginCollisionWithButtonAndScorePost(cpArbiter *arbiter, cpSpace *space, voi
             NSUInteger score = fmaxf([viewController.bottomScore.text intValue] - 1, 0);
             viewController.bottomScore.text = [NSString stringWithFormat:@"%d", score];
         }
-        [viewController checkForWinner];
+
     } 
     if( button.color == ButtonColorOrange && scorePost.buttonColor != ButtonColorOrange ) {
         viewController.bottomScore.text = [NSString stringWithFormat:@"%d", [viewController.bottomScore.text intValue] + 1];
@@ -60,10 +60,10 @@ int beginCollisionWithButtonAndScorePost(cpArbiter *arbiter, cpSpace *space, voi
             NSUInteger score = fmaxf([viewController.topScore.text intValue] - 1, 0);
             viewController.topScore.text = [NSString stringWithFormat:@"%d", score];
         }
-        [viewController checkForWinner];
     }
     
     scorePost.buttonColor = button.color;
+    [viewController checkForWinner];    
     
     return 0;
 }
@@ -181,18 +181,17 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 
 
     cpSpaceAddCollisionHandler(space, 0, 1, NULL, NULL, (cpCollisionPostSolveFunc)postSolveCollision, NULL, NULL);
-//    cpSpaceAddCollisionHandler(space, 1, 2, NULL, NULL, (cpCollisionPostSolveFunc)postSolveCollisionWithButtonAndScorePost, NULL, self);
     cpSpaceAddCollisionHandler(space, 1, 2, (cpCollisionBeginFunc)beginCollisionWithButtonAndScorePost, NULL, NULL, NULL, self);
     cpSpaceAddCollisionHandler(space, 1, 3, NULL, NULL, (cpCollisionPostSolveFunc)postSolveCollisionWithButtonAndBumper, NULL, self);    
     cpSpaceAddCollisionHandler(space, 1, 4, NULL, NULL, (cpCollisionPostSolveFunc)postSolveCollisionWithButtonAndShooter, NULL, self);
     
-    BWShooter *shooter = [[[BWShooter alloc] initWithFrame:CGRectMake(0, 0, 170, 170) color:ButtonColorGreen] autorelease];
-    [shooter makeStaticBodyWithPosition:CGPointMake(self.view.bounds.size.width/2.0, 0)];
-    shooter.gameDelegate = self;
-    cpSpaceAddShape(space, shooter.shape);
-    [self.view addSubview:shooter];
+    topShooter = [[BWShooter alloc] initWithFrame:CGRectMake(0, 0, 170, 170) color:ButtonColorGreen];
+    [topShooter makeStaticBodyWithPosition:CGPointMake(self.view.bounds.size.width/2.0, 0)];
+    topShooter.gameDelegate = self;
+    cpSpaceAddShape(space, topShooter.shape);
+    [self.view addSubview:topShooter];
     
-    BWShooter *bottomShooter = [[[BWShooter alloc] initWithFrame:CGRectMake(0, 0, 170, 170) color:ButtonColorOrange] autorelease];
+    bottomShooter = [[BWShooter alloc] initWithFrame:CGRectMake(0, 0, 170, 170) color:ButtonColorOrange];
     [bottomShooter makeStaticBodyWithPosition:CGPointMake(self.view.bounds.size.width/2.0, self.view.bounds.size.height)];
     bottomShooter.gameDelegate = self;
     cpSpaceAddShape(space, bottomShooter.shape);
@@ -263,17 +262,15 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
         if( [aLayer isKindOfClass:[BWChipmunkLayer class]] == YES )
             [(BWChipmunkLayer *)aLayer updatePosition];
     
-    if( frameCounter % 5 == 0 ) {
-        frameCounter = 0;
-        for( UIView *aView in self.view.subviews ) 
-            if( [aView isKindOfClass:[BWButton class]] == YES ) {
-                if( ((BWButton *)aView).color == ButtonColorGreen )
-                    [(BWButton *)aView guideTowardPoint:CGPointMake(self.view.bounds.size.width/2.0, 0)];
-                else
-                    [(BWButton *)aView guideTowardPoint:CGPointMake(self.view.bounds.size.width/2.0, self.view.bounds.size.height)];
-            }
-    }
-    frameCounter++;
+
+    for( UIView *aView in self.view.subviews ) 
+        if( [aView isKindOfClass:[BWButton class]] == YES ) {
+            if( ((BWButton *)aView).color == ButtonColorGreen )
+                [(BWButton *)aView guideTowardPoint:CGPointMake(self.view.bounds.size.width/2.0, 0)];
+            else
+                [(BWButton *)aView guideTowardPoint:CGPointMake(self.view.bounds.size.width/2.0, self.view.bounds.size.height)];
+        }
+
 }
 
 #pragma mark GameDelegate
@@ -322,7 +319,9 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
             cpSpaceRemoveBody(space, buttonToRemove.chipmunkLayer.body);
             [potentialButton removeFromSuperview];
         }
-    }    
+    }  
+    topShooter.activeButtonCount = 0;
+    bottomShooter.activeButtonCount = 0;
 }
 
 - (void)removeScorePosts {
@@ -358,12 +357,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     [bumper setupWithSpace:space position:CGPointMake(500, 500)];
     [self.view addSubview:bumper];
     
-    [self.view bringSubviewToFront:countdownLabel];
-    
-    [gameTimer invalidate];
-    [gameTimer release];
-    
-    gameTimer = [[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(checkForWinner) userInfo:nil repeats:YES] retain];
+    [self.view bringSubviewToFront:countdownLabel];    
 }
 
 - (void)resetBumper:(NSArray *)parameters {
