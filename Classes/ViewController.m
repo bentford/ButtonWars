@@ -262,17 +262,15 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
         if( [aLayer isKindOfClass:[BWChipmunkLayer class]] == YES )
             [(BWChipmunkLayer *)aLayer updatePosition];
     
-    if( frameCounter % 5 == 0 ) {
-        frameCounter = 0;
-        for( UIView *aView in self.view.subviews ) 
-            if( [aView isKindOfClass:[BWButton class]] == YES ) {
-                if( ((BWButton *)aView).color == ButtonColorGreen )
-                    [(BWButton *)aView guideTowardPoint:CGPointMake(self.view.bounds.size.width/2.0, 0)];
-                else
-                    [(BWButton *)aView guideTowardPoint:CGPointMake(self.view.bounds.size.width/2.0, self.view.bounds.size.height)];
-            }
-    }
-    frameCounter++;
+
+    for( UIView *aView in self.view.subviews ) 
+        if( [aView isKindOfClass:[BWButton class]] == YES ) {
+            if( ((BWButton *)aView).color == ButtonColorGreen )
+                [(BWButton *)aView guideTowardPoint:CGPointMake(self.view.bounds.size.width/2.0, 0)];
+            else
+                [(BWButton *)aView guideTowardPoint:CGPointMake(self.view.bounds.size.width/2.0, self.view.bounds.size.height)];
+        }
+
 }
 
 #pragma mark GameDelegate

@@ -57,6 +57,7 @@
 - (void)guideTowardPoint:(CGPoint)guidePoint {
     //CGFloat currentVelocity = cpvlength(cpBodyGetVel(self.chipmunkLayer.body));
     CGFloat distanceFromGuidePoint = cpvlength(cpvsub(guidePoint, cpBodyGetPos(self.chipmunkLayer.body)));
+    NSLog(@"distanceFromGuidePoint: %1.2f", distanceFromGuidePoint);
     
     cpVect guideVector = cpvnormalize(cpvsub(guidePoint, cpBodyGetPos(self.chipmunkLayer.body)));
 
@@ -65,7 +66,7 @@
     if( distanceFromGuidePoint < 400 && self.canDie == YES ) {
         impulseVector = cpvmult(guideVector, 100);
     } else
-        impulseVector = cpvmult(guideVector, 80-powf(distanceFromGuidePoint, 2.0)/15000);
+        impulseVector = cpvmult(guideVector, 16-powf(distanceFromGuidePoint, 2.0)/80000);
     
     cpBodyApplyImpulse(self.chipmunkLayer.body, impulseVector, cpvzero);
 }
