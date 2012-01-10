@@ -29,10 +29,11 @@
     if( (self = [super initWithFrame:CGRectMake(0, 0, 50, 50)]) ) {
 
         color = aColor;
-        if( color == ButtonColorGreen )
-            self.image = [UIImage imageNamed:@"ButtonGreen.png"];
-        else if( color == ButtonColorOrange )
-            self.image = [UIImage imageNamed:@"ButtonOrange.png"];
+//        if( color == ButtonColorGreen )
+//            self.image = [UIImage imageNamed:@"ButtonGreen.png"];
+//        else if( color == ButtonColorOrange )
+//            self.image = [UIImage imageNamed:@"ButtonOrange.png"];
+        self.backgroundColor = [UIColor clearColor];
         
         self.userInteractionEnabled = NO;
         
@@ -42,6 +43,26 @@
         [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(stopDeathPrevention) userInfo:nil repeats:NO];
     }
     return self;
+}
+
+- (void)drawRect:(CGRect)rect {
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+
+    CGContextSetLineWidth(context, 1.0);
+    CGContextSetStrokeColorWithColor(context, [UIColor blackColor].CGColor);
+    
+    CGFloat oppositeAngle = cpBodyGetAngle(self.chipmunkLayer.body);
+    CGPoint rotatedGuideVector = cpvrotate(currentGuideVector, cpvforangle(oppositeAngle*-1));
+    CGPoint viewableGuideVector = cpvmult(rotatedGuideVector, 25);
+    CGPoint guidePoint = cpvadd(viewableGuideVector, cpv(25,25));
+    NSLog(@"guidePoint: %@", NSStringFromCGPoint(guidePoint));
+    
+    CGContextBeginPath(context);
+    CGContextMoveToPoint(context, 25, 25);
+    CGContextAddLineToPoint(context, guidePoint.x, guidePoint.y);
+    CGContextClosePath(context);
+    CGContextStrokePath(context);
 }
 
 - (BWChipmunkLayer *)chipmunkLayer {
@@ -59,7 +80,9 @@
     CGFloat distanceFromGuidePoint = cpvlength(cpvsub(guidePoint, cpBodyGetPos(self.chipmunkLayer.body)));
     
     cpVect guideVector = cpvnormalize(cpvsub(guidePoint, cpBodyGetPos(self.chipmunkLayer.body)));
-
+    currentGuideVector = guideVector;
+    [self setNeedsDisplay];
+    
     cpVect impulseVector = cpvzero;
 
     if( distanceFromGuidePoint < 400 && self.canDie == YES ) {

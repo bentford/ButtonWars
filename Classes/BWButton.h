@@ -10,9 +10,11 @@
 #import "GameData.h"
 #import "ChipmunkLayerView.h"
 
-@interface BWButton : UIImageView <ChipmunkLayerView> {
+@interface BWButton : UIView <ChipmunkLayerView> {
     ButtonColor color;
     BOOL canDie;
+    
+    CGPoint currentGuideVector;
 }
 
 - (id)initWithColor:(ButtonColor)aColor;
