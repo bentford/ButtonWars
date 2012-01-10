@@ -12,6 +12,8 @@
 #import "BWChipmunkLayer.h"
 #import "UIViewBody.h"
 
+#define kCountdownTimer 10
+
 static NSString *borderType = @"borderType";
 
 #pragma mark - Collisions
@@ -166,7 +168,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 
     // top
     floorShape = cpSegmentShapeNew(floorBody, cpv(0, 0), cpv(self.view.bounds.size.width, 0), 0);
-    cpShapeSetElasticity(floorShape, 1.0f);
+    cpShapeSetElasticity(floorShape, 0.1f);
 	cpShapeSetFriction(floorShape, 1.0f);
 	cpShapeSetCollisionType(floorShape, kFloorCollisionType);
     cpSpaceAddShape(space, floorShape);
@@ -383,7 +385,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     else if( currentWinner == ButtonColorGreen )
         [self stopCountdownForColor:ButtonColorGreen];
     
-    if( [bottomScore.text intValue] >= 3 )
+    if( [bottomScore.text intValue] >= 15 )
         [self startCountdownForColor:ButtonColorOrange];
     else if( currentWinner == ButtonColorOrange )
         [self stopCountdownForColor:ButtonColorOrange];
@@ -417,17 +419,16 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 }
 
 - (void)iterateCountdown:(NSTimer *)countdownTimer {
-    if( countdown == 3 ) {
+    if( countdown == kCountdownTimer ) {
         [winnerTimer invalidate];
         [winnerTimer release];
         winnerTimer = nil;
         
         NSString *winnerLabel = currentWinner == ButtonColorGreen ? @"Green" : @"Orange";
         countdownLabel.text = [NSString stringWithFormat:@"%@ wins", winnerLabel];
-        NSLog(@"winner");
     } else {
         countdown++;
-        countdownLabel.text = [NSString stringWithFormat:@"%d", 4-countdown];
+        countdownLabel.text = [NSString stringWithFormat:@"%d", (kCountdownTimer+1)-countdown];
         
     }
 }
