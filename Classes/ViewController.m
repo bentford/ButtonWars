@@ -173,7 +173,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 
     // bottom
     floorShape = cpSegmentShapeNew(floorBody, cpv(0, self.view.bounds.size.height), cpv(self.view.bounds.size.width, self.view.bounds.size.height), 0);
-    cpShapeSetElasticity(floorShape, 1.0f);
+    cpShapeSetElasticity(floorShape, 0.1f);
 	cpShapeSetFriction(floorShape, 1.0f);
 	cpShapeSetCollisionType(floorShape, kFloorCollisionType);
     cpSpaceAddShape(space, floorShape);

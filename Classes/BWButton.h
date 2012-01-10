@@ -10,7 +10,7 @@
 #import "GameData.h"
 #import "ChipmunkLayerView.h"
 
-@interface BWButton : UIView <ChipmunkLayerView> {
+@interface BWButton : UIImageView <ChipmunkLayerView> {
     ButtonColor color;
     BOOL canDie;
     

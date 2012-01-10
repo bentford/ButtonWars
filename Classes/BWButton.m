@@ -9,6 +9,8 @@
 #import "BWButton.h"
 #import "BWChipmunkLayer.h"
 
+#define kDebugGuidePoint NO
+
 @interface BWButton(PrivateMethods)
 - (void)stopDeathPrevention;
 @end
@@ -29,10 +31,10 @@
     if( (self = [super initWithFrame:CGRectMake(0, 0, 50, 50)]) ) {
 
         color = aColor;
-//        if( color == ButtonColorGreen )
-//            self.image = [UIImage imageNamed:@"ButtonGreen.png"];
-//        else if( color == ButtonColorOrange )
-//            self.image = [UIImage imageNamed:@"ButtonOrange.png"];
+        if( color == ButtonColorGreen )
+            self.image = [UIImage imageNamed:@"ButtonGreen.png"];
+        else if( color == ButtonColorOrange )
+            self.image = [UIImage imageNamed:@"ButtonOrange.png"];
         self.backgroundColor = [UIColor clearColor];
         
         self.userInteractionEnabled = NO;
@@ -45,6 +47,7 @@
     return self;
 }
 
+#ifdef kDrawGuidePoint
 - (void)drawRect:(CGRect)rect {
     
     CGContextRef context = UIGraphicsGetCurrentContext();
@@ -56,7 +59,6 @@
     CGPoint rotatedGuideVector = cpvrotate(currentGuideVector, cpvforangle(oppositeAngle*-1));
     CGPoint viewableGuideVector = cpvmult(rotatedGuideVector, 25);
     CGPoint guidePoint = cpvadd(viewableGuideVector, cpv(25,25));
-    NSLog(@"guidePoint: %@", NSStringFromCGPoint(guidePoint));
     
     CGContextBeginPath(context);
     CGContextMoveToPoint(context, 25, 25);
@@ -64,6 +66,7 @@
     CGContextClosePath(context);
     CGContextStrokePath(context);
 }
+#endif
 
 - (BWChipmunkLayer *)chipmunkLayer {
     return (BWChipmunkLayer *)self.layer;
@@ -78,16 +81,18 @@
 - (void)guideTowardPoint:(CGPoint)guidePoint {
     //CGFloat currentVelocity = cpvlength(cpBodyGetVel(self.chipmunkLayer.body));
     CGFloat distanceFromGuidePoint = cpvlength(cpvsub(guidePoint, cpBodyGetPos(self.chipmunkLayer.body)));
-    NSLog(@"distanceFromGuidePoint: %1.2f", distanceFromGuidePoint);
     
     cpVect guideVector = cpvnormalize(cpvsub(guidePoint, cpBodyGetPos(self.chipmunkLayer.body)));
     currentGuideVector = guideVector;
+
+#ifdef kDebugGuidePoint
     [self setNeedsDisplay];
+#endif
     
     cpVect impulseVector = cpvzero;
 
     if( distanceFromGuidePoint < 400 && self.canDie == YES ) {
-        impulseVector = cpvmult(guideVector, 100);
+        impulseVector = cpvmult(guideVector, 30);
     } else
         impulseVector = cpvmult(guideVector, 16-powf(distanceFromGuidePoint, 2.0)/80000);
     
