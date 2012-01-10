@@ -36,7 +36,7 @@
 @property (nonatomic, retain) UILabel *topScore;
 @property (nonatomic, retain) UILabel *bottomScore;
 
-- (void)createScorePosts;
+- (void)populateMap;
 - (void)removeButtons;
 - (void)removeScorePosts;
 

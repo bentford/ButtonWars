@@ -141,7 +141,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 #pragma mark -
 
 @interface ViewController(PrivateMethods)
-- (void)createScorePostsWithTextMapNamed:(NSString *)textMapName;
+- (void)populateMapWithFileNamed:(NSString *)textMapName;
 @end
 
 @implementation ViewController
@@ -207,7 +207,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     UISwipeGestureRecognizer *swipeCleanGesture = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeClean:)] autorelease];
     [self.view addGestureRecognizer:swipeCleanGesture];
     
-    [self createScorePosts];
+    [self populateMap];
     
     topScore = [[UILabel alloc] initWithFrame:CGRectMake(100, 25, 100, 50)];
     topScore.text = @"0";
@@ -227,15 +227,15 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     [self.view addSubview:countdownLabel];
     
     
-    UIViewQuadBody *wall = [[[UIViewQuadBody alloc] initWithFrame:CGRectMake(0, 0, 20, 200)] autorelease];
-    cpBodySetAngle(wall.chipmunkLayer.body, M_PI-2);
-    [wall setupWithSpace:space position:CGPointMake(100, 400)];
-    [self.view addSubview:wall];
-    
-    wall = [[[UIViewQuadBody alloc] initWithFrame:CGRectMake(0, 0, 20, 200)] autorelease];
-    cpBodySetAngle(wall.chipmunkLayer.body, M_PI-2);
-    [wall setupWithSpace:space position:CGPointMake(self.view.bounds.size.width-100, self.view.bounds.size.height-400)];
-    [self.view addSubview:wall];
+//    UIViewQuadBody *wall = [[[UIViewQuadBody alloc] initWithFrame:CGRectMake(0, 0, 20, 200)] autorelease];
+//    cpBodySetAngle(wall.chipmunkLayer.body, M_PI-2);
+//    [wall setupWithSpace:space position:CGPointMake(100, 400)];
+//    [self.view addSubview:wall];
+//    
+//    wall = [[[UIViewQuadBody alloc] initWithFrame:CGRectMake(0, 0, 20, 200)] autorelease];
+//    cpBodySetAngle(wall.chipmunkLayer.body, M_PI-2);
+//    [wall setupWithSpace:space position:CGPointMake(self.view.bounds.size.width-100, self.view.bounds.size.height-400)];
+//    [self.view addSubview:wall];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -309,7 +309,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     
     [self removeButtons];
     [self removeScorePosts];
-    [self createScorePosts];
+    [self populateMap];
     
     topScore.text = @"0";
     bottomScore.text = @"0";
@@ -345,13 +345,13 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     }        
 }
 
-- (void)createScorePosts {
+- (void)populateMap {
     countdownLabel.text = @"";
     currentWinner = 0;
     countdown = 0;
     
     
-    [self createScorePostsWithTextMapNamed:@"Level_1"];
+    [self populateMapWithFileNamed:@"Level_1"];
     
     [self.view bringSubviewToFront:countdownLabel];    
 }
@@ -434,7 +434,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 @end
 
 @implementation ViewController(PrivateMethods)
-- (void)createScorePostsWithTextMapNamed:(NSString *)textMapName {
+- (void)populateMapWithFileNamed:(NSString *)textMapName {
     
     NSUInteger mapRowCount = 40;
     NSUInteger mapColumnCount = 72;
@@ -454,6 +454,8 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     
     if( [mapRows count] < mapRowCount - 1)
         NSLog(@"WARNDING: map is missing %d rows", mapRowCount - [mapRows count]);
+    
+    NSMutableDictionary *wallPointDictionary = [NSMutableDictionary dictionaryWithCapacity:0];
     
     NSUInteger currentRow = 0;
     NSUInteger currentColumn = 0;
@@ -476,11 +478,23 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
             
             if( [character isEqualToString:@"b"] == YES ) {
                 CGPoint newPosition = CGPointMake(currentColumn*perColumnAmount, currentRow*perRowAmount);
-                NSLog(@"creating bumper at: %@", NSStringFromCGPoint(newPosition));
                 BWBumper *bumper = [[[BWBumper alloc] init] autorelease];
-                [bumper setupWithSpace:space position:newPosition]; //CGPointMake(250, 500)
+                [bumper setupWithSpace:space position:newPosition];
                 [self.view addSubview:bumper];
             }
+            
+            // walls
+            if( [character isEqualToString:@"w"] == YES ) {
+                CGPoint newPosition = CGPointMake(currentColumn*perColumnAmount, currentRow*perRowAmount);
+                NSString *wallNumber = [columns objectAtIndex:currentColumn+1];
+                NSString *wallIdentifier = [NSString stringWithFormat:@"%@%@", character, wallNumber];
+                
+                if( [wallPointDictionary.allKeys containsObject:wallIdentifier] == NO )
+                    [wallPointDictionary setObject:[NSMutableArray array] forKey:wallIdentifier];
+                
+                [[wallPointDictionary objectForKey:wallIdentifier] addObject:[NSValue valueWithCGPoint:newPosition]];
+            }
+
             
             currentColumn++;
             if( currentColumn == mapColumnCount+1 )
@@ -491,6 +505,22 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
         
         if( currentRow == mapRowCount+1 )
             break;
+    }
+    
+    for( NSString *wallNumber in wallPointDictionary.allKeys ) {
+        NSArray *wallPoints = [wallPointDictionary objectForKey:wallNumber];
+        CGPoint firstPoint = [[wallPoints objectAtIndex:0] CGPointValue];
+        CGPoint secondPoint = [[wallPoints objectAtIndex:1] CGPointValue];
+        
+        CGFloat length = cpvlength(cpvsub(firstPoint, secondPoint));
+        CGFloat angle = cpvtoangle(cpvnormalize(cpvsub(firstPoint, secondPoint))) - M_PI/2.0;
+        
+        CGPoint midVect = cpvadd(cpvclamp(cpvsub(firstPoint, secondPoint), length/2.0), secondPoint);
+        
+        UIViewQuadBody *wall = [[[UIViewQuadBody alloc] initWithFrame:CGRectMake(0, 0, 20, length)] autorelease];
+        cpBodySetAngle(wall.chipmunkLayer.body, angle);
+        [wall setupWithSpace:space position:midVect];
+        [self.view addSubview:wall];
     }
 }
 @end
