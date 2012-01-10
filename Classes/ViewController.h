@@ -7,6 +7,7 @@
 #define kButtonCollisionType 1
 
 #import "chipmunk.h"
+#import "GameData.h"
 
 @class BWBumper;
 @class BWChipmunkLayer;
@@ -16,10 +17,17 @@
     
     UILabel *topScore;
     UILabel *bottomScore;
+    UILabel *countdownLabel;
     
     BWChipmunkLayer *buttonTest2;
     
     NSUInteger frameCounter;
+    
+    NSTimer *gameTimer;
+    NSTimer *winnerTimer;
+    NSUInteger countdown;
+    
+    ButtonColor currentWinner;
 }
 
 @property (nonatomic, retain) UILabel *topScore;
@@ -32,5 +40,9 @@
 - (void)resetBumper:(BWBumper *)theBumper;
 
 - (void)createScorePostsWithQuantity:(NSUInteger)quantity inRect:(CGRect)insideRect;
+
+- (void)startCountdownForColor:(ButtonColor)winningColor;
+- (void)iterateCountdown:(NSTimer *)countdownTimer;
+- (void)checkForWinner;
 @end
 

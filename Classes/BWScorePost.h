@@ -8,7 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import "ChipmunkLayerView.h"
+#import "GameData.h"
 
-@interface BWScorePost : UIImageView <ChipmunkLayerView>
-
+@interface BWScorePost : UIImageView <ChipmunkLayerView> {
+    ButtonColor buttonColor;
+}
+@property (nonatomic, assign) ButtonColor buttonColor;
 @end

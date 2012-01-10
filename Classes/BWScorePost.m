@@ -21,6 +21,7 @@
         self.image = [UIImage imageNamed:@"Peg.png"];
 		cpShapeSetCollisionType(self.chipmunkLayer.shape, 2);
         cpShapeSetUserData(self.chipmunkLayer.shape, self);
+        buttonColor = 0;
     }
     return self;
 }
@@ -28,6 +29,21 @@
 - (id)initWithFrame:(CGRect)frame {
     NSAssert(NO, @"use init instead");
     return nil;
+}
+
+- (void)setButtonColor:(ButtonColor)newButtonColor {
+    buttonColor = newButtonColor;
+    
+    if( buttonColor == ButtonColorGreen )
+        self.image = [UIImage imageNamed:@"PegGreen.png"];
+    else if( buttonColor == ButtonColorOrange ) 
+        self.image = [UIImage imageNamed:@"PegOrange.png"];
+    else
+        self.image = [UIImage imageNamed:@"Peg.png"];
+}
+
+- (ButtonColor)buttonColor {
+    return buttonColor;
 }
 
 - (BWChipmunkLayer *)chipmunkLayer {

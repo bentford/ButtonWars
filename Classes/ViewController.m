@@ -41,14 +41,28 @@ void postStepRemoveButton(cpSpace *space, cpShape *shape, void *unused) {
 int beginCollisionWithButtonAndScorePost(cpArbiter *arbiter, cpSpace *space, void *data) {
     CP_ARBITER_GET_SHAPES(arbiter, a, b);
     BWButton *button = a->data;
+    BWScorePost *scorePost = b->data;
     ViewController *viewController = data;
     
-    if( button.color == ButtonColorGreen )
+    if( button.color == ButtonColorGreen && scorePost.buttonColor != ButtonColorGreen ) {
         viewController.topScore.text = [NSString stringWithFormat:@"%d", [viewController.topScore.text intValue] + 1];
-    else
+
+        if( scorePost.buttonColor == ButtonColorOrange ) {
+            NSUInteger score = fmaxf([viewController.bottomScore.text intValue] - 1, 0);
+            viewController.bottomScore.text = [NSString stringWithFormat:@"%d", score];
+        }
+        
+    } 
+    if( button.color == ButtonColorOrange && scorePost.buttonColor != ButtonColorOrange ) {
         viewController.bottomScore.text = [NSString stringWithFormat:@"%d", [viewController.bottomScore.text intValue] + 1];
+        
+        if( scorePost.buttonColor == ButtonColorGreen ) {
+            NSUInteger score = fmaxf([viewController.topScore.text intValue] - 1, 0);
+            viewController.topScore.text = [NSString stringWithFormat:@"%d", score];
+        }
+    }
     
-    cpSpaceAddPostStepCallback(space, (cpPostStepFunc)postStepRemove, b, NULL);
+    scorePost.buttonColor = button.color;
     
     return 0;
 }
@@ -199,6 +213,14 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     bottomScore.font = [UIFont boldSystemFontOfSize:24];
     [self.view addSubview:bottomScore];
     
+    countdownLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.bounds.size.width/2.0-200, self.view.bounds.size.height/2.0-40, 400, 80)];
+    countdownLabel.textAlignment = UITextAlignmentCenter;
+    countdownLabel.backgroundColor = [UIColor clearColor];
+    countdownLabel.text = @"";
+    countdownLabel.font = [UIFont boldSystemFontOfSize:34];
+    [self.view addSubview:countdownLabel];
+    
+    
     UIViewQuadBody *wall = [[[UIViewQuadBody alloc] initWithFrame:CGRectMake(0, 0, 20, 200)] autorelease];
     cpBodySetAngle(wall.chipmunkLayer.body, M_PI-2);
     [wall setupWithSpace:space position:CGPointMake(100, 400)];
@@ -318,7 +340,10 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 }
 
 - (void)createScorePosts {
-
+    countdownLabel.text = @"";
+    currentWinner = 0;
+    countdown = 0;
+    
     [Random seed];
 
     [self createScorePostsWithQuantity:10 inRect:CGRectMake(10, 150, self.view.bounds.size.width, self.view.bounds.size.height/2.0 - 150)];
@@ -331,6 +356,13 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     bumper = [[[BWBumper alloc] init] autorelease];
     [bumper setupWithSpace:space position:CGPointMake(500, 500)];
     [self.view addSubview:bumper];
+    
+    [self.view bringSubviewToFront:countdownLabel];
+    
+    [gameTimer invalidate];
+    [gameTimer release];
+    
+    gameTimer = [[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(checkForWinner) userInfo:nil repeats:YES] retain];
 }
 
 - (void)resetBumper:(NSArray *)parameters {
@@ -347,6 +379,43 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
         [scorePost setupWithSpace:space position:[Random randomPointInRect:insideRect]];
         [self.view addSubview:scorePost];
         [scorePost.chipmunkLayer updatePosition];
+    }
+}
+
+- (void)checkForWinner {
+    if( [topScore.text intValue] >= 15 )
+        [self startCountdownForColor:ButtonColorGreen];
+    if( [bottomScore.text intValue] >= 15 )
+        [self startCountdownForColor:ButtonColorOrange];
+}
+
+- (void)startCountdownForColor:(ButtonColor)winningColor {
+
+    if( winningColor == currentWinner )
+        return;
+    
+    currentWinner = winningColor;
+    
+    [winnerTimer invalidate];
+    [winnerTimer release];
+    
+    countdown = 0;
+    winnerTimer = [[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(iterateCountdown:) userInfo:[NSNumber numberWithInt:winningColor] repeats:YES] retain];
+}
+
+- (void)iterateCountdown:(NSTimer *)countdownTimer {
+    if( countdown == 3 ) {
+        [winnerTimer invalidate];
+        [winnerTimer release];
+        winnerTimer = nil;
+        
+        NSString *winnerLabel = currentWinner == ButtonColorGreen ? @"Green" : @"Orange";
+        countdownLabel.text = [NSString stringWithFormat:@"%@ wins", winnerLabel];
+        NSLog(@"winner");
+    } else {
+        countdown++;
+        countdownLabel.text = [NSString stringWithFormat:@"%d", 4-countdown];
+        
     }
 }
 

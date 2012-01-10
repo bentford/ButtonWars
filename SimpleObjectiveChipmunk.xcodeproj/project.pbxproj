@@ -56,6 +56,8 @@
 		B5E7505314B58E7A0021AFC0 /* Peg.png in Resources */ = {isa = PBXBuildFile; fileRef = B5E7505214B58E7A0021AFC0 /* Peg.png */; };
 		B5E7505714B6E3AB0021AFC0 /* BWBoxChipmunkLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B5E7505614B6E3AB0021AFC0 /* BWBoxChipmunkLayer.m */; };
 		B5E7505A14B6EA040021AFC0 /* BWSegmentChipmunkLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B5E7505914B6EA030021AFC0 /* BWSegmentChipmunkLayer.m */; };
+		B5E7506514B90B520021AFC0 /* PegGreen.png in Resources */ = {isa = PBXBuildFile; fileRef = B5E7506314B90B520021AFC0 /* PegGreen.png */; };
+		B5E7506614B90B520021AFC0 /* PegOrange.png in Resources */ = {isa = PBXBuildFile; fileRef = B5E7506414B90B520021AFC0 /* PegOrange.png */; };
 		B5FE1A9914A13D8C00022983 /* MainWindow-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5FE1A9814A13D8C00022983 /* MainWindow-iPad.xib */; };
 		B5FE1A9C14A13F9200022983 /* ButtonGreen.png in Resources */ = {isa = PBXBuildFile; fileRef = B5FE1A9B14A13F9200022983 /* ButtonGreen.png */; };
 		B5FE1AA114A1410100022983 /* BWButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FE1AA014A1410100022983 /* BWButton.m */; };
@@ -168,6 +170,8 @@
 		B5E7505614B6E3AB0021AFC0 /* BWBoxChipmunkLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWBoxChipmunkLayer.m; sourceTree = "<group>"; };
 		B5E7505814B6EA030021AFC0 /* BWSegmentChipmunkLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWSegmentChipmunkLayer.h; sourceTree = "<group>"; };
 		B5E7505914B6EA030021AFC0 /* BWSegmentChipmunkLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWSegmentChipmunkLayer.m; sourceTree = "<group>"; };
+		B5E7506314B90B520021AFC0 /* PegGreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PegGreen.png; sourceTree = "<group>"; };
+		B5E7506414B90B520021AFC0 /* PegOrange.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PegOrange.png; sourceTree = "<group>"; };
 		B5FE1A9814A13D8C00022983 /* MainWindow-iPad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "MainWindow-iPad.xib"; path = "iPad/MainWindow-iPad.xib"; sourceTree = "<group>"; };
 		B5FE1A9B14A13F9200022983 /* ButtonGreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonGreen.png; sourceTree = "<group>"; };
 		B5FE1A9F14A1410100022983 /* BWButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWButton.h; sourceTree = "<group>"; };
@@ -353,6 +357,8 @@
 		B5FE1A9A14A13ED900022983 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				B5E7506314B90B520021AFC0 /* PegGreen.png */,
+				B5E7506414B90B520021AFC0 /* PegOrange.png */,
 				B5E7505214B58E7A0021AFC0 /* Peg.png */,
 				B5248B0814AD47C20058903D /* Bumper.png */,
 				B5FE1AC814A2626B00022983 /* WoodScorePost.png */,
@@ -472,6 +478,8 @@
 				B5FE1AC914A2626B00022983 /* WoodScorePost.png in Resources */,
 				B5248B0914AD47C20058903D /* Bumper.png in Resources */,
 				B5E7505314B58E7A0021AFC0 /* Peg.png in Resources */,
+				B5E7506514B90B520021AFC0 /* PegGreen.png in Resources */,
+				B5E7506614B90B520021AFC0 /* PegOrange.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

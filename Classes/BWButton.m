@@ -63,7 +63,7 @@
     cpVect impulseVector = cpvzero;
 
     if( distanceFromGuidePoint < 400 && self.canDie == YES ) {
-        impulseVector = cpvmult(guideVector, 200);
+        impulseVector = cpvmult(guideVector, 100);
     } else
         impulseVector = cpvmult(guideVector, 80-powf(distanceFromGuidePoint, 2.0)/15000);
     
