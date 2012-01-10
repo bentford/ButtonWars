@@ -28,6 +28,9 @@
     NSUInteger countdown;
     
     ButtonColor currentWinner;
+    
+    BWShooter *topShooter;
+    BWShooter *bottomShooter;
 }
 
 @property (nonatomic, retain) UILabel *topScore;
