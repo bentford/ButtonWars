@@ -352,14 +352,6 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     
     
     [self createScorePostsWithTextMapNamed:@"Level_1"];
-       
-    BWBumper *bumper = [[[BWBumper alloc] init] autorelease];
-    [bumper setupWithSpace:space position:CGPointMake(250, 500)];
-    [self.view addSubview:bumper];
-    
-    bumper = [[[BWBumper alloc] init] autorelease];
-    [bumper setupWithSpace:space position:CGPointMake(500, 500)];
-    [self.view addSubview:bumper];
     
     [self.view bringSubviewToFront:countdownLabel];    
 }
@@ -472,15 +464,24 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
             [columns addObject:character];
         }
         for( NSString *character in columns ) {
+            
+            
             if( [character isEqualToString:@"p"] == YES ) {
                 CGPoint newPosition = CGPointMake(currentColumn*perColumnAmount, currentRow*perRowAmount);
-                NSLog(@"creating post at: %@", NSStringFromCGPoint(newPosition));
                 BWScorePost *scorePost = [[[BWScorePost alloc] init] autorelease];
                 [scorePost setupWithSpace:space position:newPosition];
                 [self.view addSubview:scorePost];
                 [scorePost.chipmunkLayer updatePosition];
             }
-                
+            
+            if( [character isEqualToString:@"b"] == YES ) {
+                CGPoint newPosition = CGPointMake(currentColumn*perColumnAmount, currentRow*perRowAmount);
+                NSLog(@"creating bumper at: %@", NSStringFromCGPoint(newPosition));
+                BWBumper *bumper = [[[BWBumper alloc] init] autorelease];
+                [bumper setupWithSpace:space position:newPosition]; //CGPointMake(250, 500)
+                [self.view addSubview:bumper];
+            }
+            
             currentColumn++;
             if( currentColumn == mapColumnCount+1 )
                 break;
