@@ -140,6 +140,10 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 
 #pragma mark -
 
+@interface ViewController(PrivateMethods)
+- (void)createScorePostsWithTextMapNamed:(NSString *)textMapName;
+@end
+
 @implementation ViewController
 @synthesize topScore;
 @synthesize bottomScore;
@@ -346,16 +350,12 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     currentWinner = 0;
     countdown = 0;
     
-    [Random seed];
-    NSString *levelMap = @"\
-               s              \n\
-                              \n\
-                              \n\
-";
-    [self createScorePostsWithTextMap:levelMap];
     
-    [self createScorePostsWithQuantity:10 inRect:CGRectMake(10, 150, self.view.bounds.size.width, self.view.bounds.size.height/2.0 - 150)];
-    [self createScorePostsWithQuantity:10 inRect:CGRectMake(10, self.view.bounds.size.height/2.0, self.view.bounds.size.width, self.view.bounds.size.height/2.0 - 150)];
+    [self createScorePostsWithTextMapNamed:@"Level_1"];
+    
+//    [Random seed];
+//    [self createScorePostsWithQuantity:10 inRect:CGRectMake(10, 150, self.view.bounds.size.width, self.view.bounds.size.height/2.0 - 150)];
+//    [self createScorePostsWithQuantity:10 inRect:CGRectMake(10, self.view.bounds.size.height/2.0, self.view.bounds.size.width, self.view.bounds.size.height/2.0 - 150)];
     
     BWBumper *bumper = [[[BWBumper alloc] init] autorelease];
     [bumper setupWithSpace:space position:CGPointMake(250, 500)];
@@ -384,11 +384,6 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
         [scorePost.chipmunkLayer updatePosition];
     }
 }
-
-- (void)createScorePostsWithTextMap:(NSString *)textMap {
-    
-}
-
 - (void)checkForWinner {
     if( [topScore.text intValue] >= 15 )
         [self startCountdownForColor:ButtonColorGreen];
@@ -448,4 +443,53 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 	[super dealloc];
 }
 
+@end
+
+@implementation ViewController(PrivateMethods)
+- (void)createScorePostsWithTextMapNamed:(NSString *)textMapName {
+    
+    NSUInteger mapRowCount = 40;
+    NSUInteger mapColumnCount = 72;
+    
+    NSUInteger perRowAmount = 768/mapRowCount;
+    NSUInteger perColumnAmount = 1020/mapColumnCount;
+    
+    NSString *mapPath = [NSBundle pathForResource:textMapName ofType:@"txt" inDirectory:nil];
+    NSError *fileLoadError = nil;
+    NSString *mapText = [NSString stringWithContentsOfFile:mapPath encoding:NSUTF8StringEncoding error:&fileLoadError];
+    if( fileLoadError != nil ) {
+        NSLog(@"Error reading file: %@ with reason: %@", mapPath, [fileLoadError localizedDescription]);
+        return;
+    }
+    
+    NSArray *mapRows = [mapText componentsSeparatedByString:@"\n"];
+    
+    if( [mapRows count] < mapRowCount - 1)
+        NSLog(@"WARNDING: map is missing %d rows", mapRowCount - [mapRows count]);
+    
+    NSUInteger currentRow = 0;
+    NSUInteger currentColumn = 0;
+    for( NSString *row in mapRows ) {
+        NSArray *columns = [row componentsSeparatedByString:@""];
+        for( NSString *character in columns ) {
+            if( [character isEqualToString:@"p"] == YES ) {
+                CGPoint newPosition = CGPointMake(currentRow*perRowAmount, currentColumn*perColumnAmount);
+                
+                BWScorePost *scorePost = [[[BWScorePost alloc] init] autorelease];
+                [scorePost setupWithSpace:space position:newPosition];
+                [self.view addSubview:scorePost];
+                [scorePost.chipmunkLayer updatePosition];
+            }
+                
+            currentColumn++;
+            if( currentColumn == mapColumnCount+1 )
+                break;
+        }
+        currentColumn = 0;
+        currentRow++;
+        
+        if( currentRow == mapRowCount+1 )
+            break;
+    }
+}
 @end
