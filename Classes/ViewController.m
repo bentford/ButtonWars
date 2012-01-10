@@ -451,10 +451,10 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     NSUInteger mapRowCount = 40;
     NSUInteger mapColumnCount = 72;
     
-    NSUInteger perRowAmount = 768/mapRowCount;
-    NSUInteger perColumnAmount = 1020/mapColumnCount;
+    CGFloat perRowAmount = 1020.0/(CGFloat)mapRowCount;
+    CGFloat perColumnAmount = 768.0/(CGFloat)mapColumnCount;
     
-    NSString *mapPath = [NSBundle pathForResource:textMapName ofType:@"txt" inDirectory:nil];
+    NSString *mapPath = [[NSBundle mainBundle] pathForResource:textMapName ofType:@"txt"];
     NSError *fileLoadError = nil;
     NSString *mapText = [NSString stringWithContentsOfFile:mapPath encoding:NSUTF8StringEncoding error:&fileLoadError];
     if( fileLoadError != nil ) {
@@ -470,11 +470,15 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     NSUInteger currentRow = 0;
     NSUInteger currentColumn = 0;
     for( NSString *row in mapRows ) {
-        NSArray *columns = [row componentsSeparatedByString:@""];
+        NSMutableArray *columns = [NSMutableArray arrayWithCapacity:row.length];
+        for( NSUInteger i = 0; i < row.length; i++) {
+            NSString *character  = [NSString stringWithFormat:@"%c", [row characterAtIndex:i]];
+            [columns addObject:character];
+        }
         for( NSString *character in columns ) {
             if( [character isEqualToString:@"p"] == YES ) {
-                CGPoint newPosition = CGPointMake(currentRow*perRowAmount, currentColumn*perColumnAmount);
-                
+                CGPoint newPosition = CGPointMake(currentColumn*perColumnAmount, currentRow*perRowAmount);
+                NSLog(@"creating post at: %@", NSStringFromCGPoint(newPosition));
                 BWScorePost *scorePost = [[[BWScorePost alloc] init] autorelease];
                 [scorePost setupWithSpace:space position:newPosition];
                 [self.view addSubview:scorePost];
