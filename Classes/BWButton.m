@@ -78,6 +78,23 @@
     cpSpaceAddShape(space, self.chipmunkLayer.shape);
 }
 
+- (void)guideTowardPlaneOfPoint:(CGPoint)guidePoint {
+    CGFloat distanceFromGuidePoint = cpvlength(cpvsub(guidePoint, cpBodyGetPos(self.chipmunkLayer.body)));
+
+    cpVect guideVector = cpvnormalize(cpvsub(guidePoint, cpBodyGetPos(self.chipmunkLayer.body)));
+    
+    guideVector = cpv(0,guideVector.y);
+    
+    currentGuideVector = guideVector;
+    
+#ifdef kDebugGuidePoint
+    [self setNeedsDisplay];
+#endif
+    
+    [self applyImpulseWithVector:guideVector basedOnDistance:distanceFromGuidePoint];
+    
+}
+
 - (void)guideTowardPoint:(CGPoint)guidePoint {
     //CGFloat currentVelocity = cpvlength(cpBodyGetVel(self.chipmunkLayer.body));
     CGFloat distanceFromGuidePoint = cpvlength(cpvsub(guidePoint, cpBodyGetPos(self.chipmunkLayer.body)));
@@ -89,14 +106,20 @@
     [self setNeedsDisplay];
 #endif
     
-    cpVect impulseVector = cpvzero;
+    [self applyImpulseWithVector:guideVector basedOnDistance:distanceFromGuidePoint];
+    
+}
 
-    if( distanceFromGuidePoint < 400 && self.canDie == YES ) {
-        impulseVector = cpvmult(guideVector, 30);
+- (void)applyImpulseWithVector:(CGPoint)baseVector basedOnDistance:(CGFloat)distance {
+    cpVect impulseVector = cpvzero;
+    
+    if( distance < 400 && self.canDie == YES ) {
+        impulseVector = cpvmult(baseVector, 30);
     } else
-        impulseVector = cpvmult(guideVector, 16-powf(distanceFromGuidePoint, 2.0)/80000);
+        impulseVector = cpvmult(baseVector, 16-powf(distance, 2.0)/80000);
     
     cpBodyApplyImpulse(self.chipmunkLayer.body, impulseVector, cpvzero);
+    
 }
 
 - (BOOL)canDie {

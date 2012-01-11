@@ -23,4 +23,7 @@
 @property (nonatomic, readonly) BOOL canDie;
 
 - (void)guideTowardPoint:(CGPoint)guidePoint;
+- (void)guideTowardPlaneOfPoint:(CGPoint)guidePoint;
+
+- (void)applyImpulseWithVector:(CGPoint)baseVector basedOnDistance:(CGFloat)distance;
 @end

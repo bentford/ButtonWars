@@ -171,20 +171,31 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     cpSpaceAddShape(space, floorShape);
 
     // top
-    floorShape = cpSegmentShapeNew(floorBody, cpv(0, 0), cpv(self.view.bounds.size.width, 0), 0);
-    cpShapeSetElasticity(floorShape, 0.4f);
-	cpShapeSetFriction(floorShape, 1.0f);
-	cpShapeSetCollisionType(floorShape, kFloorCollisionType);
-    cpSpaceAddShape(space, floorShape);
-
-    // bottom
-    floorShape = cpSegmentShapeNew(floorBody, cpv(0, self.view.bounds.size.height), cpv(self.view.bounds.size.width, self.view.bounds.size.height), 0);
+    floorShape = cpSegmentShapeNew(floorBody, cpv(0, 50), cpv(self.view.bounds.size.width/2.0, 0), 0);
     cpShapeSetElasticity(floorShape, 0.4f);
 	cpShapeSetFriction(floorShape, 1.0f);
 	cpShapeSetCollisionType(floorShape, kFloorCollisionType);
     cpSpaceAddShape(space, floorShape);
     
+    floorShape = cpSegmentShapeNew(floorBody, cpv(self.view.bounds.size.width/2.0, 0), cpv(self.view.bounds.size.width, 50), 0);
+    cpShapeSetElasticity(floorShape, 0.4f);
+	cpShapeSetFriction(floorShape, 1.0f);
+	cpShapeSetCollisionType(floorShape, kFloorCollisionType);
+    cpSpaceAddShape(space, floorShape);
 
+
+    // bottom
+    floorShape = cpSegmentShapeNew(floorBody, cpv(0, self.view.bounds.size.height-50), cpv(self.view.bounds.size.width/2.0, self.view.bounds.size.height), 0);
+    cpShapeSetElasticity(floorShape, 0.4f);
+	cpShapeSetFriction(floorShape, 1.0f);
+	cpShapeSetCollisionType(floorShape, kFloorCollisionType);
+    cpSpaceAddShape(space, floorShape);
+    
+    floorShape = cpSegmentShapeNew(floorBody, cpv(self.view.bounds.size.width/2.0, self.view.bounds.size.height), cpv(self.view.bounds.size.width, self.view.bounds.size.height-50), 0);
+    cpShapeSetElasticity(floorShape, 0.4f);
+	cpShapeSetFriction(floorShape, 1.0f);
+	cpShapeSetCollisionType(floorShape, kFloorCollisionType);
+    cpSpaceAddShape(space, floorShape);
 
     cpSpaceAddCollisionHandler(space, 0, 1, NULL, NULL, (cpCollisionPostSolveFunc)postSolveCollision, NULL, NULL);
     cpSpaceAddCollisionHandler(space, 1, 2, (cpCollisionBeginFunc)beginCollisionWithButtonAndScorePost, NULL, NULL, NULL, self);
@@ -225,17 +236,6 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     countdownLabel.text = @"";
     countdownLabel.font = [UIFont boldSystemFontOfSize:34];
     [self.view addSubview:countdownLabel];
-    
-    
-//    UIViewQuadBody *wall = [[[UIViewQuadBody alloc] initWithFrame:CGRectMake(0, 0, 20, 200)] autorelease];
-//    cpBodySetAngle(wall.chipmunkLayer.body, M_PI-2);
-//    [wall setupWithSpace:space position:CGPointMake(100, 400)];
-//    [self.view addSubview:wall];
-//    
-//    wall = [[[UIViewQuadBody alloc] initWithFrame:CGRectMake(0, 0, 20, 200)] autorelease];
-//    cpBodySetAngle(wall.chipmunkLayer.body, M_PI-2);
-//    [wall setupWithSpace:space position:CGPointMake(self.view.bounds.size.width-100, self.view.bounds.size.height-400)];
-//    [self.view addSubview:wall];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -272,9 +272,9 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     for( UIView *aView in self.view.subviews ) 
         if( [aView isKindOfClass:[BWButton class]] == YES ) {
             if( ((BWButton *)aView).color == ButtonColorGreen )
-                [(BWButton *)aView guideTowardPoint:CGPointMake(self.view.bounds.size.width/2.0, 0)];
+                [(BWButton *)aView guideTowardPlaneOfPoint:CGPointMake(self.view.bounds.size.width/2.0, 0)];
             else
-                [(BWButton *)aView guideTowardPoint:CGPointMake(self.view.bounds.size.width/2.0, self.view.bounds.size.height)];
+                [(BWButton *)aView guideTowardPlaneOfPoint:CGPointMake(self.view.bounds.size.width/2.0, self.view.bounds.size.height)];
         }
 
 }
