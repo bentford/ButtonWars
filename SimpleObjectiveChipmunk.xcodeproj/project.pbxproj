@@ -27,6 +27,7 @@
 		B569D42014BD0A1400F46D4B /* LevelPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B569D41F14BD0A1400F46D4B /* LevelPickerViewController.m */; };
 		B569D42214BD0A5B00F46D4B /* LevelPicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = B569D42114BD0A5A00F46D4B /* LevelPicker.xib */; };
 		B569D45C14BE54FF00F46D4B /* RotatingBumper.png in Resources */ = {isa = PBXBuildFile; fileRef = B569D45B14BE54FF00F46D4B /* RotatingBumper.png */; };
+		B569D45F14BE555300F46D4B /* BWRotatingBumper.m in Sources */ = {isa = PBXBuildFile; fileRef = B569D45E14BE555200F46D4B /* BWRotatingBumper.m */; };
 		B57E3581147877E90065B34F /* chipmunk.c in Sources */ = {isa = PBXBuildFile; fileRef = B57E3549147877E90065B34F /* chipmunk.c */; };
 		B57E358D147877E90065B34F /* cpArbiter.c in Sources */ = {isa = PBXBuildFile; fileRef = B57E3567147877E90065B34F /* cpArbiter.c */; };
 		B57E358E147877E90065B34F /* cpArray.c in Sources */ = {isa = PBXBuildFile; fileRef = B57E3569147877E90065B34F /* cpArray.c */; };
@@ -126,6 +127,8 @@
 		B569D41F14BD0A1400F46D4B /* LevelPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LevelPickerViewController.m; sourceTree = "<group>"; };
 		B569D42114BD0A5A00F46D4B /* LevelPicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LevelPicker.xib; sourceTree = "<group>"; };
 		B569D45B14BE54FF00F46D4B /* RotatingBumper.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RotatingBumper.png; sourceTree = "<group>"; };
+		B569D45D14BE555200F46D4B /* BWRotatingBumper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWRotatingBumper.h; sourceTree = "<group>"; };
+		B569D45E14BE555200F46D4B /* BWRotatingBumper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWRotatingBumper.m; sourceTree = "<group>"; };
 		B57E3549147877E90065B34F /* chipmunk.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = chipmunk.c; sourceTree = "<group>"; };
 		B57E354A147877E90065B34F /* chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk.h; sourceTree = "<group>"; };
 		B57E354B147877E90065B34F /* chipmunk_ffi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_ffi.h; sourceTree = "<group>"; };
@@ -394,6 +397,8 @@
 				B5FE1AD214A265E900022983 /* Random.m */,
 				B5248B0B14AD47E20058903D /* BWBumper.h */,
 				B5248B0C14AD47E20058903D /* BWBumper.m */,
+				B569D45D14BE555200F46D4B /* BWRotatingBumper.h */,
+				B569D45E14BE555200F46D4B /* BWRotatingBumper.m */,
 			);
 			name = "Game Parts";
 			sourceTree = "<group>";
@@ -552,6 +557,7 @@
 				B5E7505A14B6EA040021AFC0 /* BWSegmentChipmunkLayer.m in Sources */,
 				B5E3021914B7A8ED00556639 /* BWStaticBoxChipmunkLayer.m in Sources */,
 				B569D42014BD0A1400F46D4B /* LevelPickerViewController.m in Sources */,
+				B569D45F14BE555300F46D4B /* BWRotatingBumper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

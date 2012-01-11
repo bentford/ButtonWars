@@ -11,6 +11,7 @@
 #import "UIImageViewBody2.h"
 #import "BWChipmunkLayer.h"
 #import "UIViewBody.h"
+#import "BWRotatingBumper.h"
 
 #define kCountdownTimer 10
 
@@ -339,6 +340,12 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
             cpSpaceRemoveShape(space, buttonToRemove.chipmunkLayer.shape);
             [potentialButton removeFromSuperview];
 
+        // rotating bumper
+        } else if( [potentialButton isKindOfClass:[BWRotatingBumper class]] ) {
+            BWRotatingBumper *buttonToRemove = (BWRotatingBumper *)potentialButton;
+            cpSpaceRemoveShape(space, buttonToRemove.chipmunkLayer.shape);
+            [potentialButton removeFromSuperview];
+        
         // walls
         } else if( [potentialButton isKindOfClass:[UIViewQuadBody class]] ) {
             UIViewQuadBody *buttonToRemove = (UIViewQuadBody *)potentialButton;
@@ -487,9 +494,16 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
                 [scorePost.chipmunkLayer updatePosition];
             }
             
-            if( [character isEqualToString:@"b"] == YES ) {
+            if( [character isEqualToString:@"b"] == YES && ( currentColumn == 0 || [[columns objectAtIndex:currentColumn-1] isEqualToString:@"r"] == NO) ) {
                 CGPoint newPosition = CGPointMake(currentColumn*perColumnAmount, currentRow*perRowAmount);
                 BWBumper *bumper = [[[BWBumper alloc] init] autorelease];
+                [bumper setupWithSpace:space position:newPosition];
+                [self.view addSubview:bumper];
+            }
+            
+            if( [character isEqualToString:@"r"] == YES && currentColumn+1 < [columns count] && [[columns objectAtIndex:currentColumn+1] isEqualToString:@"b"] == YES ) {
+                CGPoint newPosition = CGPointMake(currentColumn*perColumnAmount, currentRow*perRowAmount);
+                BWRotatingBumper *bumper = [[[BWRotatingBumper alloc] init] autorelease];
                 [bumper setupWithSpace:space position:newPosition];
                 [self.view addSubview:bumper];
             }
