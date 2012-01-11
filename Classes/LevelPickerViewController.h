@@ -12,9 +12,12 @@
 - (void)didChooseLevel:(NSString *)levelName;
 @end
 
-@interface LevelPickerViewController : UIViewController 
+@interface LevelPickerViewController : UIViewController {
+    IBOutlet UITextView *textView;
+}
 
 @property (nonatomic, assign) id<LevelPickerDelegate> delegate;
 
 - (IBAction)close:(id)sender;
+- (IBAction)editLevel:(id)sender;
 @end
