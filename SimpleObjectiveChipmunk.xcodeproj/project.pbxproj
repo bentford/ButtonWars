@@ -26,6 +26,7 @@
 		B569D41D14BD087300F46D4B /* Levels in Resources */ = {isa = PBXBuildFile; fileRef = B569D41C14BD087300F46D4B /* Levels */; };
 		B569D42014BD0A1400F46D4B /* LevelPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B569D41F14BD0A1400F46D4B /* LevelPickerViewController.m */; };
 		B569D42214BD0A5B00F46D4B /* LevelPicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = B569D42114BD0A5A00F46D4B /* LevelPicker.xib */; };
+		B569D45C14BE54FF00F46D4B /* RotatingBumper.png in Resources */ = {isa = PBXBuildFile; fileRef = B569D45B14BE54FF00F46D4B /* RotatingBumper.png */; };
 		B57E3581147877E90065B34F /* chipmunk.c in Sources */ = {isa = PBXBuildFile; fileRef = B57E3549147877E90065B34F /* chipmunk.c */; };
 		B57E358D147877E90065B34F /* cpArbiter.c in Sources */ = {isa = PBXBuildFile; fileRef = B57E3567147877E90065B34F /* cpArbiter.c */; };
 		B57E358E147877E90065B34F /* cpArray.c in Sources */ = {isa = PBXBuildFile; fileRef = B57E3569147877E90065B34F /* cpArray.c */; };
@@ -75,7 +76,6 @@
 		D36457881213327700023C7E /* SimpleSound.m in Sources */ = {isa = PBXBuildFile; fileRef = D36457871213327700023C7E /* SimpleSound.m */; };
 		D3645799121334F000023C7E /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3645798121334F000023C7E /* OpenAL.framework */; };
 		D36457DC121338B500023C7E /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D36457DB121338B500023C7E /* AudioToolbox.framework */; };
-		D36458991213420C00023C7E /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = D36458981213420C00023C7E /* logo.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -125,6 +125,7 @@
 		B569D41E14BD0A1400F46D4B /* LevelPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelPickerViewController.h; sourceTree = "<group>"; };
 		B569D41F14BD0A1400F46D4B /* LevelPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LevelPickerViewController.m; sourceTree = "<group>"; };
 		B569D42114BD0A5A00F46D4B /* LevelPicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LevelPicker.xib; sourceTree = "<group>"; };
+		B569D45B14BE54FF00F46D4B /* RotatingBumper.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RotatingBumper.png; sourceTree = "<group>"; };
 		B57E3549147877E90065B34F /* chipmunk.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = chipmunk.c; sourceTree = "<group>"; };
 		B57E354A147877E90065B34F /* chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk.h; sourceTree = "<group>"; };
 		B57E354B147877E90065B34F /* chipmunk_ffi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_ffi.h; sourceTree = "<group>"; };
@@ -199,7 +200,6 @@
 		D36457871213327700023C7E /* SimpleSound.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleSound.m; sourceTree = "<group>"; };
 		D3645798121334F000023C7E /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		D36457DB121338B500023C7E /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		D36458981213420C00023C7E /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -274,7 +274,6 @@
 				B569D41C14BD087300F46D4B /* Levels */,
 				B5FE1AAC14A1607900022983 /* Icon-72.png */,
 				B5FE1A9A14A13ED900022983 /* Images */,
-				D36458981213420C00023C7E /* logo.png */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
 				B5FE1A9814A13D8C00022983 /* MainWindow-iPad.xib */,
 				8D1107310486CEB800E47090 /* SimpleObjectiveChipmunk-Info.plist */,
@@ -368,6 +367,7 @@
 		B5FE1A9A14A13ED900022983 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				B569D45B14BE54FF00F46D4B /* RotatingBumper.png */,
 				B5E7506314B90B520021AFC0 /* PegGreen.png */,
 				B5E7506414B90B520021AFC0 /* PegOrange.png */,
 				B5E7505214B58E7A0021AFC0 /* Peg.png */,
@@ -480,7 +480,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
-				D36458991213420C00023C7E /* logo.png in Resources */,
 				B5FE1A9914A13D8C00022983 /* MainWindow-iPad.xib in Resources */,
 				B5FE1A9C14A13F9200022983 /* ButtonGreen.png in Resources */,
 				B5FE1AA614A143FC00022983 /* GreenShooter.png in Resources */,
@@ -493,6 +492,7 @@
 				B5E7506614B90B520021AFC0 /* PegOrange.png in Resources */,
 				B569D41D14BD087300F46D4B /* Levels in Resources */,
 				B569D42214BD0A5B00F46D4B /* LevelPicker.xib in Resources */,
+				B569D45C14BE54FF00F46D4B /* RotatingBumper.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
