@@ -452,7 +452,8 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     CGFloat perRowAmount = 1020.0/(CGFloat)mapRowCount;
     CGFloat perColumnAmount = 768.0/(CGFloat)mapColumnCount;
     
-    NSString *mapPath = [[NSBundle mainBundle] pathForResource:textMapName ofType:@"txt" inDirectory:@"Levels"];
+    NSString *cacheFolder = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *mapPath = [cacheFolder stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.txt", textMapName]];
     NSError *fileLoadError = nil;
     NSString *mapText = [NSString stringWithContentsOfFile:mapPath encoding:NSUTF8StringEncoding error:&fileLoadError];
     if( fileLoadError != nil ) {

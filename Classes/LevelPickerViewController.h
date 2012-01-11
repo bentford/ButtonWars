@@ -14,10 +14,11 @@
 
 @interface LevelPickerViewController : UIViewController {
     IBOutlet UITextView *textView;
+    NSString *currentLevelPath;
 }
 
 @property (nonatomic, assign) id<LevelPickerDelegate> delegate;
 
 - (IBAction)close:(id)sender;
-- (IBAction)editLevel:(id)sender;
+- (IBAction)saveChanges:(id)sender;
 @end

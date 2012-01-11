@@ -4,6 +4,11 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import <OpenAL/alc.h>
 
+
+@interface AppDelegate(PrivateMethods)
+- (void)copyLevelFilesToCacheFolder;
+@end
+
 @implementation AppDelegate
 
 @synthesize window;
@@ -20,6 +25,8 @@
 	AudioSessionSetProperty(kAudioSessionProperty_AudioCategory, sizeof(sessionCategory), &sessionCategory);
 	AudioSessionSetActive(TRUE);
 	
+    [self copyLevelFilesToCacheFolder];
+    
 	[window addSubview:viewController.view];
 	[window makeKeyAndVisible];
 
@@ -32,4 +39,25 @@
 	[super dealloc];
 }
 
+@end
+
+@implementation AppDelegate(PrivateMethods)
+- (void)copyLevelFilesToCacheFolder {
+    NSString *cacheFolder = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+    
+    NSArray *paths = [[NSBundle mainBundle] pathsForResourcesOfType:@"txt" inDirectory:@"Levels"];
+    for( NSString *bundlePath in paths ) {
+        NSError *error = nil;
+        NSString *cacheFolderPath = [cacheFolder stringByAppendingPathComponent:[bundlePath lastPathComponent]];
+        
+        if( [[NSFileManager defaultManager] fileExistsAtPath:cacheFolderPath] == YES )
+            continue;
+        
+        [[NSFileManager defaultManager] copyItemAtPath:bundlePath toPath:cacheFolderPath error:&error];
+        if( error != nil )
+            NSLog(@"Error copying file: %@", [error localizedDescription]);
+    }
+    
+    
+}
 @end
