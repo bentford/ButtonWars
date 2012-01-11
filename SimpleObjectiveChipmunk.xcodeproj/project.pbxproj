@@ -24,6 +24,8 @@
 		B55416591482ACE600994AEB /* UIImageViewBody.m in Sources */ = {isa = PBXBuildFile; fileRef = B55416581482ACE600994AEB /* UIImageViewBody.m */; };
 		B554165C1482ADCB00994AEB /* UIImageViewCircleBody.m in Sources */ = {isa = PBXBuildFile; fileRef = B554165B1482ADCB00994AEB /* UIImageViewCircleBody.m */; };
 		B569D41D14BD087300F46D4B /* Levels in Resources */ = {isa = PBXBuildFile; fileRef = B569D41C14BD087300F46D4B /* Levels */; };
+		B569D42014BD0A1400F46D4B /* LevelPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B569D41F14BD0A1400F46D4B /* LevelPickerViewController.m */; };
+		B569D42214BD0A5B00F46D4B /* LevelPicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = B569D42114BD0A5A00F46D4B /* LevelPicker.xib */; };
 		B57E3581147877E90065B34F /* chipmunk.c in Sources */ = {isa = PBXBuildFile; fileRef = B57E3549147877E90065B34F /* chipmunk.c */; };
 		B57E358D147877E90065B34F /* cpArbiter.c in Sources */ = {isa = PBXBuildFile; fileRef = B57E3567147877E90065B34F /* cpArbiter.c */; };
 		B57E358E147877E90065B34F /* cpArray.c in Sources */ = {isa = PBXBuildFile; fileRef = B57E3569147877E90065B34F /* cpArray.c */; };
@@ -120,6 +122,9 @@
 		B554165A1482ADCB00994AEB /* UIImageViewCircleBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageViewCircleBody.h; sourceTree = "<group>"; };
 		B554165B1482ADCB00994AEB /* UIImageViewCircleBody.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImageViewCircleBody.m; sourceTree = "<group>"; };
 		B569D41C14BD087300F46D4B /* Levels */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Levels; sourceTree = "<group>"; };
+		B569D41E14BD0A1400F46D4B /* LevelPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelPickerViewController.h; sourceTree = "<group>"; };
+		B569D41F14BD0A1400F46D4B /* LevelPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LevelPickerViewController.m; sourceTree = "<group>"; };
+		B569D42114BD0A5A00F46D4B /* LevelPicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LevelPicker.xib; sourceTree = "<group>"; };
 		B57E3549147877E90065B34F /* chipmunk.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = chipmunk.c; sourceTree = "<group>"; };
 		B57E354A147877E90065B34F /* chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk.h; sourceTree = "<group>"; };
 		B57E354B147877E90065B34F /* chipmunk_ffi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_ffi.h; sourceTree = "<group>"; };
@@ -227,6 +232,9 @@
 				28D7ACF70DDB3853001CB0EB /* ViewController.m */,
 				D36457861213326700023C7E /* SimpleSound.h */,
 				D36457871213327700023C7E /* SimpleSound.m */,
+				B569D41E14BD0A1400F46D4B /* LevelPickerViewController.h */,
+				B569D41F14BD0A1400F46D4B /* LevelPickerViewController.m */,
+				B569D42114BD0A5A00F46D4B /* LevelPicker.xib */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -484,6 +492,7 @@
 				B5E7506514B90B520021AFC0 /* PegGreen.png in Resources */,
 				B5E7506614B90B520021AFC0 /* PegOrange.png in Resources */,
 				B569D41D14BD087300F46D4B /* Levels in Resources */,
+				B569D42214BD0A5B00F46D4B /* LevelPicker.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -542,6 +551,7 @@
 				B5E7505714B6E3AB0021AFC0 /* BWBoxChipmunkLayer.m in Sources */,
 				B5E7505A14B6EA040021AFC0 /* BWSegmentChipmunkLayer.m in Sources */,
 				B5E3021914B7A8ED00556639 /* BWStaticBoxChipmunkLayer.m in Sources */,
+				B569D42014BD0A1400F46D4B /* LevelPickerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

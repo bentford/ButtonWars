@@ -8,10 +8,11 @@
 
 #import "chipmunk.h"
 #import "GameData.h"
+#import "LevelPickerViewController.h"
 
 @class BWBumper;
 @class BWChipmunkLayer;
-@interface ViewController : UIViewController <GameDelegate> {
+@interface ViewController : UIViewController <GameDelegate, LevelPickerDelegate> {
 	CADisplayLink *displayLink;
 	cpSpace *space;
     
@@ -31,18 +32,20 @@
     
     BWShooter *topShooter;
     BWShooter *bottomShooter;
+    
+    LevelPickerViewController *levelPickerViewController;
 }
 
 @property (nonatomic, retain) UILabel *topScore;
 @property (nonatomic, retain) UILabel *bottomScore;
 
-- (void)populateMap;
 - (void)removeButtons;
-- (void)removeScorePosts;
+- (void)removeLevelItems;
 
 - (void)resetBumper:(BWBumper *)theBumper;
 
 - (void)createScorePostsWithQuantity:(NSUInteger)quantity inRect:(CGRect)insideRect;
+- (void)reloadMapWithLevelNamed:(NSString *)levelName;
 
 - (void)startCountdownForColor:(ButtonColor)winningColor;
 - (void)iterateCountdown:(NSTimer *)countdownTimer;

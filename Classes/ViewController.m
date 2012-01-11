@@ -204,10 +204,10 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     [self.view addSubview:bottomShooter];
     [bottomShooter updatePosition];
     
-    UISwipeGestureRecognizer *swipeCleanGesture = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeClean:)] autorelease];
+    UISwipeGestureRecognizer *swipeCleanGesture = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(chooseNewLevel:)] autorelease];
     [self.view addGestureRecognizer:swipeCleanGesture];
     
-    [self populateMap];
+    [self reloadMapWithLevelNamed:@"Level_1"];
     
     topScore = [[UILabel alloc] initWithFrame:CGRectMake(100, 25, 100, 50)];
     topScore.text = @"0";
@@ -295,27 +295,21 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 }
 #pragma mark -
 
-
-- (void)swipeClean:(UISwipeGestureRecognizer *)swipeGesture {
-    UIAlertView *alert = [[[UIAlertView alloc] initWithTitle:@"Remove all buttons?" message:@"" delegate:self cancelButtonTitle:@"Nope" otherButtonTitles:@"Remove", nil] autorelease];
-    [alert show];
-
-}
-
-#pragma mark UIAlertViewDelegate 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if( buttonIndex == 0 )
-        return;
-    
-    [self removeButtons];
-    [self removeScorePosts];
-    [self populateMap];
-    
-    topScore.text = @"0";
-    bottomScore.text = @"0";
-
+#pragma mark LevelPickerDelegate
+- (void)didChooseLevel:(NSString *)levelName {
+    NSLog(@"didChooseLeveL: %@", levelName);
+    [self reloadMapWithLevelNamed:levelName];
 }
 #pragma mark -
+
+- (void)chooseNewLevel:(UISwipeGestureRecognizer *)swipeGesture {
+    if( levelPickerViewController == nil ) {
+        levelPickerViewController = [[LevelPickerViewController alloc] init];
+        levelPickerViewController.delegate = self;
+    }
+    
+    [self presentViewController:levelPickerViewController animated:YES completion:nil];
+}
 
 - (void)removeButtons {
     for( UIView *potentialButton in self.view.subviews ) {
@@ -330,28 +324,44 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     bottomShooter.activeButtonCount = 0;
 }
 
-- (void)removeScorePosts {
+- (void)removeLevelItems {
     for( UIView *potentialButton in self.view.subviews ) {
+
+        // score posts
         if( [potentialButton isKindOfClass:[BWScorePost class]] ) {
             BWScorePost *buttonToRemove = (BWScorePost *)potentialButton;
             cpSpaceRemoveShape(space, buttonToRemove.chipmunkLayer.shape);
             [potentialButton removeFromSuperview];
+        
+        // bumpers
         } else if( [potentialButton isKindOfClass:[BWBumper class]] ) {
             BWBumper *buttonToRemove = (BWBumper *)potentialButton;
             cpSpaceRemoveShape(space, buttonToRemove.chipmunkLayer.shape);
+            [potentialButton removeFromSuperview];
+
+        // walls
+        } else if( [potentialButton isKindOfClass:[UIViewQuadBody class]] ) {
+            UIViewQuadBody *buttonToRemove = (UIViewQuadBody *)potentialButton;
+            cpSpaceRemoveShape(space, buttonToRemove.chipmunkLayer.shape);
+            cpSpaceRemoveBody(space, buttonToRemove.chipmunkLayer.body);
             [potentialButton removeFromSuperview];
         }
         
     }        
 }
 
-- (void)populateMap {
+- (void)reloadMapWithLevelNamed:(NSString *)levelName {
     countdownLabel.text = @"";
     currentWinner = 0;
     countdown = 0;
     
+    topScore.text = @"0";
+    bottomScore.text = @"0";
     
-    [self populateMapWithFileNamed:@"Level_2"];
+    [self removeButtons];
+    [self removeLevelItems];
+    
+    [self populateMapWithFileNamed:levelName];
     
     [self.view bringSubviewToFront:countdownLabel];    
 }
