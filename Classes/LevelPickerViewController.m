@@ -8,6 +8,14 @@
 
 #import "LevelPickerViewController.h"
 
+@interface LevelPickerViewController(PrivateMethods)
+- (void)registerForKeyboardNotifications;
+- (void)unregisterForKeyboardNotifications;
+
+- (void)keyboardWillShow:(NSNotification*)aNotification;
+- (void)keyboardWillHide:(NSNotification*)aNotification;
+@end
+
 @implementation LevelPickerViewController
 @synthesize delegate;
 
@@ -21,6 +29,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self registerForKeyboardNotifications];
+    
+    fullTextHeight = textView.frame.size.height;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [self unregisterForKeyboardNotifications];
 }
 
 #pragma UIPickerViewDataSource
@@ -76,4 +98,57 @@
     if( delegate != nil )
         [delegate didChooseLevel:mapName];
 }
+@end
+
+@implementation LevelPickerViewController(PrivateMethods)
+- (void)registerForKeyboardNotifications {
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(keyboardWillShow:)
+												 name:UIKeyboardWillShowNotification object:nil];
+	
+    [[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(keyboardWillHide:)
+												 name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)unregisterForKeyboardNotifications {
+    
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark KeyboardNotifications
+- (void)keyboardWillShow:(NSNotification *)notification {
+    NSTimeInterval animationDuration;
+    UIViewAnimationCurve curve;
+    [[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] getValue:&animationDuration];
+    [[[notification userInfo] objectForKey:UIKeyboardAnimationCurveUserInfoKey] getValue:&curve];
+    
+    NSValue *aValue = [[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey];
+    CGSize keyboardSize = [aValue CGRectValue].size;
+    
+    CGFloat keyboardHeight = UIInterfaceOrientationIsPortrait(self.interfaceOrientation) ? keyboardSize.height : keyboardSize.width;
+    
+    [UIView animateWithDuration:animationDuration delay:0.05 options:curve animations:^{
+        textView.frame = CGRectMake(textView.frame.origin.x, textView.frame.origin.y, textView.frame.size.width, fullTextHeight-keyboardHeight);
+    } completion:^(BOOL completion) {
+        
+        
+    }];
+    
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification {
+    NSTimeInterval animationDuration;
+	UIViewAnimationCurve curve;
+    [[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] getValue:&animationDuration];
+    [[[notification userInfo] objectForKey:UIKeyboardAnimationCurveUserInfoKey] getValue:&curve];
+    
+    [UIView animateWithDuration:animationDuration delay:0 options:curve animations:^(void) {
+        textView.frame = CGRectMake(textView.frame.origin.x, textView.frame.origin.y, textView.frame.size.width, fullTextHeight);
+    } completion:^(BOOL finished) {
+        
+    }];
+}
+#pragma mark -
 @end

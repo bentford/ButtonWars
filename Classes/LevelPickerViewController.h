@@ -15,6 +15,8 @@
 @interface LevelPickerViewController : UIViewController {
     IBOutlet UITextView *textView;
     NSString *currentLevelPath;
+    
+    NSUInteger fullTextHeight;
 }
 
 @property (nonatomic, assign) id<LevelPickerDelegate> delegate;
