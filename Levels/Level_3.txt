@@ -1,0 +1,43 @@
+                                   s1                                   x
+                                                                        x
+                                                                        x
+                                                                        x
+           p              p                 p              p            x
+                                                                        x
+                                                                        x
+                                                                        x
+                                                                        x
+           p              p                 p              p            x
+                                                                        x
+                                                                        x
+                                                                        x
+w1         w1              p                 p                p          x
+                                                                        x
+                                                                        x
+                                                                        x
+                                                                        x
+                                                                        x
+           b             p                    p              b          x
+                                                                        x 
+                                                                        x
+                                                                        x
+                                                                        x
+                                                                        x
+           p              p                 p             w2          w2x
+                                                                        x
+                                                                        x
+                                                                        x
+           p              p                 p              p            x
+                                                                        x
+                                                                        x
+                                                                        x
+                                                                        x
+           p              p                 p              p            x
+                                                                        x
+                                                                        x
+                                                                        x
+                                                                        x
+                                   s2                                   x
+
+571 x 755
+72 chars x 40 chars
