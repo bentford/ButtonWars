@@ -520,6 +520,12 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     
     for( NSString *wallNumber in wallPointDictionary.allKeys ) {
         NSArray *wallPoints = [wallPointDictionary objectForKey:wallNumber];
+        
+        if( [wallPoints count] != 2 ) {
+            NSLog(@"skipping wall because it had %d point(s)", [wallPoints count]);
+            continue;
+        }
+        
         CGPoint firstPoint = [[wallPoints objectAtIndex:0] CGPointValue];
         CGPoint secondPoint = [[wallPoints objectAtIndex:1] CGPointValue];
         
