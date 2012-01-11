@@ -351,7 +351,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     countdown = 0;
     
     
-    [self populateMapWithFileNamed:@"Level_1"];
+    [self populateMapWithFileNamed:@"Level_2"];
     
     [self.view bringSubviewToFront:countdownLabel];    
 }
@@ -442,7 +442,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     CGFloat perRowAmount = 1020.0/(CGFloat)mapRowCount;
     CGFloat perColumnAmount = 768.0/(CGFloat)mapColumnCount;
     
-    NSString *mapPath = [[NSBundle mainBundle] pathForResource:textMapName ofType:@"txt"];
+    NSString *mapPath = [[NSBundle mainBundle] pathForResource:textMapName ofType:@"txt" inDirectory:@"Levels"];
     NSError *fileLoadError = nil;
     NSString *mapText = [NSString stringWithContentsOfFile:mapPath encoding:NSUTF8StringEncoding error:&fileLoadError];
     if( fileLoadError != nil ) {
