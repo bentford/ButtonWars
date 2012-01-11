@@ -23,10 +23,7 @@
 		B5541650147F819300994AEB /* UIViewQuadBody.m in Sources */ = {isa = PBXBuildFile; fileRef = B554164F147F819200994AEB /* UIViewQuadBody.m */; };
 		B55416591482ACE600994AEB /* UIImageViewBody.m in Sources */ = {isa = PBXBuildFile; fileRef = B55416581482ACE600994AEB /* UIImageViewBody.m */; };
 		B554165C1482ADCB00994AEB /* UIImageViewCircleBody.m in Sources */ = {isa = PBXBuildFile; fileRef = B554165B1482ADCB00994AEB /* UIImageViewCircleBody.m */; };
-		B569D41614BCE77700F46D4B /* EmptyMap.txt in Resources */ = {isa = PBXBuildFile; fileRef = B569D41414BCE77700F46D4B /* EmptyMap.txt */; };
-		B569D41714BCE77700F46D4B /* Level_1.txt in Resources */ = {isa = PBXBuildFile; fileRef = B569D41514BCE77700F46D4B /* Level_1.txt */; };
-		B569D41914BCEF1A00F46D4B /* Level_Calabration.txt in Resources */ = {isa = PBXBuildFile; fileRef = B569D41814BCEF1A00F46D4B /* Level_Calabration.txt */; };
-		B569D41B14BD012400F46D4B /* Level_wall_test.txt in Resources */ = {isa = PBXBuildFile; fileRef = B569D41A14BD012400F46D4B /* Level_wall_test.txt */; };
+		B569D41D14BD087300F46D4B /* Levels in Resources */ = {isa = PBXBuildFile; fileRef = B569D41C14BD087300F46D4B /* Levels */; };
 		B57E3581147877E90065B34F /* chipmunk.c in Sources */ = {isa = PBXBuildFile; fileRef = B57E3549147877E90065B34F /* chipmunk.c */; };
 		B57E358D147877E90065B34F /* cpArbiter.c in Sources */ = {isa = PBXBuildFile; fileRef = B57E3567147877E90065B34F /* cpArbiter.c */; };
 		B57E358E147877E90065B34F /* cpArray.c in Sources */ = {isa = PBXBuildFile; fileRef = B57E3569147877E90065B34F /* cpArray.c */; };
@@ -122,10 +119,7 @@
 		B55416581482ACE600994AEB /* UIImageViewBody.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImageViewBody.m; sourceTree = "<group>"; };
 		B554165A1482ADCB00994AEB /* UIImageViewCircleBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImageViewCircleBody.h; sourceTree = "<group>"; };
 		B554165B1482ADCB00994AEB /* UIImageViewCircleBody.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImageViewCircleBody.m; sourceTree = "<group>"; };
-		B569D41414BCE77700F46D4B /* EmptyMap.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = EmptyMap.txt; sourceTree = "<group>"; };
-		B569D41514BCE77700F46D4B /* Level_1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Level_1.txt; sourceTree = "<group>"; };
-		B569D41814BCEF1A00F46D4B /* Level_Calabration.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Level_Calabration.txt; sourceTree = "<group>"; };
-		B569D41A14BD012400F46D4B /* Level_wall_test.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Level_wall_test.txt; sourceTree = "<group>"; };
+		B569D41C14BD087300F46D4B /* Levels */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Levels; sourceTree = "<group>"; };
 		B57E3549147877E90065B34F /* chipmunk.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = chipmunk.c; sourceTree = "<group>"; };
 		B57E354A147877E90065B34F /* chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk.h; sourceTree = "<group>"; };
 		B57E354B147877E90065B34F /* chipmunk_ffi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_ffi.h; sourceTree = "<group>"; };
@@ -269,7 +263,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				B569D41214BCE75900F46D4B /* Levels */,
+				B569D41C14BD087300F46D4B /* Levels */,
 				B5FE1AAC14A1607900022983 /* Icon-72.png */,
 				B5FE1A9A14A13ED900022983 /* Images */,
 				D36458981213420C00023C7E /* logo.png */,
@@ -291,17 +285,6 @@
 				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		B569D41214BCE75900F46D4B /* Levels */ = {
-			isa = PBXGroup;
-			children = (
-				B569D41814BCEF1A00F46D4B /* Level_Calabration.txt */,
-				B569D41414BCE77700F46D4B /* EmptyMap.txt */,
-				B569D41514BCE77700F46D4B /* Level_1.txt */,
-				B569D41A14BD012400F46D4B /* Level_wall_test.txt */,
-			);
-			name = Levels;
 			sourceTree = "<group>";
 		};
 		B57E3548147877E90065B34F /* Chipmunk */ = {
@@ -500,10 +483,7 @@
 				B5E7505314B58E7A0021AFC0 /* Peg.png in Resources */,
 				B5E7506514B90B520021AFC0 /* PegGreen.png in Resources */,
 				B5E7506614B90B520021AFC0 /* PegOrange.png in Resources */,
-				B569D41614BCE77700F46D4B /* EmptyMap.txt in Resources */,
-				B569D41714BCE77700F46D4B /* Level_1.txt in Resources */,
-				B569D41914BCEF1A00F46D4B /* Level_Calabration.txt in Resources */,
-				B569D41B14BD012400F46D4B /* Level_wall_test.txt in Resources */,
+				B569D41D14BD087300F46D4B /* Levels in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
