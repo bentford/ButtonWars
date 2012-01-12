@@ -41,6 +41,11 @@ void postStepRemoveButton(cpSpace *space, cpShape *shape, void *unused) {
     [button release];
 }
 
+void postStepRemoveButtonBodyFromSpace(cpSpace *space, cpShape *shape, void *unused) {
+    BWButton *button = shape->data;
+    cpSpaceRemoveBody(space, button.chipmunkLayer.body);
+}
+
 int beginCollisionWithButtonAndScorePost(cpArbiter *arbiter, cpSpace *space, void *data) {
     CP_ARBITER_GET_SHAPES(arbiter, a, b);
     BWButton *button = a->data;
@@ -125,6 +130,18 @@ void postSolveCollisionWithButtonAndBumper(cpArbiter *arbiter, cpSpace *space, v
     [viewController performSelector:@selector(resetBumper:) withObject:parameters afterDelay:0.1];
 }
 
+void postSolveCollisionWithButtonAndRotatingBumper(cpArbiter *arbiter, cpSpace *space, void *data) {
+    CP_ARBITER_GET_SHAPES(arbiter, a, b);
+    BWRotatingBumper *bumper = b->data;
+    BWButton *button = a->data;
+    ViewController *viewController = data;
+    
+    cpSpaceAddPostStepCallback(space, (cpPostStepFunc)postStepRemoveButtonBodyFromSpace, a, NULL);
+    [bumper rotateTrappedButton:button];
+    
+    [viewController performSelector:@selector(fireTrappedButton:) withObject:button afterDelay:3.0];
+}
+
 void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     
 	if( cpArbiterIsFirstContact(arbiter) == NO ) 
@@ -202,6 +219,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     cpSpaceAddCollisionHandler(space, 1, 2, (cpCollisionBeginFunc)beginCollisionWithButtonAndScorePost, NULL, NULL, NULL, self);
     cpSpaceAddCollisionHandler(space, 1, 3, NULL, NULL, (cpCollisionPostSolveFunc)postSolveCollisionWithButtonAndBumper, NULL, self);    
     cpSpaceAddCollisionHandler(space, 1, 4, NULL, NULL, (cpCollisionPostSolveFunc)postSolveCollisionWithButtonAndShooter, NULL, self);
+    cpSpaceAddCollisionHandler(space, 1, 5, NULL, NULL, (cpCollisionPostSolveFunc)postSolveCollisionWithButtonAndRotatingBumper, NULL, self);
     
     topShooter = [[BWShooter alloc] initWithFrame:CGRectMake(0, 0, 170, 170) color:ButtonColorGreen];
     [topShooter makeStaticBodyWithPosition:CGPointMake(self.view.bounds.size.width/2.0, 0)];
@@ -290,6 +308,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     BWButton *greenButton = [[[BWButton alloc] initWithColor:shooter.buttonColor] autorelease];
     [greenButton setupWithSpace:space position:CGPointMake(shooter.body->p.x, shooter.body->p.y)];
     [self.view addSubview:greenButton];
+    [self.view sendSubviewToBack:greenButton];
 
     cpVect v = cpvmult(cpvforangle(shooter.body->a), 1000.0f);
 	cpBodyApplyImpulse(greenButton.chipmunkLayer.body, v, cpvzero);
@@ -441,6 +460,11 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
         countdownLabel.text = [NSString stringWithFormat:@"%d", (kCountdownTimer+1)-countdown];
         
     }
+}
+
+- (void)fireTrappedButton:(BWButton *)button {
+    cpSpaceAddBody(space, button.chipmunkLayer.body);
+    //cpBodyApplyImpulse(button.chipmunkLayer.body, cpv(-1, 0), cpvzero);
 }
 
 - (void)dealloc {

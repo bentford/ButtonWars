@@ -10,6 +10,7 @@
 #import "GameData.h"
 #import "LevelPickerViewController.h"
 
+@class BWButton;
 @class BWBumper;
 @class BWChipmunkLayer;
 @interface ViewController : UIViewController <GameDelegate, LevelPickerDelegate> {
@@ -51,5 +52,7 @@
 - (void)iterateCountdown:(NSTimer *)countdownTimer;
 - (void)checkForWinner;
 - (void)stopCountdownForColor:(ButtonColor)theColor;
+
+- (void)fireTrappedButton:(BWButton *)button;
 @end
 
