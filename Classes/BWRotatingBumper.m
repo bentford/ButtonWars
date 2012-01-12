@@ -8,6 +8,11 @@
 
 #import "BWRotatingBumper.h"
 #import "BWChipmunkLayer.h"
+#import "BWButton.h"
+
+@interface BWRotatingBumper(PrivateMethods)
+- (void)forgetButton:(BWButton *)button;
+@end
 
 @implementation BWRotatingBumper
 
@@ -24,10 +29,14 @@
         
         cpShapeSetElasticity(self.chipmunkLayer.shape, 1.0);
         cpShapeSetCollisionType(self.chipmunkLayer.shape, 5);
-        cpBodySetMass(self.chipmunkLayer.body, 1000.0);
+        cpBodySetMass(self.chipmunkLayer.body, INFINITY);
+        
+        cpShapeSetSensor(self.chipmunkLayer.shape, YES);
         
         cpBodySetUserData(self.chipmunkLayer.body, self);
         cpShapeSetUserData(self.chipmunkLayer.shape, self);
+        
+        recentlyTrappedButtons = [[NSMutableSet alloc] initWithCapacity:2];
     }
     return self;
 }
@@ -48,8 +57,22 @@
     [self.chipmunkLayer updatePosition];
 }
 
-- (void)rotateTrappedButton:(BWButton *)button {
+- (BOOL)trapButton:(BWButton *)button {
+    if( [recentlyTrappedButtons containsObject:button] )
+        return NO;
+    
+    cpVect buttonPoint = cpBodyWorld2Local(self.chipmunkLayer.body, cpBodyGetPos(button.chipmunkLayer.body));
+    NSLog(@"button point: %@", NSStringFromCGPoint(buttonPoint));
     cpBodySetAngVel(self.chipmunkLayer.body, 1);
     
+    [recentlyTrappedButtons addObject:button];
+    [self performSelector:@selector(forgetButton:) withObject:button afterDelay:2.0];
+    return YES;
+}
+@end
+
+@implementation BWRotatingBumper(PrivateMethods)
+- (void)forgetButton:(BWButton *)button {
+    [recentlyTrappedButtons removeObject:button];
 }
 @end
