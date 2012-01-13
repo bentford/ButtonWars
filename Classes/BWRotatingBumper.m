@@ -61,7 +61,7 @@ void postStepRemoveConstraint(cpSpace *space, void *obj, void *data);
 }
 
 - (void)trapButton:(BWButton *)button withSpace:(cpSpace *)space {
-    if( [recentlyTrappedButtons containsObject:button] )
+    if( [recentlyTrappedButtons count] > 0 )
         return;
 
     // freeze button
@@ -71,7 +71,7 @@ void postStepRemoveConstraint(cpSpace *space, void *obj, void *data);
     
     // ignore collisions for this button button for a short moment
     [recentlyTrappedButtons addObject:button];
-    [self performSelector:@selector(forgetButton:) withObject:button afterDelay:3.2];
+    [self performSelector:@selector(forgetButton:) withObject:button afterDelay:1.0];
     
     cpSpaceAddPostStepCallback(space, (cpPostStepFunc)postStepTrapButton, button, self);
 }
@@ -115,7 +115,10 @@ void postStepTrapButton(cpSpace *space, void *obj, void *data) {
     cpSpaceAddConstraint(space, groove);
     cpSpaceAddConstraint(space, pin);
     
-    cpBodySetAngVel(bumper.chipmunkLayer.body, 4);
+    if( button.color == ButtonColorGreen )
+        cpBodySetAngVel(bumper.chipmunkLayer.body, -4);
+    else
+        cpBodySetAngVel(bumper.chipmunkLayer.body, 4);
     
     // fire button after delay
     NSArray *parameters = [NSArray arrayWithObjects:button,[NSValue valueWithPointer:groove], [NSValue valueWithPointer:pin], [NSValue valueWithPointer:space], nil];
