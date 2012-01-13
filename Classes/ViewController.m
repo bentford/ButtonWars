@@ -556,7 +556,6 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
                 BWBumper *bumper = [[[BWBumper alloc] init] autorelease];
                 [bumper setupWithSpace:space position:currentPosition];
                 [self.view addSubview:bumper];
-                NSLog(@"adding bumper to : %@", NSStringFromCGPoint(currentPosition));
             }
             
             if( [character isEqualToString:@"r"] == YES && currentColumn+1 < [columns count] && [[columns objectAtIndex:currentColumn+1] isEqualToString:@"b"] == YES ) {
