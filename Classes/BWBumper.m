@@ -18,7 +18,7 @@
 
 - (id)init {
     if( (self = [super initWithFrame:CGRectMake(0, 0, 100, 100)]) ) {
-        self.image = [UIImage imageNamed:@"Bumper.png"];
+        self.image = [UIImage imageNamed:@"Bumper_v2.png"];
         cpShapeSetElasticity(self.chipmunkLayer.shape, 1.0);
         cpShapeSetCollisionType(self.chipmunkLayer.shape, 3);
         cpBodySetMass(self.chipmunkLayer.body, 100.0);

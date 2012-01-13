@@ -28,6 +28,7 @@
 		B569D42214BD0A5B00F46D4B /* LevelPicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = B569D42114BD0A5A00F46D4B /* LevelPicker.xib */; };
 		B569D45C14BE54FF00F46D4B /* RotatingBumper.png in Resources */ = {isa = PBXBuildFile; fileRef = B569D45B14BE54FF00F46D4B /* RotatingBumper.png */; };
 		B569D45F14BE555300F46D4B /* BWRotatingBumper.m in Sources */ = {isa = PBXBuildFile; fileRef = B569D45E14BE555200F46D4B /* BWRotatingBumper.m */; };
+		B569D49A14C0D24A00F46D4B /* Bumper_v2.png in Resources */ = {isa = PBXBuildFile; fileRef = B569D49914C0D24A00F46D4B /* Bumper_v2.png */; };
 		B57E3581147877E90065B34F /* chipmunk.c in Sources */ = {isa = PBXBuildFile; fileRef = B57E3549147877E90065B34F /* chipmunk.c */; };
 		B57E358D147877E90065B34F /* cpArbiter.c in Sources */ = {isa = PBXBuildFile; fileRef = B57E3567147877E90065B34F /* cpArbiter.c */; };
 		B57E358E147877E90065B34F /* cpArray.c in Sources */ = {isa = PBXBuildFile; fileRef = B57E3569147877E90065B34F /* cpArray.c */; };
@@ -129,6 +130,7 @@
 		B569D45B14BE54FF00F46D4B /* RotatingBumper.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RotatingBumper.png; sourceTree = "<group>"; };
 		B569D45D14BE555200F46D4B /* BWRotatingBumper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWRotatingBumper.h; sourceTree = "<group>"; };
 		B569D45E14BE555200F46D4B /* BWRotatingBumper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWRotatingBumper.m; sourceTree = "<group>"; };
+		B569D49914C0D24A00F46D4B /* Bumper_v2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Bumper_v2.png; sourceTree = "<group>"; };
 		B57E3549147877E90065B34F /* chipmunk.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = chipmunk.c; sourceTree = "<group>"; };
 		B57E354A147877E90065B34F /* chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk.h; sourceTree = "<group>"; };
 		B57E354B147877E90065B34F /* chipmunk_ffi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_ffi.h; sourceTree = "<group>"; };
@@ -225,6 +227,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				B569D49814C0C0D800F46D4B /* Util */,
 				B5FE1A9E14A140C500022983 /* Chipmunk Parts */,
 				B5FE1A9D14A140AA00022983 /* Game Parts */,
 				B57E3548147877E90065B34F /* Chipmunk */,
@@ -295,6 +298,15 @@
 				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B569D49814C0C0D800F46D4B /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				B5FE1AD114A265E900022983 /* Random.h */,
+				B5FE1AD214A265E900022983 /* Random.m */,
+			);
+			name = Util;
 			sourceTree = "<group>";
 		};
 		B57E3548147877E90065B34F /* Chipmunk */ = {
@@ -370,6 +382,7 @@
 		B5FE1A9A14A13ED900022983 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				B569D49914C0D24A00F46D4B /* Bumper_v2.png */,
 				B569D45B14BE54FF00F46D4B /* RotatingBumper.png */,
 				B5E7506314B90B520021AFC0 /* PegGreen.png */,
 				B5E7506414B90B520021AFC0 /* PegOrange.png */,
@@ -386,15 +399,13 @@
 		B5FE1A9D14A140AA00022983 /* Game Parts */ = {
 			isa = PBXGroup;
 			children = (
+				B586134414A1A5C800F7D9ED /* GameData.h */,
 				B5FE1A9F14A1410100022983 /* BWButton.h */,
 				B5FE1AA014A1410100022983 /* BWButton.m */,
 				B5FE1AA214A143C800022983 /* BWShooter.h */,
 				B5FE1AA314A143C800022983 /* BWShooter.m */,
-				B586134414A1A5C800F7D9ED /* GameData.h */,
 				B5FE1ACB14A2628B00022983 /* BWScorePost.h */,
 				B5FE1ACC14A2628B00022983 /* BWScorePost.m */,
-				B5FE1AD114A265E900022983 /* Random.h */,
-				B5FE1AD214A265E900022983 /* Random.m */,
 				B5248B0B14AD47E20058903D /* BWBumper.h */,
 				B5248B0C14AD47E20058903D /* BWBumper.m */,
 				B569D45D14BE555200F46D4B /* BWRotatingBumper.h */,
@@ -498,6 +509,7 @@
 				B569D41D14BD087300F46D4B /* Levels in Resources */,
 				B569D42214BD0A5B00F46D4B /* LevelPicker.xib in Resources */,
 				B569D45C14BE54FF00F46D4B /* RotatingBumper.png in Resources */,
+				B569D49A14C0D24A00F46D4B /* Bumper_v2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
