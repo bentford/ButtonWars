@@ -489,13 +489,14 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 - (void)populateMapWithFileNamed:(NSString *)textMapName {
     
     NSUInteger mapRowCount = 33;
-    NSUInteger mapColumnCount = 64;
+    NSUInteger mapColumnCount = 65;
     
     CGFloat perRowAmount = 1024.0/((CGFloat)mapRowCount-1);
-    CGFloat perColumnAmount = 768.0/(CGFloat)mapColumnCount;
+    CGFloat perColumnAmount = 768.0/((CGFloat)mapColumnCount-1);
     
     NSUInteger middleRow = ((mapRowCount-1)/2)+1; // 17
-
+    NSUInteger middleColumn = ((mapColumnCount-1)/2)+1; // 33
+    
     NSString *cacheFolder = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
     NSString *mapPath = [cacheFolder stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.txt", textMapName]];
     NSError *fileLoadError = nil;
@@ -522,13 +523,27 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
         }
         for( NSString *character in columns ) {
             
-            CGPoint currentPosition = CGPointZero;
+            
+            CGFloat xPoint = 0;
+            CGFloat yPoint = 0;
+            
+            // get xPoint 
             if( currentRow < middleRow )
-                currentPosition = CGPointMake(currentColumn*perColumnAmount, currentRow*perRowAmount);
-            if( currentRow == middleRow )
-                currentPosition = CGPointMake(currentColumn*perColumnAmount, 1024.0/2.0);
+                yPoint = currentRow*perRowAmount;
+            else if( currentRow == middleRow )
+                yPoint = 1024.0/2.0;
             else if( currentRow > middleRow )
-                currentPosition = CGPointMake(currentColumn*perColumnAmount, (currentRow-1)*perRowAmount);
+                yPoint = (currentRow-1)*perRowAmount;
+            
+            // get yPoint
+            if( currentColumn < middleColumn )
+                xPoint = currentColumn * perColumnAmount;
+            else if( currentColumn == middleColumn ) 
+                xPoint = 768.0/2.0;
+            else if( currentColumn > middleColumn )
+                xPoint = (currentColumn-1)*perColumnAmount;
+            
+            CGPoint currentPosition = CGPointMake(xPoint, yPoint);
             
             if( [character isEqualToString:@"p"] == YES ) {
                 BWScorePost *scorePost = [[[BWScorePost alloc] init] autorelease];
