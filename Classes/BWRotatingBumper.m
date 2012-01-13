@@ -71,7 +71,7 @@ void postStepRemoveConstraint(cpSpace *space, void *obj, void *data);
     
     // ignore collisions for this button button for a short moment
     [recentlyTrappedButtons addObject:button];
-    [self performSelector:@selector(forgetButton:) withObject:button afterDelay:5.0];
+    [self performSelector:@selector(forgetButton:) withObject:button afterDelay:3.2];
     
     cpSpaceAddPostStepCallback(space, (cpPostStepFunc)postStepTrapButton, button, self);
 }
@@ -90,6 +90,8 @@ void postStepRemoveConstraint(cpSpace *space, void *obj, void *data);
     
 
     cpBodySetAngVel(self.chipmunkLayer.body, 0);
+    cpBodySetTorque(self.chipmunkLayer.body, 0);
+    
     cpSpaceRemoveConstraint(space, pin);
     cpSpaceRemoveConstraint(space, groove);
     
@@ -106,17 +108,18 @@ void postStepTrapButton(cpSpace *space, void *obj, void *data) {
     BWButton *button = obj;
     BWRotatingBumper *bumper = data;
     
+    cpVect localButtonPosition = cpBodyWorld2Local(bumper.chipmunkLayer.body, cpBodyGetPos(button.chipmunkLayer.body));
     
-    cpConstraint *groove = cpGrooveJointNew(bumper.chipmunkLayer.body, button.chipmunkLayer.body, cpv(0,0), cpv(-50,0), cpvzero);
+    cpConstraint *groove = cpGrooveJointNew(bumper.chipmunkLayer.body, button.chipmunkLayer.body, cpv(0,0), localButtonPosition, cpvzero);
     cpConstraint *pin = cpPinJointNew(bumper.chipmunkLayer.body, button.chipmunkLayer.body, cpvzero, cpvzero);
     cpSpaceAddConstraint(space, groove);
     cpSpaceAddConstraint(space, pin);
     
-    cpBodySetAngVel(bumper.chipmunkLayer.body, 1);
+    cpBodySetAngVel(bumper.chipmunkLayer.body, 4);
     
     // fire button after delay
     NSArray *parameters = [NSArray arrayWithObjects:button,[NSValue valueWithPointer:groove], [NSValue valueWithPointer:pin], [NSValue valueWithPointer:space], nil];
-    [bumper performSelector:@selector(fireTrappedButton:) withObject:parameters afterDelay:3.0];
+    [bumper performSelector:@selector(fireTrappedButton:) withObject:parameters afterDelay:1.0];
 }
 
 
