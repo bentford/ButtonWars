@@ -17,6 +17,7 @@
 
 @implementation BWButton
 @synthesize color;
+@synthesize ignoreGuideForce;
 
 + (Class)layerClass {
     return [BWChipmunkLayer class];
@@ -41,6 +42,7 @@
         
         cpShapeSetUserData(self.chipmunkLayer.shape, self);
         canDie = NO;
+        self.ignoreGuideForce = NO;
         [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(stopDeathPrevention) userInfo:nil repeats:NO];
     }
     return self;

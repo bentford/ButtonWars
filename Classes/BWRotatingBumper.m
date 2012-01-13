@@ -12,6 +12,9 @@
 
 @interface BWRotatingBumper(PrivateMethods)
 - (void)forgetButton:(BWButton *)button;
+
+void postStepTrapButton(cpSpace *space, void *obj, void *data);
+void postStepRemoveConstraint(cpSpace *space, void *obj, void *data);
 @end
 
 @implementation BWRotatingBumper
@@ -57,17 +60,19 @@
     [self.chipmunkLayer updatePosition];
 }
 
-- (BOOL)trapButton:(BWButton *)button {
+- (void)trapButton:(BWButton *)button withSpace:(cpSpace *)space {
     if( [recentlyTrappedButtons containsObject:button] )
-        return NO;
+        return;
+
+    // freeze button
+    button.ignoreGuideForce = YES;
+    cpBodySetVel(button.chipmunkLayer.body, cpvzero);    
     
-    cpVect buttonPoint = cpBodyWorld2Local(self.chipmunkLayer.body, cpBodyGetPos(button.chipmunkLayer.body));
-    NSLog(@"button point: %@", NSStringFromCGPoint(buttonPoint));
-    cpBodySetAngVel(self.chipmunkLayer.body, 1);
-    
+    // ignore collisions for this button button for a short moment
     [recentlyTrappedButtons addObject:button];
     [self performSelector:@selector(forgetButton:) withObject:button afterDelay:2.0];
-    return YES;
+    
+    cpSpaceAddPostStepCallback(space, (cpPostStepFunc)postStepTrapButton, button, self);
 }
 @end
 
@@ -75,4 +80,38 @@
 - (void)forgetButton:(BWButton *)button {
     [recentlyTrappedButtons removeObject:button];
 }
+
+- (void)fireTrappedButton:(NSArray *)parameters {
+    BWButton *button = [parameters objectAtIndex:0];
+    cpConstraint *groove = (cpConstraint *)[((NSValue *)[parameters objectAtIndex:1]) pointerValue];
+    cpConstraint *pin = (cpConstraint *)[((NSValue *)[parameters objectAtIndex:2]) pointerValue];
+    cpSpace *space = (cpSpace *)[((NSValue *)[parameters objectAtIndex:3]) pointerValue];
+    
+
+    cpBodySetAngVel(self.chipmunkLayer.body, 0);
+    cpSpaceRemoveConstraint(space, pin);
+    cpSpaceRemoveConstraint(space, groove);
+    
+    button.ignoreGuideForce = NO;
+    cpBodyApplyImpulse(button.chipmunkLayer.body, cpv(-1000,0), cpvzero);
+}
+
+void postStepTrapButton(cpSpace *space, void *obj, void *data) {
+    BWButton *button = obj;
+    BWRotatingBumper *bumper = data;
+    
+    
+    cpConstraint *groove = cpGrooveJointNew(bumper.chipmunkLayer.body, button.chipmunkLayer.body, cpv(0,0), cpv(-50,0), cpvzero);
+    cpConstraint *pin = cpPinJointNew(bumper.chipmunkLayer.body, button.chipmunkLayer.body, cpvzero, cpvzero);
+    cpSpaceAddConstraint(space, groove);
+    cpSpaceAddConstraint(space, pin);
+    
+    cpBodySetAngVel(bumper.chipmunkLayer.body, 1);
+    
+    // fire button after delay
+    NSArray *parameters = [NSArray arrayWithObjects:button,[NSValue valueWithPointer:groove], [NSValue valueWithPointer:pin], [NSValue valueWithPointer:space], nil];
+    [bumper performSelector:@selector(fireTrappedButton:) withObject:parameters afterDelay:3.0];
+}
+
+
 @end

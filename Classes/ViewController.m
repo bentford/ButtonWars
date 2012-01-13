@@ -134,13 +134,8 @@ void beginSolveCollisionWithButtonAndRotatingBumper(cpArbiter *arbiter, cpSpace 
     CP_ARBITER_GET_SHAPES(arbiter, a, b);
     BWRotatingBumper *bumper = b->data;
     BWButton *button = a->data;
-    ViewController *viewController = data;
 
-    if( [bumper trapButton:button] == YES ) {
-        cpSpaceAddPostStepCallback(space, (cpPostStepFunc)postStepRemoveButtonBodyFromSpace, a, NULL);
-        NSArray *parameters = [NSArray arrayWithObjects:button, bumper, nil];
-        [viewController performSelector:@selector(fireTrappedButton:) withObject:parameters afterDelay:3.0];
-    }
+    [bumper trapButton:button withSpace:space];
 }
 
 void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
@@ -290,7 +285,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     
 
     for( UIView *aView in self.view.subviews ) 
-        if( [aView isKindOfClass:[BWButton class]] == YES ) {
+        if( [aView isKindOfClass:[BWButton class]] == YES && ((BWButton *)aView).ignoreGuideForce == NO ) {
             if( ((BWButton *)aView).color == ButtonColorGreen )
                 [(BWButton *)aView guideTowardPlaneOfPoint:CGPointMake(self.view.bounds.size.width/2.0, 0)];
             else

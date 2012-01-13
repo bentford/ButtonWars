@@ -21,9 +21,12 @@
 
 @property (nonatomic, readonly) ButtonColor color;
 @property (nonatomic, readonly) BOOL canDie;
+@property (nonatomic, assign) BOOL ignoreGuideForce;
 
 - (void)guideTowardPoint:(CGPoint)guidePoint;
 - (void)guideTowardPlaneOfPoint:(CGPoint)guidePoint;
 
 - (void)applyImpulseWithVector:(CGPoint)baseVector basedOnDistance:(CGFloat)distance;
+
+
 @end

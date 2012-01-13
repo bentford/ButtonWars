@@ -16,5 +16,6 @@
 
 - (void)setupWithSpace:(cpSpace *)space position:(CGPoint)position;
 
-- (BOOL)trapButton:(BWButton *)button;
+- (void)trapButton:(BWButton *)button withSpace:(cpSpace *)space;
+
 @end
