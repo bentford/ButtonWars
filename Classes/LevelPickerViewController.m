@@ -107,23 +107,22 @@
 }
 
 - (IBAction)reloadFromBundle:(id)sender {
-    NSString *cacheFolder = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+    
     NSString *currentFileName = [[currentLevelPath lastPathComponent] stringByReplacingOccurrencesOfString:@".txt" withString:@""];
     
-    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:currentFileName ofType:@"txt"];
-    NSString *cacheFolderPath = [cacheFolder stringByAppendingPathComponent:[bundlePath lastPathComponent]];
+    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:currentFileName ofType:@"txt" inDirectory:@"Levels"];
 
     NSError *error = nil;
-    [[NSFileManager defaultManager] removeItemAtPath:cacheFolderPath error:&error];
+    [[NSFileManager defaultManager] removeItemAtPath:currentLevelPath error:&error];
     if( error != nil ) {
         NSLog(@"Error deleting existing file: %@", [error localizedDescription]);
         error = nil;
     }
     
-    if( [[NSFileManager defaultManager] fileExistsAtPath:cacheFolderPath] == YES )
-        NSLog(@"couldn't delete file at path: %@", cacheFolderPath);
+    if( [[NSFileManager defaultManager] fileExistsAtPath:currentLevelPath] == YES )
+        NSLog(@"couldn't delete file at path: %@", currentLevelPath);
 
-    [[NSFileManager defaultManager] copyItemAtPath:bundlePath toPath:cacheFolderPath error:&error];
+    [[NSFileManager defaultManager] copyItemAtPath:bundlePath toPath:currentLevelPath error:&error];
     if( error != nil )
         NSLog(@"Error copying file: %@", [error localizedDescription]);
     
