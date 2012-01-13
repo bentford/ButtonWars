@@ -164,7 +164,13 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
-
+    self.wantsFullScreenLayout = YES;
+    
+    CALayer *background = [CALayer layer];
+    background.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
+    background.contents = (id)[UIImage imageNamed:@"Background_1.png"].CGImage;
+    [self.view.layer insertSublayer:background atIndex:0];
+    
 	space = cpSpaceNew();
     cpSpaceSetIterations(space, 10);
     
@@ -237,12 +243,16 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     
     topScore = [[UILabel alloc] initWithFrame:CGRectMake(100, 25, 100, 50)];
     topScore.text = @"0";
-    topScore.font = [UIFont boldSystemFontOfSize:24];    
+    topScore.font = [UIFont boldSystemFontOfSize:24];
+    topScore.backgroundColor = [UIColor clearColor];
+    topScore.textColor = [UIColor whiteColor];    
     [self.view addSubview:topScore];
     
     bottomScore = [[UILabel alloc] initWithFrame:CGRectMake(100, self.view.bounds.size.height-75, 100, 50)];
     bottomScore.text = @"0";
     bottomScore.font = [UIFont boldSystemFontOfSize:24];
+    bottomScore.backgroundColor = [UIColor clearColor];    
+    bottomScore.textColor = [UIColor whiteColor];
     [self.view addSubview:bottomScore];
     
     countdownLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.bounds.size.width/2.0-200, self.view.bounds.size.height/2.0-40, 400, 80)];
@@ -303,8 +313,8 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     shooter.activeButtonCount++;
     BWButton *greenButton = [[[BWButton alloc] initWithColor:shooter.buttonColor] autorelease];
     [greenButton setupWithSpace:space position:CGPointMake(shooter.body->p.x, shooter.body->p.y)];
-    [self.view addSubview:greenButton];
-    [self.view sendSubviewToBack:greenButton];
+    [self.view insertSubview:greenButton belowSubview:topScore];
+    
 
     cpVect v = cpvmult(cpvforangle(shooter.body->a), 1000.0f);
 	cpBodyApplyImpulse(greenButton.chipmunkLayer.body, v, cpvzero);
@@ -478,12 +488,14 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 @implementation ViewController(PrivateMethods)
 - (void)populateMapWithFileNamed:(NSString *)textMapName {
     
-    NSUInteger mapRowCount = 40;
-    NSUInteger mapColumnCount = 72;
+    NSUInteger mapRowCount = 33;
+    NSUInteger mapColumnCount = 64;
     
-    CGFloat perRowAmount = 1020.0/(CGFloat)mapRowCount;
+    CGFloat perRowAmount = 1024.0/((CGFloat)mapRowCount-1);
     CGFloat perColumnAmount = 768.0/(CGFloat)mapColumnCount;
     
+    NSUInteger middleRow = ((mapRowCount-1)/2)+1; // 17
+
     NSString *cacheFolder = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
     NSString *mapPath = [cacheFolder stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.txt", textMapName]];
     NSError *fileLoadError = nil;
@@ -510,39 +522,43 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
         }
         for( NSString *character in columns ) {
             
+            CGPoint currentPosition = CGPointZero;
+            if( currentRow < middleRow )
+                currentPosition = CGPointMake(currentColumn*perColumnAmount, currentRow*perRowAmount);
+            if( currentRow == middleRow )
+                currentPosition = CGPointMake(currentColumn*perColumnAmount, 1024.0/2.0);
+            else if( currentRow > middleRow )
+                currentPosition = CGPointMake(currentColumn*perColumnAmount, (currentRow-1)*perRowAmount);
             
             if( [character isEqualToString:@"p"] == YES ) {
-                CGPoint newPosition = CGPointMake(currentColumn*perColumnAmount, currentRow*perRowAmount);
                 BWScorePost *scorePost = [[[BWScorePost alloc] init] autorelease];
-                [scorePost setupWithSpace:space position:newPosition];
+                [scorePost setupWithSpace:space position:currentPosition];
                 [self.view addSubview:scorePost];
                 [scorePost.chipmunkLayer updatePosition];
             }
             
             if( [character isEqualToString:@"b"] == YES && ( currentColumn == 0 || [[columns objectAtIndex:currentColumn-1] isEqualToString:@"r"] == NO) ) {
-                CGPoint newPosition = CGPointMake(currentColumn*perColumnAmount, currentRow*perRowAmount);
                 BWBumper *bumper = [[[BWBumper alloc] init] autorelease];
-                [bumper setupWithSpace:space position:newPosition];
+                [bumper setupWithSpace:space position:currentPosition];
                 [self.view addSubview:bumper];
+                NSLog(@"adding bumper to : %@", NSStringFromCGPoint(currentPosition));
             }
             
             if( [character isEqualToString:@"r"] == YES && currentColumn+1 < [columns count] && [[columns objectAtIndex:currentColumn+1] isEqualToString:@"b"] == YES ) {
-                CGPoint newPosition = CGPointMake(currentColumn*perColumnAmount, currentRow*perRowAmount);
                 BWRotatingBumper *bumper = [[[BWRotatingBumper alloc] init] autorelease];
-                [bumper setupWithSpace:space position:newPosition];
+                [bumper setupWithSpace:space position:currentPosition];
                 [self.view addSubview:bumper];
             }
             
             // walls
             if( [character isEqualToString:@"w"] == YES ) {
-                CGPoint newPosition = CGPointMake(currentColumn*perColumnAmount, currentRow*perRowAmount);
                 NSString *wallNumber = [columns objectAtIndex:currentColumn+1];
                 NSString *wallIdentifier = [NSString stringWithFormat:@"%@%@", character, wallNumber];
                 
                 if( [wallPointDictionary.allKeys containsObject:wallIdentifier] == NO )
                     [wallPointDictionary setObject:[NSMutableArray array] forKey:wallIdentifier];
                 
-                [[wallPointDictionary objectForKey:wallIdentifier] addObject:[NSValue valueWithCGPoint:newPosition]];
+                [[wallPointDictionary objectForKey:wallIdentifier] addObject:[NSValue valueWithCGPoint:currentPosition]];
             }
 
             

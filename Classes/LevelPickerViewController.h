@@ -12,15 +12,19 @@
 - (void)didChooseLevel:(NSString *)levelName;
 @end
 
-@interface LevelPickerViewController : UIViewController {
+@interface LevelPickerViewController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource> {
     IBOutlet UITextView *textView;
     NSString *currentLevelPath;
     
     NSUInteger fullTextHeight;
+    
+    IBOutlet UIPickerView *filePicker;
 }
 
 @property (nonatomic, assign) id<LevelPickerDelegate> delegate;
 
 - (IBAction)close:(id)sender;
 - (IBAction)saveChanges:(id)sender;
+
+- (IBAction)reloadFromBundle:(id)sender;
 @end

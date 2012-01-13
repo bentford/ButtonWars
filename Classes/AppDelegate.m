@@ -15,7 +15,10 @@
 @synthesize viewController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {   
-  // Some quick sound code for this demonstration.
+  
+    [UIApplication sharedApplication].statusBarHidden = YES;
+    
+    // Some quick sound code for this demonstration.
 	ALCdevice *device = alcOpenDevice(NULL);
 	ALCcontext *context = alcCreateContext(device, NULL);
 	alcMakeContextCurrent(context);

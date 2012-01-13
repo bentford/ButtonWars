@@ -32,11 +32,18 @@
     
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self pickerView:filePicker didSelectRow:[filePicker selectedRowInComponent:0] inComponent:0];
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self registerForKeyboardNotifications];
     
     fullTextHeight = textView.frame.size.height;
+
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -45,7 +52,7 @@
     [self unregisterForKeyboardNotifications];
 }
 
-#pragma UIPickerViewDataSource
+#pragma mark UIPickerViewDataSource
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
     return 1;
 }
@@ -55,7 +62,7 @@
 }
 #pragma mark -
 
-#pragma UIPickerViewDelegate
+#pragma mark UIPickerViewDelegate
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
     NSString *fullPath = [[[NSBundle mainBundle] pathsForResourcesOfType:@"txt" inDirectory:@"Levels"] objectAtIndex:row];
     return [fullPath lastPathComponent];
@@ -97,6 +104,30 @@
     NSString *mapName = [[currentLevelPath lastPathComponent] stringByReplacingOccurrencesOfString:@".txt" withString:@""];
     if( delegate != nil )
         [delegate didChooseLevel:mapName];
+}
+
+- (IBAction)reloadFromBundle:(id)sender {
+    NSString *cacheFolder = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *currentFileName = [[currentLevelPath lastPathComponent] stringByReplacingOccurrencesOfString:@".txt" withString:@""];
+    
+    NSString *bundlePath = [[NSBundle mainBundle] pathForResource:currentFileName ofType:@"txt"];
+    NSString *cacheFolderPath = [cacheFolder stringByAppendingPathComponent:[bundlePath lastPathComponent]];
+
+    NSError *error = nil;
+    [[NSFileManager defaultManager] removeItemAtPath:cacheFolderPath error:&error];
+    if( error != nil ) {
+        NSLog(@"Error deleting existing file: %@", [error localizedDescription]);
+        error = nil;
+    }
+    
+    if( [[NSFileManager defaultManager] fileExistsAtPath:cacheFolderPath] == YES )
+        NSLog(@"couldn't delete file at path: %@", cacheFolderPath);
+
+    [[NSFileManager defaultManager] copyItemAtPath:bundlePath toPath:cacheFolderPath error:&error];
+    if( error != nil )
+        NSLog(@"Error copying file: %@", [error localizedDescription]);
+    
+    [self pickerView:filePicker didSelectRow:[filePicker selectedRowInComponent:0] inComponent:0];
 }
 @end
 
