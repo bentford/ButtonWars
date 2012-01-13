@@ -67,10 +67,11 @@ void postStepRemoveConstraint(cpSpace *space, void *obj, void *data);
     // freeze button
     button.ignoreGuideForce = YES;
     cpBodySetVel(button.chipmunkLayer.body, cpvzero);    
+    cpBodySetAngVel(button.chipmunkLayer.body, 0);
     
     // ignore collisions for this button button for a short moment
     [recentlyTrappedButtons addObject:button];
-    [self performSelector:@selector(forgetButton:) withObject:button afterDelay:2.0];
+    [self performSelector:@selector(forgetButton:) withObject:button afterDelay:5.0];
     
     cpSpaceAddPostStepCallback(space, (cpPostStepFunc)postStepTrapButton, button, self);
 }
@@ -93,7 +94,12 @@ void postStepRemoveConstraint(cpSpace *space, void *obj, void *data);
     cpSpaceRemoveConstraint(space, groove);
     
     button.ignoreGuideForce = NO;
-    cpBodyApplyImpulse(button.chipmunkLayer.body, cpv(-1000,0), cpvzero);
+    
+    cpVect collisionVector = cpvnormalize(cpvsub(cpBodyGetPos(self.chipmunkLayer.body), cpBodyGetPos(button.chipmunkLayer.body)));
+    cpVect invertedCollisionVector = cpvrotate(collisionVector, cpvforangle(M_PI));
+    cpVect impulseVector = cpvmult(invertedCollisionVector, 1000);
+    
+    cpBodyApplyImpulse(button.chipmunkLayer.body, impulseVector, cpvzero);
 }
 
 void postStepTrapButton(cpSpace *space, void *obj, void *data) {
