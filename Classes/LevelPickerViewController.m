@@ -42,7 +42,7 @@
     [super viewDidAppear:animated];
     [self registerForKeyboardNotifications];
     
-    fullTextHeight = textView.frame.size.height;
+    fullTextHeight = 763;
 
 }
 
