@@ -1,42 +1,39 @@
-p    p    p    p    p    p    p    p    p    p    p    p    p    p     px
-                                                                       px
-                                                                       px
-                                                                       px
-                                                                       px
-                                                                       px
-                                                                       px
-                                                                       px
-                                                                       px
-                                                                       px
-                                                                       px
-                                                                       px
-                                                                       px
-                                                                       px
-                                                                       px
-                                                                       px
-                                                                       px
-                                                                       px
-                                                                       px
-                                                                       px
-                                                                       px
-                                                                       px
-                                                                       px
-                                                                       px
-                                                                       px
-                                                                       px
-                                                                       px
-                                                                       px
-                                                                       px
-                                                                       px
-                                                                       px
-                                                                       px
-                                                                       px
-                                                                       px
-                                                                       px
-                                                                       px
-                                                                       px
-                                                                       px
-                                                                       px
-p    p    p    p    p    p    p    p    p    p    p    p    p    p     px
-571 x 755
-72 chars x 40 chars
+p    p    p    p    p    p    p    p    p    p    p    p    p   px
+                                                                px
+                                                                px
+                                                                px
+                                                                px
+                                                                px
+                                                                px
+                                                                px
+                                                                px
+                                                                px
+                                                                px
+                                                                px
+                                                                px
+                                                                px
+                                                                px
+                                                                px
+                                                                px
+                                                                px
+                                                                px
+                                                                px
+                                                                px
+                                                                px
+                                                                px
+                                                                px
+                                                                px
+                                                                px
+                                                                px
+                                                                px
+                                                                px
+                                                                px
+                                                                px
+                                                                px
+p    p    p    p    p    p    p    p    p    p    p    p    p   px
+
+65 chars x 33 chars 
+
+center point( 33, 17 )
+
+vertical guide is on col 66 

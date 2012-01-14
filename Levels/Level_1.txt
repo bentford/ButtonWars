@@ -1,36 +1,40 @@
-                                s1                           	 x
-                                                               	 x
-                                                               	 x
-                                                               	 x
-                                                               	 x
-                                                               	 x
-                                                               	 x
-                                                               	 x
-                                                               	 x
-                                                               	 x
-                                                               	 x
-                                                               	 x
+                                s2                               x
                                                                	 x
                                                                  x
-                                                             	 x
-                                                               	 x
+                                                                 x
+                                                                 x
+                                                                 x
+                                                                 x
+                                                                 x
+                                                                 x
+                                                                 x
+                                                                 x
+                                                                 x
+                                                                 x
+                                                                 x
+                                                                 x
+                                                                 x
                                 b                             	 x
                                                                	 x
-                                                               	 x
-                                                         	     x      
-                                                               	 x   
-                                                               	 x
-                                                               	 x
-                                                             	 x
-                                                               	 x
-                                                               	 x                            
-                                                               	 x
-                                                               	 x
-                                                               	 x
-                                                               	 x
+                                                                 x
+                                                                 x
+                                                                 x
+                                                                 x
+                                                                 x
+                                                                 x
+                                                                 x
+                                                                 x
+                                                                 x
+                                                                 x
+                                                                 x
+                                                                 x
                                                                  x
                                                                  x
                                 s2                               x
                                                                  
                                                                  
-64 chars x 33 chars                                              
+65 chars x 33 chars 
+
+center point( 33, 17 )
+
+vertical guide is on col 66 
