@@ -35,6 +35,8 @@
     BWShooter *bottomShooter;
     
     LevelPickerViewController *levelPickerViewController;
+    
+    NSUInteger pointsToWin;
 }
 
 @property (nonatomic, retain) UILabel *topScore;

@@ -31,8 +31,12 @@
                                                                  x
                                                                  x
                                 s2                               x
-                                                                 
-                                                                 
+10
+
+
+line 34 is the points need to win
+
+MapData:                                                                 
 65 chars x 33 chars 
 
 center point( 33, 17 )

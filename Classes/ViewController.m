@@ -415,12 +415,12 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     }
 }
 - (void)checkForWinner {
-    if( [topScore.text intValue] >= 15 )
+    if( [topScore.text intValue] >= pointsToWin )
         [self startCountdownForColor:ButtonColorGreen];
     else if( currentWinner == ButtonColorGreen )
         [self stopCountdownForColor:ButtonColorGreen];
     
-    if( [bottomScore.text intValue] >= 15 )
+    if( [bottomScore.text intValue] >= pointsToWin )
         [self startCountdownForColor:ButtonColorOrange];
     else if( currentWinner == ButtonColorOrange )
         [self stopCountdownForColor:ButtonColorOrange];
@@ -608,5 +608,12 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
         [wall setupWithSpace:space position:midVect];
         [self.view addSubview:wall];
     }
+    
+    if( [mapRows count] >= 34 ) {
+        pointsToWin = [[mapRows objectAtIndex:33] intValue];
+        if( pointsToWin == 0 )
+            pointsToWin = 15;
+    } else
+        pointsToWin = 15;
 }
 @end
