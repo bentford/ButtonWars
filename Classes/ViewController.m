@@ -533,7 +533,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
             else if( currentRow == middleRow )
                 yPoint = 1024.0/2.0;
             else if( currentRow > middleRow )
-                yPoint = (currentRow-1)*perRowAmount;
+                yPoint = ((currentRow-(middleRow-1))*perRowAmount)+(1024.0/2.0);
             
             // get yPoint
             if( currentColumn < middleColumn )
@@ -541,7 +541,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
             else if( currentColumn == middleColumn ) 
                 xPoint = 768.0/2.0;
             else if( currentColumn > middleColumn )
-                xPoint = (currentColumn-1)*perColumnAmount;
+                xPoint = ((currentColumn-(middleColumn-1))*perColumnAmount)+(768.0/2.0);
             
             CGPoint currentPosition = CGPointMake(xPoint, yPoint);
             
