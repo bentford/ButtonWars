@@ -13,4 +13,5 @@
 @protocol ChipmunkLayerView <NSObject>
 - (BWChipmunkLayer *)chipmunkLayer;
 - (void)setupWithSpace:(cpSpace *)space position:(CGPoint)position;
+- (void)removeFromSpace:(cpSpace *)space;
 @end

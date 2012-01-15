@@ -105,6 +105,7 @@
 - (void)setPosition:(CGPoint)position {
     
     cpBodySetPos(body, position);
+    [self updatePosition];
 }
 
 - (CGPoint)position {

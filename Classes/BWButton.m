@@ -74,9 +74,15 @@
 }
 
 - (void)setupWithSpace:(cpSpace *)space position:(CGPoint)position {
-    cpBodySetPos(self.chipmunkLayer.body, position);
+    self.center = position;
+    
     cpSpaceAddBody(space, self.chipmunkLayer.body);
     cpSpaceAddShape(space, self.chipmunkLayer.shape);
+}
+
+- (void)removeFromSpace:(cpSpace *)space {
+    cpSpaceRemoveShape(space, self.chipmunkLayer.shape);
+    cpSpaceRemoveBody(space, self.chipmunkLayer.body);
 }
 
 - (void)guideTowardPlaneOfPoint:(CGPoint)guidePoint {

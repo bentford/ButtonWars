@@ -280,6 +280,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 }
 
 - (void)update {
+    
 	cpFloat dt = displayLink.duration * displayLink.frameInterval;
 	cpSpaceStep(space, dt);
 	
@@ -314,7 +315,6 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     BWButton *greenButton = [[[BWButton alloc] initWithColor:shooter.buttonColor] autorelease];
     [greenButton setupWithSpace:space position:CGPointMake(shooter.body->p.x, shooter.body->p.y)];
     [self.view insertSubview:greenButton belowSubview:topScore];
-    
 
     cpVect v = cpvmult(cpvforangle(shooter.body->a), 1000.0f);
 	cpBodyApplyImpulse(greenButton.chipmunkLayer.body, v, cpvzero);
@@ -356,26 +356,25 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
         // score posts
         if( [potentialButton isKindOfClass:[BWScorePost class]] ) {
             BWScorePost *buttonToRemove = (BWScorePost *)potentialButton;
-            cpSpaceRemoveShape(space, buttonToRemove.chipmunkLayer.shape);
+            [buttonToRemove removeFromSpace:space];
             [potentialButton removeFromSuperview];
         
         // bumpers
         } else if( [potentialButton isKindOfClass:[BWBumper class]] ) {
             BWBumper *buttonToRemove = (BWBumper *)potentialButton;
-            cpSpaceRemoveShape(space, buttonToRemove.chipmunkLayer.shape);
+            [buttonToRemove removeFromSpace:space];
             [potentialButton removeFromSuperview];
 
         // rotating bumper
         } else if( [potentialButton isKindOfClass:[BWRotatingBumper class]] ) {
             BWRotatingBumper *buttonToRemove = (BWRotatingBumper *)potentialButton;
-            cpSpaceRemoveShape(space, buttonToRemove.chipmunkLayer.shape);
+            [buttonToRemove removeFromSpace:space];
             [potentialButton removeFromSuperview];
         
         // walls
         } else if( [potentialButton isKindOfClass:[UIViewQuadBody class]] ) {
             UIViewQuadBody *buttonToRemove = (UIViewQuadBody *)potentialButton;
-            cpSpaceRemoveShape(space, buttonToRemove.chipmunkLayer.shape);
-            cpSpaceRemoveBody(space, buttonToRemove.chipmunkLayer.body);
+            [buttonToRemove removeFromSpace:space];
             [potentialButton removeFromSuperview];
         }
         
