@@ -17,6 +17,7 @@
 
 - (id)initWithFrame:(CGRect)frame {
     if( self = [super initWithFrame:frame] ) {
+        
 		cpShapeSetUserData(self.chipmunkLayer.shape, self);
         
         cpShapeSetCollisionType(self.chipmunkLayer.shape, 0);
@@ -39,8 +40,7 @@
 }
 
 - (void)setupWithSpace:(cpSpace *)space position:(CGPoint)position {
-    cpBodySetPos(self.chipmunkLayer.body, position);
-    //cpSpaceAddBody(space, self.chipmunkLayer.body);
+    self.center = position;
     cpSpaceAddShape(space, self.chipmunkLayer.shape);
 }
 
