@@ -34,6 +34,8 @@
 - (void)setupWithSpace:(cpSpace *)space position:(CGPoint)position {
     self.center = position;
     
+    animationStartPoint = position;
+    
     cpSpaceAddBody(space, self.chipmunkLayer.body);
     cpSpaceAddShape(space, self.chipmunkLayer.shape);
 }
@@ -47,8 +49,8 @@
 
 #pragma mark AnimatedChipmunkLayer
 - (void)startAnimation {
-    NSUInteger fromPos = self.center.x - 100;
-    NSUInteger toPos = self.center.x + 100;
+    NSUInteger fromPos = animationStartPoint.x - 100;
+    NSUInteger toPos = animationStartPoint.x + 100;
     CABasicAnimation *moveAnimation = [CABasicAnimation animationWithKeyPath:@"bodyPosition.x"];
     moveAnimation.fromValue = [NSNumber numberWithInt:fromPos];
     moveAnimation.toValue = [NSNumber numberWithInt:toPos];
