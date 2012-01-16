@@ -65,6 +65,7 @@
 		B5E7505A14B6EA040021AFC0 /* BWSegmentChipmunkLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B5E7505914B6EA030021AFC0 /* BWSegmentChipmunkLayer.m */; };
 		B5E7506514B90B520021AFC0 /* PegGreen.png in Resources */ = {isa = PBXBuildFile; fileRef = B5E7506314B90B520021AFC0 /* PegGreen.png */; };
 		B5E7506614B90B520021AFC0 /* PegOrange.png in Resources */ = {isa = PBXBuildFile; fileRef = B5E7506414B90B520021AFC0 /* PegOrange.png */; };
+		B5E7507E14C260A70021AFC0 /* BWSlidingBox.m in Sources */ = {isa = PBXBuildFile; fileRef = B5E7507D14C260A60021AFC0 /* BWSlidingBox.m */; };
 		B5FE1A9914A13D8C00022983 /* MainWindow-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5FE1A9814A13D8C00022983 /* MainWindow-iPad.xib */; };
 		B5FE1A9C14A13F9200022983 /* ButtonGreen.png in Resources */ = {isa = PBXBuildFile; fileRef = B5FE1A9B14A13F9200022983 /* ButtonGreen.png */; };
 		B5FE1AA114A1410100022983 /* BWButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B5FE1AA014A1410100022983 /* BWButton.m */; };
@@ -187,6 +188,8 @@
 		B5E7505914B6EA030021AFC0 /* BWSegmentChipmunkLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWSegmentChipmunkLayer.m; sourceTree = "<group>"; };
 		B5E7506314B90B520021AFC0 /* PegGreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PegGreen.png; sourceTree = "<group>"; };
 		B5E7506414B90B520021AFC0 /* PegOrange.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PegOrange.png; sourceTree = "<group>"; };
+		B5E7507C14C260A50021AFC0 /* BWSlidingBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWSlidingBox.h; sourceTree = "<group>"; };
+		B5E7507D14C260A60021AFC0 /* BWSlidingBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWSlidingBox.m; sourceTree = "<group>"; };
 		B5FE1A9814A13D8C00022983 /* MainWindow-iPad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "MainWindow-iPad.xib"; path = "iPad/MainWindow-iPad.xib"; sourceTree = "<group>"; };
 		B5FE1A9B14A13F9200022983 /* ButtonGreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonGreen.png; sourceTree = "<group>"; };
 		B5FE1A9F14A1410100022983 /* BWButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWButton.h; sourceTree = "<group>"; };
@@ -413,6 +416,8 @@
 				B5248B0C14AD47E20058903D /* BWBumper.m */,
 				B569D45D14BE555200F46D4B /* BWRotatingBumper.h */,
 				B569D45E14BE555200F46D4B /* BWRotatingBumper.m */,
+				B5E7507C14C260A50021AFC0 /* BWSlidingBox.h */,
+				B5E7507D14C260A60021AFC0 /* BWSlidingBox.m */,
 			);
 			name = "Game Parts";
 			sourceTree = "<group>";
@@ -574,6 +579,7 @@
 				B5E3021914B7A8ED00556639 /* BWStaticBoxChipmunkLayer.m in Sources */,
 				B569D42014BD0A1400F46D4B /* LevelPickerViewController.m in Sources */,
 				B569D45F14BE555300F46D4B /* BWRotatingBumper.m in Sources */,
+				B5E7507E14C260A70021AFC0 /* BWSlidingBox.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

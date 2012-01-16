@@ -20,6 +20,7 @@
 
 @property (nonatomic, assign) cpBody *body;
 @property (nonatomic, assign) cpShape *shape;
+@property (nonatomic, assign) CGPoint bodyPosition;
 
 - (void)updatePosition;
 

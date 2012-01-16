@@ -12,6 +12,7 @@
 #import "BWChipmunkLayer.h"
 #import "UIViewBody.h"
 #import "BWRotatingBumper.h"
+#import "BWSlidingBox.h"
 
 #define kCountdownTimer 10
 
@@ -261,6 +262,21 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     countdownLabel.text = @"";
     countdownLabel.font = [UIFont boldSystemFontOfSize:34];
     [self.view addSubview:countdownLabel];
+    
+    BWSlidingBox *slidingBox = [[[BWSlidingBox alloc] init] autorelease];
+    [slidingBox setupWithSpace:space position:cpv(100,100)];
+    [self.view addSubview:slidingBox];
+    
+    
+    CABasicAnimation *moveAnimation = [CABasicAnimation animationWithKeyPath:@"bodyPosition.x"];
+    moveAnimation.fromValue = [NSNumber numberWithInt:100];
+    moveAnimation.toValue = [NSNumber numberWithInt:300];
+    moveAnimation.duration = 3.0;
+    moveAnimation.autoreverses = YES;
+    moveAnimation.repeatCount = INFINITY;
+    moveAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    [slidingBox.chipmunkLayer addAnimation:moveAnimation forKey:@"bodyPosition.x"];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
