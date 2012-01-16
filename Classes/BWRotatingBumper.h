@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "ChipmunkLayerView.h"
+#import "BWImageView.h"
 
 @class BWButton;
-@interface BWRotatingBumper : UIImageView <ChipmunkLayerView> {
+@interface BWRotatingBumper : BWImageView <ChipmunkLayerView> {
     NSMutableSet *recentlyTrappedButtons;
 }
 

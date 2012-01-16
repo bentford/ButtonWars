@@ -30,6 +30,7 @@
 		B569D45F14BE555300F46D4B /* BWRotatingBumper.m in Sources */ = {isa = PBXBuildFile; fileRef = B569D45E14BE555200F46D4B /* BWRotatingBumper.m */; };
 		B569D49A14C0D24A00F46D4B /* Bumper_v2.png in Resources */ = {isa = PBXBuildFile; fileRef = B569D49914C0D24A00F46D4B /* Bumper_v2.png */; };
 		B569D49C14C0E5DA00F46D4B /* Background_1.png in Resources */ = {isa = PBXBuildFile; fileRef = B569D49B14C0E5DA00F46D4B /* Background_1.png */; };
+		B569D4E214C4DDA400F46D4B /* BWImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = B569D4E114C4DDA300F46D4B /* BWImageView.m */; };
 		B57E3581147877E90065B34F /* chipmunk.c in Sources */ = {isa = PBXBuildFile; fileRef = B57E3549147877E90065B34F /* chipmunk.c */; };
 		B57E358D147877E90065B34F /* cpArbiter.c in Sources */ = {isa = PBXBuildFile; fileRef = B57E3567147877E90065B34F /* cpArbiter.c */; };
 		B57E358E147877E90065B34F /* cpArray.c in Sources */ = {isa = PBXBuildFile; fileRef = B57E3569147877E90065B34F /* cpArray.c */; };
@@ -135,6 +136,8 @@
 		B569D49914C0D24A00F46D4B /* Bumper_v2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Bumper_v2.png; sourceTree = "<group>"; };
 		B569D49B14C0E5DA00F46D4B /* Background_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background_1.png; sourceTree = "<group>"; };
 		B569D4A514C4AC5700F46D4B /* AnimatedChipmunkLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedChipmunkLayer.h; sourceTree = "<group>"; };
+		B569D4E014C4DDA300F46D4B /* BWImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWImageView.h; sourceTree = "<group>"; };
+		B569D4E114C4DDA300F46D4B /* BWImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWImageView.m; sourceTree = "<group>"; };
 		B57E3549147877E90065B34F /* chipmunk.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = chipmunk.c; sourceTree = "<group>"; };
 		B57E354A147877E90065B34F /* chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk.h; sourceTree = "<group>"; };
 		B57E354B147877E90065B34F /* chipmunk_ffi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_ffi.h; sourceTree = "<group>"; };
@@ -449,6 +452,8 @@
 				B5E3021714B7A8EC00556639 /* BWStaticBoxChipmunkLayer.h */,
 				B5E3021814B7A8EC00556639 /* BWStaticBoxChipmunkLayer.m */,
 				B569D4A514C4AC5700F46D4B /* AnimatedChipmunkLayer.h */,
+				B569D4E014C4DDA300F46D4B /* BWImageView.h */,
+				B569D4E114C4DDA300F46D4B /* BWImageView.m */,
 			);
 			name = "Chipmunk Parts";
 			sourceTree = "<group>";
@@ -582,6 +587,7 @@
 				B569D42014BD0A1400F46D4B /* LevelPickerViewController.m in Sources */,
 				B569D45F14BE555300F46D4B /* BWRotatingBumper.m in Sources */,
 				B5E7507E14C260A70021AFC0 /* BWSlidingBox.m in Sources */,
+				B569D4E214C4DDA400F46D4B /* BWImageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

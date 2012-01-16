@@ -116,20 +116,22 @@ void postStepTrapButton(cpSpace *space, void *obj, void *data) {
     
     cpVect localButtonPosition = cpBodyWorld2Local(bumper.chipmunkLayer.body, cpBodyGetPos(button.chipmunkLayer.body));
     
-    cpConstraint *groove = cpGrooveJointNew(bumper.chipmunkLayer.body, button.chipmunkLayer.body, cpv(0,0), localButtonPosition, cpvzero);
+    cpConstraint *groove = cpGrooveJointNew(bumper.chipmunkLayer.body, button.chipmunkLayer.body, cpv(localButtonPosition.x-1,localButtonPosition.y-1), localButtonPosition, cpvzero);
     cpConstraint *pin = cpPinJointNew(bumper.chipmunkLayer.body, button.chipmunkLayer.body, cpvzero, cpvzero);
     cpSpaceAddConstraint(space, groove);
     cpSpaceAddConstraint(space, pin);
     
-    if( button.color == ButtonColorGreen )
-        cpBodySetAngVel(bumper.chipmunkLayer.body, -4);
-    else
-        cpBodySetAngVel(bumper.chipmunkLayer.body, 4);
-    
-    // fire button after delay
-    NSArray *parameters = [NSArray arrayWithObjects:button,[NSValue valueWithPointer:groove], [NSValue valueWithPointer:pin], [NSValue valueWithPointer:space], nil];
-    [bumper performSelector:@selector(fireTrappedButton:) withObject:parameters afterDelay:1.0];
+    [CATransaction begin];
+    [CATransaction setCompletionBlock:^{
+        NSArray *parameters = [NSArray arrayWithObjects:button,[NSValue valueWithPointer:groove], [NSValue valueWithPointer:pin], [NSValue valueWithPointer:space], nil];        
+        [bumper fireTrappedButton:parameters];
+    }];
+    CABasicAnimation *rotation = [CABasicAnimation animationWithKeyPath:@"bodyAngle"];
+    rotation.fromValue = [NSNumber numberWithFloat:bumper.chipmunkLayer.angle];
+    rotation.toValue = [NSNumber numberWithFloat:bumper.chipmunkLayer.angle+M_PI/2.0];
+    rotation.duration = 2.0;
+    rotation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    [bumper.chipmunkLayer addAnimation:rotation forKey:@"bodyAngle"];
+    [CATransaction commit];    
 }
-
-
 @end

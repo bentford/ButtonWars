@@ -20,7 +20,11 @@
 
 @property (nonatomic, assign) cpBody *body;
 @property (nonatomic, assign) cpShape *shape;
+@property (nonatomic, assign) CGFloat angle;
+
+// these are proxies for positon and angle and targets for CABasicAnimation
 @property (nonatomic, assign) CGPoint bodyPosition;
+@property (nonatomic, assign) CGFloat bodyAngle;
 
 - (void)updatePosition;
 

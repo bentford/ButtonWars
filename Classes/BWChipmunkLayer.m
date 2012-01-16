@@ -17,7 +17,8 @@
 @synthesize shape;
 
 + (BOOL)needsDisplayForKey:(NSString *)key {
-    if( [key isEqualToString:@"bodyPosition"] ) 
+    if( [key isEqualToString:@"bodyPosition"] || 
+        [key isEqualToString:@"bodyAngle"] ) 
         return YES;
     
     return [super needsDisplayForKey:key];
@@ -50,7 +51,7 @@
             shape = [[self class] shapeWithBody:body size:CGSizeMake(width, height)];
             cpShapeSetFriction(shape, cpShapeGetFriction(bodyLayer.shape));
             cpShapeSetElasticity(shape, cpShapeGetElasticity(bodyLayer.shape));
-            cpShapeSetCollisionType(shape, cpShapeGetCollisionType(bodyLayer.shape));
+            cpShapeSetCollisionType(shape, cpShapeGetCollisionType(bodyLayer.shape));            
         }
     }
     return self;
@@ -126,8 +127,24 @@
     return self.position;
 }
 
+- (CGFloat)angle {
+    return cpBodyGetAngle(self.body);
+}
+
+- (void)setAngle:(CGFloat)radians {
+    cpBodySetAngle(self.body, radians);
+}
+
 - (void)setBodyPosition:(CGPoint)bodyPosition {
     [self.modelLayer setPosition:bodyPosition];
+}
+
+- (void)setBodyAngle:(CGFloat)radians {
+    [self.modelLayer setAngle:radians];
+}
+
+- (CGFloat)bodyAngle {
+    return cpBodyGetAngle(self.body);
 }
 
 - (void)dealloc {
