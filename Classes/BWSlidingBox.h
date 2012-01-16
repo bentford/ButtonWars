@@ -11,4 +11,7 @@
 
 @interface BWSlidingBox : UIView <ChipmunkLayerView>
 
+- (void)startAnimation;
+- (void)stopAnimation;
+
 @end

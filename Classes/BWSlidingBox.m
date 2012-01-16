@@ -43,4 +43,21 @@
     cpSpaceRemoveBody(space, self.chipmunkLayer.body);
 }
 #pragma mark -
+
+- (void)startAnimation {
+    NSUInteger fromPos = self.center.x - 100;
+    NSUInteger toPos = self.center.x + 100;
+    CABasicAnimation *moveAnimation = [CABasicAnimation animationWithKeyPath:@"bodyPosition.x"];
+    moveAnimation.fromValue = [NSNumber numberWithInt:fromPos];
+    moveAnimation.toValue = [NSNumber numberWithInt:toPos];
+    moveAnimation.duration = 3.0;
+    moveAnimation.autoreverses = YES;
+    moveAnimation.repeatCount = INFINITY;
+    moveAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    [self.chipmunkLayer addAnimation:moveAnimation forKey:@"bodyPosition.x"];
+}
+
+- (void)stopAnimation {
+    [self.chipmunkLayer removeAllAnimations];
+}
 @end

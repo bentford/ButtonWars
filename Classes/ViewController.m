@@ -263,19 +263,6 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     countdownLabel.font = [UIFont boldSystemFontOfSize:34];
     [self.view addSubview:countdownLabel];
     
-    BWSlidingBox *slidingBox = [[[BWSlidingBox alloc] init] autorelease];
-    [slidingBox setupWithSpace:space position:cpv(100,100)];
-    [self.view addSubview:slidingBox];
-    
-    
-    CABasicAnimation *moveAnimation = [CABasicAnimation animationWithKeyPath:@"bodyPosition.x"];
-    moveAnimation.fromValue = [NSNumber numberWithInt:100];
-    moveAnimation.toValue = [NSNumber numberWithInt:300];
-    moveAnimation.duration = 3.0;
-    moveAnimation.autoreverses = YES;
-    moveAnimation.repeatCount = INFINITY;
-    moveAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    [slidingBox.chipmunkLayer addAnimation:moveAnimation forKey:@"bodyPosition.x"];
     
 }
 
@@ -577,6 +564,13 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
                 BWRotatingBumper *bumper = [[[BWRotatingBumper alloc] init] autorelease];
                 [bumper setupWithSpace:space position:currentPosition];
                 [self.view addSubview:bumper];
+            }
+
+            if( [character isEqualToString:@"s"] == YES && currentColumn+1 < [columns count] && [[columns objectAtIndex:currentColumn+1] isEqualToString:@"x"] == YES ) {            
+                BWSlidingBox *slidingBox = [[[BWSlidingBox alloc] init] autorelease];
+                [slidingBox setupWithSpace:space position:currentPosition];
+                [self.view addSubview:slidingBox];
+                [slidingBox startAnimation];
             }
             
             // walls
