@@ -13,6 +13,7 @@
 #import "UIViewBody.h"
 #import "BWRotatingBumper.h"
 #import "BWSlidingBox.h"
+#import "ChipmunkLayerView.h"
 
 #define kCountdownTimer 10
 
@@ -266,13 +267,17 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     
 	// Set up the display link to control the timing of the animation.
 	displayLink = [[CADisplayLink displayLinkWithTarget:self selector:@selector(update)] retain];
 	displayLink.frameInterval = 1;
-	[displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];	
+	[displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
+    
+    for( UIView *potentialView in self.view.subviews )
+        if( [potentialView conformsToProtocol:@protocol(AnimatedChipmunkLayer)] )
+            [(id<AnimatedChipmunkLayer>)potentialView startAnimation];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -280,6 +285,10 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     
 	[displayLink invalidate];
 	displayLink = nil;
+    
+    for( UIView *potentialView in self.view.subviews )
+        if( [potentialView conformsToProtocol:@protocol(AnimatedChipmunkLayer)] )
+            [(id<AnimatedChipmunkLayer>)potentialView stopAnimation];
 }
 
 - (void)update {
@@ -354,34 +363,15 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 }
 
 - (void)removeLevelItems {
-    for( UIView *potentialButton in self.view.subviews ) {
+    
+    for( UIView *potentialLevelItem in self.view.subviews ) {
+        if( [potentialLevelItem conformsToProtocol:@protocol(ChipmunkLayerView)] ) {
 
-        // score posts
-        if( [potentialButton isKindOfClass:[BWScorePost class]] ) {
-            BWScorePost *buttonToRemove = (BWScorePost *)potentialButton;
-            [buttonToRemove removeFromSpace:space];
-            [potentialButton removeFromSuperview];
-        
-        // bumpers
-        } else if( [potentialButton isKindOfClass:[BWBumper class]] ) {
-            BWBumper *buttonToRemove = (BWBumper *)potentialButton;
-            [buttonToRemove removeFromSpace:space];
-            [potentialButton removeFromSuperview];
-
-        // rotating bumper
-        } else if( [potentialButton isKindOfClass:[BWRotatingBumper class]] ) {
-            BWRotatingBumper *buttonToRemove = (BWRotatingBumper *)potentialButton;
-            [buttonToRemove removeFromSpace:space];
-            [potentialButton removeFromSuperview];
-        
-        // walls
-        } else if( [potentialButton isKindOfClass:[UIViewQuadBody class]] ) {
-            UIViewQuadBody *buttonToRemove = (UIViewQuadBody *)potentialButton;
-            [buttonToRemove removeFromSpace:space];
-            [potentialButton removeFromSuperview];
+            UIView<ChipmunkLayerView> *itemToRemove = (UIView<ChipmunkLayerView> *)potentialLevelItem;
+            [itemToRemove removeFromSpace:space];
+            [itemToRemove removeFromSuperview];
         }
-        
-    }        
+    }
 }
 
 - (void)reloadMapWithLevelNamed:(NSString *)levelName {
@@ -571,6 +561,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
                 [slidingBox setupWithSpace:space position:currentPosition];
                 [self.view addSubview:slidingBox];
                 [slidingBox startAnimation];
+                
             }
             
             // walls

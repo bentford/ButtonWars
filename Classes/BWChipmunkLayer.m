@@ -127,9 +127,7 @@
 }
 
 - (void)setBodyPosition:(CGPoint)bodyPosition {
-    //NSLog(@"bodyPosition: %@", NSStringFromCGPoint(bodyPosition));
     [self.modelLayer setPosition:bodyPosition];
-    //[self setPosition:bodyPosition];
 }
 
 - (void)dealloc {

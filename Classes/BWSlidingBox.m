@@ -39,11 +39,13 @@
 }
 
 - (void)removeFromSpace:(cpSpace *)space {
+    [self stopAnimation];
     cpSpaceRemoveShape(space, self.chipmunkLayer.shape);
     cpSpaceRemoveBody(space, self.chipmunkLayer.body);
 }
 #pragma mark -
 
+#pragma mark AnimatedChipmunkLayer
 - (void)startAnimation {
     NSUInteger fromPos = self.center.x - 100;
     NSUInteger toPos = self.center.x + 100;
@@ -58,6 +60,7 @@
 }
 
 - (void)stopAnimation {
-    [self.chipmunkLayer removeAllAnimations];
+    [self.layer removeAllAnimations];
 }
+#pragma mark -
 @end
