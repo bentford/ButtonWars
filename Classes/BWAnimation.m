@@ -9,11 +9,16 @@
 #import "BWAnimation.h"
 #import "BWChipmunkLayer.h"
 
+
 @implementation BWAnimation
 @synthesize fromAngle;
 @synthesize toAngle;
+@synthesize fromPoint;
+@synthesize toPoint;
 @synthesize duration;
 @synthesize timing;
+@synthesize autoreverses;
+@synthesize repeatCount;
 @synthesize completionBlock;
 
 + (BWAnimation *)animation {
@@ -23,21 +28,62 @@
 - (id)init {
     if( (self = [super init]) ) {
         elapsedTime = 0.0f;
+        hasFinished = NO;
+        repeatCount = 1;
+        totalRepeatIterations = 0;
+        autoreverses = NO;
+        autoreverseDirection = AutoReverseDirectionForward;
     }
     return self;
 }
 
 - (void)step:(CGFloat)timeDelta {
-    elapsedTime += timeDelta;    
+    elapsedTime += timeDelta;
+
+    if( elapsedTime > duration ) {
+        elapsedTime = 0;
+
+        if( autoreverses == NO || (autoreverses == YES && autoreverseDirection == AutoReverseDirectionBackward) )
+            totalRepeatIterations++;
+
+        if( totalRepeatIterations > repeatCount )
+            hasFinished = YES;
+        
+        if( autoreverses == YES ) {
+            // flip direction
+            if( autoreverseDirection == AutoReverseDirectionForward ) 
+                autoreverseDirection = AutoReverseDirectionBackward;
+            else if( autoreverseDirection == AutoReverseDirectionBackward ) 
+                autoreverseDirection = AutoReverseDirectionForward;
+            
+            // swap positions
+            CGPoint placeHolderPoint = fromPoint;
+            fromPoint = toPoint;
+            toPoint = placeHolderPoint;
+            
+            // swap angles
+            CGFloat placeHolderAngle = fromAngle;
+            fromAngle = toAngle;
+            toAngle = placeHolderAngle;
+        }
+    }
 }
 
 - (BOOL)isFinished {
-    return elapsedTime > duration;
+    return hasFinished;
 }
 
 - (void)updateBody:(BWChipmunkLayer *)body {
+    CGFloat interpolation = elapsedTime / duration;
 
-    body.angle = fromAngle + (toAngle-fromAngle)*(elapsedTime/duration);
+    if( [self isRotating] == YES ) 
+        body.angle = fromAngle + (toAngle-fromAngle)*interpolation;
+    
+    if( [self isMoving] == YES ) {
+        CGFloat xPos = fromPoint.x+(toPoint.x-fromPoint.x)*interpolation;
+        CGFloat yPos = fromPoint.y+(toPoint.y-fromPoint.y)*interpolation;
+        body.position = CGPointMake(xPos, yPos);
+    }
 }
 
 - (BOOL)isRotating {
@@ -45,7 +91,7 @@
 }
 
 - (BOOL)isMoving {
-    return NO;
+    return CGPointEqualToPoint(fromPoint, toPoint) == NO;
 }
 
 - (void)dealloc {

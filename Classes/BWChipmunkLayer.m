@@ -105,7 +105,7 @@
 - (void)setPosition:(CGPoint)position {
     
     cpBodySetPos(body, position);
-    [self updatePosition:0.0f];
+    [self updatePosition];
 }
 
 - (CGPoint)position {
@@ -121,19 +121,20 @@
 }
 
 - (void)updatePosition {
-    [self updatePosition:0.0f];
-}
-
-- (void)updatePosition:(CGFloat)timeDelta {
-    [self processAnimationsWithTimeDelta:timeDelta];
-    
     [CATransaction begin];
     [CATransaction setValue:(id)kCFBooleanTrue
                      forKey:kCATransactionDisableActions];
-
+    
 	self.transform = [self transformWithBody:body];
     
     [CATransaction commit];
+}
+
+- (void)step:(CGFloat)timeDelta {
+    [self processAnimationsWithTimeDelta:timeDelta];
+    
+    [self updatePosition];
+    
 }
 
 - (void)addBWAnimation:(BWAnimation *)animation {

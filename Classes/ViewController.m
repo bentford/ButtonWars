@@ -270,7 +270,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     [super viewWillAppear:animated];
     
 	// Set up the display link to control the timing of the animation.
-	displayLink = [[CADisplayLink displayLinkWithTarget:self selector:@selector(update)] retain];
+	displayLink = [[CADisplayLink displayLinkWithTarget:self selector:@selector(step)] retain];
 	displayLink.frameInterval = 1;
 	[displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
     
@@ -290,7 +290,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
             [(id<AnimatedChipmunkLayer>)potentialView stopAnimation];
 }
 
-- (void)update {
+- (void)step {
     
 	cpFloat dt = displayLink.duration * displayLink.frameInterval;
 	cpSpaceStep(space, dt);
@@ -303,7 +303,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     
     for( CALayer *aLayer in self.view.layer.sublayers ) 
         if( [aLayer isKindOfClass:[BWChipmunkLayer class]] == YES )
-            [(BWChipmunkLayer *)aLayer updatePosition:dt];
+            [(BWChipmunkLayer *)aLayer step:dt];
     
 
     for( UIView *aView in self.view.subviews ) 

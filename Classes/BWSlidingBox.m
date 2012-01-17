@@ -51,14 +51,16 @@
 - (void)startAnimation {
     NSUInteger fromPos = animationStartPoint.x - 100;
     NSUInteger toPos = animationStartPoint.x + 100;
-    CABasicAnimation *moveAnimation = [CABasicAnimation animationWithKeyPath:@"bodyPosition.x"];
-    moveAnimation.fromValue = [NSNumber numberWithInt:fromPos];
-    moveAnimation.toValue = [NSNumber numberWithInt:toPos];
-    moveAnimation.duration = 3.0;
-    moveAnimation.autoreverses = YES;
-    moveAnimation.repeatCount = INFINITY;
-    moveAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    [self.chipmunkLayer addAnimation:moveAnimation forKey:@"bodyPosition.x"];
+    
+    BWAnimation *animation = [BWAnimation animation];
+    animation.fromPoint = CGPointMake(fromPos, self.center.y);
+    animation.toPoint = CGPointMake(toPos, self.center.y);
+    animation.duration = 3.0f;
+    animation.autoreverses = YES;
+    animation.repeatCount = INFINITY;
+    animation.timing = BWAnimationTimingEaseInEaseOut;
+    
+    [self.chipmunkLayer addBWAnimation:animation];
 }
 
 - (void)stopAnimation {

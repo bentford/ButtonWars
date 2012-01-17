@@ -27,8 +27,8 @@
 @property (nonatomic, assign) cpShape *shape;
 @property (nonatomic, assign) CGFloat angle;
 
-- (void)updatePosition __attribute__((deprecated));
-- (void)updatePosition:(CGFloat)timeDelta;
+- (void)updatePosition;
+- (void)step:(CGFloat)timeDelta;
 
 + (cpShape *)shapeWithBody:(cpBody *)theBody size:(CGSize)shapeSize;
 + (cpBody *)bodyWithMass:(CGFloat)mass size:(CGSize)size;
