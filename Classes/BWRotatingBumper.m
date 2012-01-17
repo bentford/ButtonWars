@@ -16,10 +16,6 @@
 
 @interface BWRotatingBumper(PrivateMethods)
 - (void)forgetButton:(BWButton *)button;
-
-void postStepTrapButton(cpSpace *space, void *obj, void *data);
-void postStepRemoveConstraint(cpSpace *space, void *obj, void *data);
-
 - (void)fireTrappedButton:(BWButton *)button;
 @end
 
@@ -88,7 +84,25 @@ void postStepRemoveConstraint(cpSpace *space, void *obj, void *data);
     [recentlyTrappedButtons addObject:button];
     [self performSelector:@selector(forgetButton:) withObject:button afterDelay:1.0];
     
-    cpSpaceAddPostStepCallback(space, (cpPostStepFunc)postStepTrapButton, button, self);
+    // rotate the button
+    cpVect localButtonPosition = cpBodyWorld2Local(self.chipmunkLayer.body, cpBodyGetPos(button.chipmunkLayer.body));
+    self.trappedButtonPosition = localButtonPosition;
+    self.trappedButton = button;
+    
+    CGFloat degrees = 90;
+    if( button.color == ButtonColorGreen )
+        degrees = -90;
+    
+    BWAnimation *rotation = [BWAnimation animation];
+    rotation.fromAngle = cpBodyGetAngle(self.chipmunkLayer.body);
+    rotation.toAngle = cpBodyGetAngle(self.chipmunkLayer.body) + RADIANS(degrees);
+    rotation.duration = 2.0f;
+    rotation.timing = BWAnimationTimingEaseInEaseOut;
+    rotation.completionBlock = ^{
+        // fire button when rotation completes
+        [self fireTrappedButton:button];
+    };
+    [self.chipmunkLayer addBWAnimation:rotation];
 }
 
 #pragma mark BWChipmunkLayerDelegate
@@ -130,28 +144,5 @@ void postStepRemoveConstraint(cpSpace *space, void *obj, void *data);
     cpVect impulseVector = cpvmult(invertedCollisionVector, 1000);
     
     cpBodyApplyImpulse(button.chipmunkLayer.body, impulseVector, cpvzero);
-}
-
-void postStepTrapButton(cpSpace *space, void *obj, void *data) {
-    BWButton *button = obj;
-    BWRotatingBumper *bumper = data;
-    
-    cpVect localButtonPosition = cpBodyWorld2Local(bumper.chipmunkLayer.body, cpBodyGetPos(button.chipmunkLayer.body));
-    bumper.trappedButtonPosition = localButtonPosition;
-    bumper.trappedButton = button;
-    
-    CGFloat degrees = 90;
-    if( button.color == ButtonColorGreen )
-        degrees = -90;
-    
-    BWAnimation *rotation = [BWAnimation animation];
-    rotation.fromAngle = cpBodyGetAngle(bumper.chipmunkLayer.body);
-    rotation.toAngle = cpBodyGetAngle(bumper.chipmunkLayer.body) + RADIANS(degrees);
-    rotation.duration = 2.0f;
-    rotation.timing = BWAnimationTimingEaseInEaseOut;
-    rotation.completionBlock = ^{
-        [bumper fireTrappedButton:button];
-    };
-    [bumper.chipmunkLayer addBWAnimation:rotation];
 }
 @end
