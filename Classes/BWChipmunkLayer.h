@@ -9,6 +9,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "chipmunk.h"
 #import "BWChipmunkLayerDelegate.h"
+#import "BWAnimation.h"
 
 @interface BWChipmunkLayer : CALayer {
     cpShape *shape;
@@ -17,6 +18,7 @@
     CGFloat width;
     CGFloat height;
 
+    NSMutableArray *bwAnimations;
 }
 
 @property (nonatomic, assign) id<BWChipmunkLayerDelegate> chipmunkLayerDelegate;
@@ -25,13 +27,12 @@
 @property (nonatomic, assign) cpShape *shape;
 @property (nonatomic, assign) CGFloat angle;
 
-// these are proxies for positon and angle and targets for CABasicAnimation
-@property (nonatomic, assign) CGPoint bodyPosition;
-@property (nonatomic, assign) CGFloat bodyAngle;
-
-- (void)updatePosition;
+- (void)updatePosition __attribute__((deprecated));
+- (void)updatePosition:(CGFloat)timeDelta;
 
 + (cpShape *)shapeWithBody:(cpBody *)theBody size:(CGSize)shapeSize;
 + (cpBody *)bodyWithMass:(CGFloat)mass size:(CGSize)size;
 + (CGFloat)momentForBodyWithSize:(CGSize)momentSize mass:(CGFloat)mass;
+
+- (void)addBWAnimation:(BWAnimation *)animation;
 @end

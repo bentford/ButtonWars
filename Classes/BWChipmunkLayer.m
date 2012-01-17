@@ -7,23 +7,18 @@
 //
 
 #import "BWChipmunkLayer.h"
+#import "BWAnimation.h"
+#import "NSObject+PerformBlockAfterDelay.h"
 
 @interface BWChipmunkLayer(PrivateMethods)
 - (CATransform3D)transformWithBody:(cpBody *)theBody;
+- (void)processAnimationsWithTimeDelta:(CGFloat)timeDelta;
 @end
 
 @implementation BWChipmunkLayer
 @synthesize body;
 @synthesize shape;
 @synthesize chipmunkLayerDelegate;
-
-+ (BOOL)needsDisplayForKey:(NSString *)key {
-    if( [key isEqualToString:@"bodyPosition"] || 
-        [key isEqualToString:@"bodyAngle"] ) 
-        return YES;
-    
-    return [super needsDisplayForKey:key];
-}
 
 + (cpShape *)shapeWithBody:(cpBody *)theBody size:(CGSize)shapeSize {
     return cpCircleShapeNew(theBody, shapeSize.width/2.0, cpvzero);
@@ -68,6 +63,8 @@
         
         cpShapeSetCollisionType(shape, 1);
         self.chipmunkLayerDelegate = nil;
+        
+        bwAnimations = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -108,51 +105,45 @@
 - (void)setPosition:(CGPoint)position {
     
     cpBodySetPos(body, position);
-    [self updatePosition];
+    [self updatePosition:0.0f];
 }
 
 - (CGPoint)position {
     return cpBodyGetPos(body);
 }
 
+- (CGFloat)angle {
+    return cpBodyGetAngle(self.body);
+}
+
+- (void)setAngle:(CGFloat)angle {
+    cpBodySetAngle(self.body, angle);
+}
+
 - (void)updatePosition {
+    [self updatePosition:0.0f];
+}
+
+- (void)updatePosition:(CGFloat)timeDelta {
+    [self processAnimationsWithTimeDelta:timeDelta];
+    
     [CATransaction begin];
-    [CATransaction setValue:[NSNumber numberWithFloat:0.0]
-                     forKey:kCATransactionAnimationDuration];
+    [CATransaction setValue:(id)kCFBooleanTrue
+                     forKey:kCATransactionDisableActions];
 
 	self.transform = [self transformWithBody:body];
     
     [CATransaction commit];
 }
 
-- (CGPoint)bodyPosition {
-    return self.position;
-}
-
-- (CGFloat)angle {
-    return cpBodyGetAngle(self.body);
-}
-
-- (void)setAngle:(CGFloat)radians {
-    cpBodySetAngle(self.body, radians);
-}
-
-- (void)setBodyPosition:(CGPoint)bodyPosition {
-    [self.modelLayer setPosition:bodyPosition];
-}
-
-- (void)setBodyAngle:(CGFloat)radians {
-    [(id<BWChipmunkLayerDelegate>)[self.modelLayer delegate] didRotateBodyToRadians:radians];
-    [self.modelLayer setAngle:radians];
-}
-
-- (CGFloat)bodyAngle {
-    return cpBodyGetAngle(self.body);
+- (void)addBWAnimation:(BWAnimation *)animation {
+    [bwAnimations addObject:animation];
 }
 
 - (void)dealloc {
     cpShapeFree(shape);
     cpBodyFree(body);
+    [bwAnimations release];
     
     [super dealloc];
 }
@@ -165,5 +156,33 @@
     CATransform3D transform = CATransform3DRotate(translate, theBody->a, 0, 0, 1);
     
     return transform;
+}
+
+- (void)processAnimationsWithTimeDelta:(CGFloat)timeDelta {
+    if( [bwAnimations count] == 0 )
+        return;
+    
+    NSMutableSet *toRemove = [NSMutableSet setWithCapacity:0];
+    for( BWAnimation *animation in bwAnimations ) {
+        
+        [animation step:timeDelta];
+        
+        if( [animation isFinished] == YES ) {
+            [toRemove addObject:animation];
+            continue;
+        }
+
+        [animation updateBody:self];
+        
+        if( [animation isRotating] == YES )
+            [chipmunkLayerDelegate didRotateBodyToRadians:cpBodyGetAngle(self.body)];
+    }
+    
+    for( BWAnimation *completedAnimation in toRemove )
+        // performs in main runloop, the delay isn't the intention
+        [self performBlock:completedAnimation.completionBlock afterDelay:0.0]; 
+    
+    [bwAnimations removeObjectsInArray:[toRemove allObjects]];
+
 }
 @end

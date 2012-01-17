@@ -303,7 +303,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     
     for( CALayer *aLayer in self.view.layer.sublayers ) 
         if( [aLayer isKindOfClass:[BWChipmunkLayer class]] == YES )
-            [(BWChipmunkLayer *)aLayer updatePosition];
+            [(BWChipmunkLayer *)aLayer updatePosition:dt];
     
 
     for( UIView *aView in self.view.subviews ) 
@@ -402,7 +402,6 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
         BWScorePost *scorePost = [[[BWScorePost alloc] init] autorelease];
         [scorePost setupWithSpace:space position:[Random randomPointInRect:insideRect]];
         [self.view addSubview:scorePost];
-        [scorePost.chipmunkLayer updatePosition];
     }
 }
 - (void)checkForWinner {
@@ -540,7 +539,6 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
                 BWScorePost *scorePost = [[[BWScorePost alloc] init] autorelease];
                 [scorePost setupWithSpace:space position:currentPosition];
                 [self.view addSubview:scorePost];
-                [scorePost.chipmunkLayer updatePosition];
             }
             
             if( [character isEqualToString:@"b"] == YES && ( currentColumn == 0 || [[columns objectAtIndex:currentColumn-1] isEqualToString:@"r"] == NO) ) {

@@ -31,6 +31,8 @@
 		B569D49A14C0D24A00F46D4B /* Bumper_v2.png in Resources */ = {isa = PBXBuildFile; fileRef = B569D49914C0D24A00F46D4B /* Bumper_v2.png */; };
 		B569D49C14C0E5DA00F46D4B /* Background_1.png in Resources */ = {isa = PBXBuildFile; fileRef = B569D49B14C0E5DA00F46D4B /* Background_1.png */; };
 		B569D4E214C4DDA400F46D4B /* BWImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = B569D4E114C4DDA300F46D4B /* BWImageView.m */; };
+		B569D5DB14C61DBF00F46D4B /* BWAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = B569D5DA14C61DBF00F46D4B /* BWAnimation.m */; };
+		B569D5DF14C6292800F46D4B /* NSObject+PerformBlockAfterDelay.m in Sources */ = {isa = PBXBuildFile; fileRef = B569D5DE14C6292800F46D4B /* NSObject+PerformBlockAfterDelay.m */; };
 		B57E3581147877E90065B34F /* chipmunk.c in Sources */ = {isa = PBXBuildFile; fileRef = B57E3549147877E90065B34F /* chipmunk.c */; };
 		B57E358D147877E90065B34F /* cpArbiter.c in Sources */ = {isa = PBXBuildFile; fileRef = B57E3567147877E90065B34F /* cpArbiter.c */; };
 		B57E358E147877E90065B34F /* cpArray.c in Sources */ = {isa = PBXBuildFile; fileRef = B57E3569147877E90065B34F /* cpArray.c */; };
@@ -139,6 +141,10 @@
 		B569D4E014C4DDA300F46D4B /* BWImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWImageView.h; sourceTree = "<group>"; };
 		B569D4E114C4DDA300F46D4B /* BWImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWImageView.m; sourceTree = "<group>"; };
 		B569D4E314C4ED5200F46D4B /* BWChipmunkLayerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWChipmunkLayerDelegate.h; sourceTree = "<group>"; };
+		B569D5D914C61DBF00F46D4B /* BWAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWAnimation.h; sourceTree = "<group>"; };
+		B569D5DA14C61DBF00F46D4B /* BWAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWAnimation.m; sourceTree = "<group>"; };
+		B569D5DD14C6292800F46D4B /* NSObject+PerformBlockAfterDelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+PerformBlockAfterDelay.h"; sourceTree = "<group>"; };
+		B569D5DE14C6292800F46D4B /* NSObject+PerformBlockAfterDelay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+PerformBlockAfterDelay.m"; sourceTree = "<group>"; };
 		B57E3549147877E90065B34F /* chipmunk.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = chipmunk.c; sourceTree = "<group>"; };
 		B57E354A147877E90065B34F /* chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk.h; sourceTree = "<group>"; };
 		B57E354B147877E90065B34F /* chipmunk_ffi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_ffi.h; sourceTree = "<group>"; };
@@ -237,6 +243,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				B569D5DC14C6290C00F46D4B /* Extension */,
 				B569D49814C0C0D800F46D4B /* Util */,
 				B5FE1A9E14A140C500022983 /* Chipmunk Parts */,
 				B5FE1A9D14A140AA00022983 /* Game Parts */,
@@ -317,6 +324,15 @@
 				B5FE1AD214A265E900022983 /* Random.m */,
 			);
 			name = Util;
+			sourceTree = "<group>";
+		};
+		B569D5DC14C6290C00F46D4B /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				B569D5DD14C6292800F46D4B /* NSObject+PerformBlockAfterDelay.h */,
+				B569D5DE14C6292800F46D4B /* NSObject+PerformBlockAfterDelay.m */,
+			);
+			name = Extension;
 			sourceTree = "<group>";
 		};
 		B57E3548147877E90065B34F /* Chipmunk */ = {
@@ -456,6 +472,8 @@
 				B569D4E014C4DDA300F46D4B /* BWImageView.h */,
 				B569D4E114C4DDA300F46D4B /* BWImageView.m */,
 				B569D4E314C4ED5200F46D4B /* BWChipmunkLayerDelegate.h */,
+				B569D5D914C61DBF00F46D4B /* BWAnimation.h */,
+				B569D5DA14C61DBF00F46D4B /* BWAnimation.m */,
 			);
 			name = "Chipmunk Parts";
 			sourceTree = "<group>";
@@ -590,6 +608,8 @@
 				B569D45F14BE555300F46D4B /* BWRotatingBumper.m in Sources */,
 				B5E7507E14C260A70021AFC0 /* BWSlidingBox.m in Sources */,
 				B569D4E214C4DDA400F46D4B /* BWImageView.m in Sources */,
+				B569D5DB14C61DBF00F46D4B /* BWAnimation.m in Sources */,
+				B569D5DF14C6292800F46D4B /* NSObject+PerformBlockAfterDelay.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

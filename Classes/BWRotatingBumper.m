@@ -140,20 +140,18 @@ void postStepTrapButton(cpSpace *space, void *obj, void *data) {
     bumper.trappedButtonPosition = localButtonPosition;
     bumper.trappedButton = button;
     
-    [CATransaction begin];
-    [CATransaction setCompletionBlock:^{
-        [bumper fireTrappedButton:button];
-    }];
-    
     CGFloat degrees = 90;
     if( button.color == ButtonColorGreen )
         degrees = -90;
-    CABasicAnimation *rotation = [CABasicAnimation animationWithKeyPath:@"bodyAngle"];
-    rotation.fromValue = [NSNumber numberWithFloat:bumper.chipmunkLayer.angle];
-    rotation.toValue = [NSNumber numberWithFloat:bumper.chipmunkLayer.angle+RADIANS(degrees)];
-    rotation.duration = 2.0;
-    rotation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    [bumper.chipmunkLayer addAnimation:rotation forKey:@"bodyAngle"];
-    [CATransaction commit];    
+    
+    BWAnimation *rotation = [BWAnimation animation];
+    rotation.fromAngle = cpBodyGetAngle(bumper.chipmunkLayer.body);
+    rotation.toAngle = cpBodyGetAngle(bumper.chipmunkLayer.body) + RADIANS(degrees);
+    rotation.duration = 2.0f;
+    rotation.timing = BWAnimationTimingEaseInEaseOut;
+    rotation.completionBlock = ^{
+        [bumper fireTrappedButton:button];
+    };
+    [bumper.chipmunkLayer addBWAnimation:rotation];
 }
 @end
