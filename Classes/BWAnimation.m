@@ -29,7 +29,7 @@
     if( (self = [super init]) ) {
         elapsedTime = 0.0f;
         hasFinished = NO;
-        repeatCount = 1;
+        repeatCount = 0;
         totalRepeatIterations = 0;
         autoreverses = NO;
         autoreverseDirection = AutoReverseDirectionForward;
