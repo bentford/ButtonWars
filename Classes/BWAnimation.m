@@ -9,6 +9,17 @@
 #import "BWAnimation.h"
 #import "BWChipmunkLayer.h"
 
+// Bezier cubic formula:
+//	((1 - t) + t)3 = 1 
+// Expands to… 
+//   (1 - t)3 + 3t(1-t)2 + 3t2(1 - t) + t3 = 1 
+static inline float bezierat( float a, float b, float c, float d, CGFloat t )
+{
+	return (powf(1-t,3) * a + 
+			3*t*(powf(1-t,2))*b + 
+			3*powf(t,2)*(1-t)*c +
+			powf(t,3)*d );
+}
 
 @implementation BWAnimation
 @synthesize fromAngle;
@@ -74,8 +85,29 @@
 }
 
 - (void)updateBody:(BWChipmunkLayer *)body {
+    
     CGFloat interpolation = elapsedTime / duration;
+    
+    if( (timing == BWAnimationTimingEaseIn && interpolation > 0.5) ||
+        (timing == BWAnimationTimingEaseOut && interpolation < 0.5) ||
+        timing == BWAnimationTimingEaseInEaseOut ) {
+        
+        CAMediaTimingFunction *easeIn = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
 
+        CGFloat *points = calloc(4, sizeof(CGFloat));
+        CGFloat *calculationValues = calloc(2, sizeof(CGFloat));
+        for( int i = 0; i < 4; i++ ) {
+            
+            [easeIn getControlPointAtIndex:i values:calculationValues];
+            points[i] = calculationValues[1];
+        }
+        
+        interpolation = bezierat(points[0], points[1], points[2], points[3], interpolation);
+
+        free(points);
+        free(calculationValues);
+    }
+    
     if( [self isRotating] == YES ) 
         body.angle = fromAngle + (toAngle-fromAngle)*interpolation;
     
