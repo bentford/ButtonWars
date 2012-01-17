@@ -145,12 +145,18 @@ void postStepTrapButton(cpSpace *space, void *obj, void *data) {
         [bumper fireTrappedButton:button];
     }];
     
-    CGFloat degrees = 90;
+    CGFloat angleOffset;
     if( button.color == ButtonColorGreen )
-        degrees = -90;
+        angleOffset = ((360 + DEGREES(cpvtoangle(cpvnormalize(localButtonPosition)))) - 180)*-1;
+    else
+        angleOffset = 180 - DEGREES(cpvtoangle(cpvnormalize(localButtonPosition)));
+    
+    NSLog(@"newAngle: %1.2f", DEGREES(cpvtoangle(cpvnormalize(localButtonPosition))));
+    
+    //TODO: play test and see if doing a 90 degree shift or going to a specific degrees is better
     CABasicAnimation *rotation = [CABasicAnimation animationWithKeyPath:@"bodyAngle"];
     rotation.fromValue = [NSNumber numberWithFloat:bumper.chipmunkLayer.angle];
-    rotation.toValue = [NSNumber numberWithFloat:bumper.chipmunkLayer.angle+RADIANS(degrees)];
+    rotation.toValue = [NSNumber numberWithFloat:bumper.chipmunkLayer.angle+RADIANS(angleOffset)];
     rotation.duration = 2.0;
     rotation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
     [bumper.chipmunkLayer addAnimation:rotation forKey:@"bodyAngle"];
