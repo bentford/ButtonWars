@@ -9,15 +9,22 @@
 #import "BWRotatingBumper.h"
 #import "BWChipmunkLayer.h"
 #import "BWButton.h"
+@interface BWRotatingBumper()
+@property (nonatomic, assign) CGPoint trappedButtonPosition;
+@property (nonatomic, assign) BWButton *trappedButton;
+@end
 
 @interface BWRotatingBumper(PrivateMethods)
 - (void)forgetButton:(BWButton *)button;
 
 void postStepTrapButton(cpSpace *space, void *obj, void *data);
 void postStepRemoveConstraint(cpSpace *space, void *obj, void *data);
+
+- (void)fireTrappedButton:(BWButton *)button;
 @end
 
 @implementation BWRotatingBumper
+@synthesize trappedButton;
 
 + (Class)layerClass {
     return [BWChipmunkLayer class];
@@ -40,6 +47,8 @@ void postStepRemoveConstraint(cpSpace *space, void *obj, void *data);
         cpShapeSetUserData(self.chipmunkLayer.shape, self);
         
         recentlyTrappedButtons = [[NSMutableSet alloc] initWithCapacity:2];
+        
+        self.chipmunkLayer.chipmunkLayerDelegate = self;
     }
     return self;
 }
@@ -81,6 +90,30 @@ void postStepRemoveConstraint(cpSpace *space, void *obj, void *data);
     
     cpSpaceAddPostStepCallback(space, (cpPostStepFunc)postStepTrapButton, button, self);
 }
+
+#pragma mark BWChipmunkLayerDelegate
+- (void)didRotateBodyToRadians:(CGFloat)radians {
+    trappedButton.center = [self convertPoint:CGPointMake(self.bounds.size.width/2.0+trappedButtonPosition.x, self.bounds.size.height/2.0+trappedButtonPosition.y) toView:self.superview]; 
+}
+#pragma mark -
+
+- (void)setTrappedButtonPosition:(CGPoint)newTrappedButtonPosition {
+    trappedButtonPosition = newTrappedButtonPosition;
+}
+
+- (CGPoint)trappedButtonPosition {
+    return trappedButtonPosition;
+}
+
+#ifdef kDebugTrappedButtonPoint
+- (void)drawRect:(CGRect)rect {
+    [super drawRect:rect];
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, [UIColor blueColor].CGColor);
+    CGContextFillEllipseInRect(context, CGRectMake(self.bounds.size.width/2.0+trappedButtonPosition.x-5, self.bounds.size.height/2.0+trappedButtonPosition.y-5, 10, 10));
+}
+#endif
+
 @end
 
 @implementation BWRotatingBumper(PrivateMethods)
@@ -88,18 +121,7 @@ void postStepRemoveConstraint(cpSpace *space, void *obj, void *data);
     [recentlyTrappedButtons removeObject:button];
 }
 
-- (void)fireTrappedButton:(NSArray *)parameters {
-    BWButton *button = [parameters objectAtIndex:0];
-    cpConstraint *groove = (cpConstraint *)[((NSValue *)[parameters objectAtIndex:1]) pointerValue];
-    cpConstraint *pin = (cpConstraint *)[((NSValue *)[parameters objectAtIndex:2]) pointerValue];
-    cpSpace *space = (cpSpace *)[((NSValue *)[parameters objectAtIndex:3]) pointerValue];
-    
-
-    cpBodySetAngVel(self.chipmunkLayer.body, 0);
-    cpBodySetTorque(self.chipmunkLayer.body, 0);
-    
-    cpSpaceRemoveConstraint(space, pin);
-    cpSpaceRemoveConstraint(space, groove);
+- (void)fireTrappedButton:(BWButton *)button {
     
     button.ignoreGuideForce = NO;
     
@@ -115,20 +137,20 @@ void postStepTrapButton(cpSpace *space, void *obj, void *data) {
     BWRotatingBumper *bumper = data;
     
     cpVect localButtonPosition = cpBodyWorld2Local(bumper.chipmunkLayer.body, cpBodyGetPos(button.chipmunkLayer.body));
-    
-    cpConstraint *groove = cpGrooveJointNew(bumper.chipmunkLayer.body, button.chipmunkLayer.body, cpv(localButtonPosition.x-1,localButtonPosition.y-1), localButtonPosition, cpvzero);
-    cpConstraint *pin = cpPinJointNew(bumper.chipmunkLayer.body, button.chipmunkLayer.body, cpvzero, cpvzero);
-    cpSpaceAddConstraint(space, groove);
-    cpSpaceAddConstraint(space, pin);
+    bumper.trappedButtonPosition = localButtonPosition;
+    bumper.trappedButton = button;
     
     [CATransaction begin];
     [CATransaction setCompletionBlock:^{
-        NSArray *parameters = [NSArray arrayWithObjects:button,[NSValue valueWithPointer:groove], [NSValue valueWithPointer:pin], [NSValue valueWithPointer:space], nil];        
-        [bumper fireTrappedButton:parameters];
+        [bumper fireTrappedButton:button];
     }];
+    
+    CGFloat degrees = 90;
+    if( button.color == ButtonColorGreen )
+        degrees = -90;
     CABasicAnimation *rotation = [CABasicAnimation animationWithKeyPath:@"bodyAngle"];
     rotation.fromValue = [NSNumber numberWithFloat:bumper.chipmunkLayer.angle];
-    rotation.toValue = [NSNumber numberWithFloat:bumper.chipmunkLayer.angle+M_PI/2.0];
+    rotation.toValue = [NSNumber numberWithFloat:bumper.chipmunkLayer.angle+RADIANS(degrees)];
     rotation.duration = 2.0;
     rotation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
     [bumper.chipmunkLayer addAnimation:rotation forKey:@"bodyAngle"];

@@ -8,6 +8,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import "chipmunk.h"
+#import "BWChipmunkLayerDelegate.h"
 
 @interface BWChipmunkLayer : CALayer {
     cpShape *shape;
@@ -17,6 +18,8 @@
     CGFloat height;
 
 }
+
+@property (nonatomic, assign) id<BWChipmunkLayerDelegate> chipmunkLayerDelegate;
 
 @property (nonatomic, assign) cpBody *body;
 @property (nonatomic, assign) cpShape *shape;

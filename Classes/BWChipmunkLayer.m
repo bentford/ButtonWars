@@ -15,6 +15,7 @@
 @implementation BWChipmunkLayer
 @synthesize body;
 @synthesize shape;
+@synthesize chipmunkLayerDelegate;
 
 + (BOOL)needsDisplayForKey:(NSString *)key {
     if( [key isEqualToString:@"bodyPosition"] || 
@@ -66,6 +67,7 @@
         cpShapeSetFriction(shape, 0.2);
         
         cpShapeSetCollisionType(shape, 1);
+        self.chipmunkLayerDelegate = nil;
     }
     return self;
 }
@@ -140,6 +142,7 @@
 }
 
 - (void)setBodyAngle:(CGFloat)radians {
+    [(id<BWChipmunkLayerDelegate>)[self.modelLayer delegate] didRotateBodyToRadians:radians];
     [self.modelLayer setAngle:radians];
 }
 

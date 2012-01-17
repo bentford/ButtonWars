@@ -9,10 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "ChipmunkLayerView.h"
 #import "BWImageView.h"
+#import "BWChipmunkLayerDelegate.h"
 
 @class BWButton;
-@interface BWRotatingBumper : BWImageView <ChipmunkLayerView> {
+@interface BWRotatingBumper : BWImageView <ChipmunkLayerView, BWChipmunkLayerDelegate> {
     NSMutableSet *recentlyTrappedButtons;
+    CGPoint trappedButtonPosition;
 }
 
 - (void)setupWithSpace:(cpSpace *)space position:(CGPoint)position;

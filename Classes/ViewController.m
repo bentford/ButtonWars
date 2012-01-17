@@ -241,8 +241,6 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     UISwipeGestureRecognizer *swipeCleanGesture = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(chooseNewLevel:)] autorelease];
     [self.view addGestureRecognizer:swipeCleanGesture];
     
-    [self reloadMapWithLevelNamed:@"Level_1"];
-    
     topScore = [[UILabel alloc] initWithFrame:CGRectMake(100, 25, 100, 50)];
     topScore.text = @"0";
     topScore.font = [UIFont boldSystemFontOfSize:24];
@@ -264,6 +262,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     countdownLabel.font = [UIFont boldSystemFontOfSize:34];
     [self.view addSubview:countdownLabel];
     
+    [self reloadMapWithLevelNamed:@"Level_1"];
     
 }
 

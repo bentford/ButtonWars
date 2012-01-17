@@ -138,6 +138,7 @@
 		B569D4A514C4AC5700F46D4B /* AnimatedChipmunkLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimatedChipmunkLayer.h; sourceTree = "<group>"; };
 		B569D4E014C4DDA300F46D4B /* BWImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWImageView.h; sourceTree = "<group>"; };
 		B569D4E114C4DDA300F46D4B /* BWImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWImageView.m; sourceTree = "<group>"; };
+		B569D4E314C4ED5200F46D4B /* BWChipmunkLayerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWChipmunkLayerDelegate.h; sourceTree = "<group>"; };
 		B57E3549147877E90065B34F /* chipmunk.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = chipmunk.c; sourceTree = "<group>"; };
 		B57E354A147877E90065B34F /* chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk.h; sourceTree = "<group>"; };
 		B57E354B147877E90065B34F /* chipmunk_ffi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_ffi.h; sourceTree = "<group>"; };
@@ -454,6 +455,7 @@
 				B569D4A514C4AC5700F46D4B /* AnimatedChipmunkLayer.h */,
 				B569D4E014C4DDA300F46D4B /* BWImageView.h */,
 				B569D4E114C4DDA300F46D4B /* BWImageView.m */,
+				B569D4E314C4ED5200F46D4B /* BWChipmunkLayerDelegate.h */,
 			);
 			name = "Chipmunk Parts";
 			sourceTree = "<group>";
