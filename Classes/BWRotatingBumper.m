@@ -9,6 +9,8 @@
 #import "BWRotatingBumper.h"
 #import "BWChipmunkLayer.h"
 #import "BWButton.h"
+
+
 @interface BWRotatingBumper()
 @property (nonatomic, assign) CGPoint trappedButtonPosition;
 @property (nonatomic, assign) BWButton *trappedButton;
@@ -86,7 +88,15 @@
     
     // rotate the button
     cpVect localButtonPosition = cpBodyWorld2Local(self.chipmunkLayer.body, cpBodyGetPos(button.chipmunkLayer.body));
+
+    CGFloat targetAngle = 180;
+    if( button.color == ButtonColorGreen )
+        targetAngle = -180;
+    
+    CGFloat angleOffset = targetAngle-DEGREES(cpvtoangle(cpvrotate(cpvnormalize(localButtonPosition), cpvforangle(self.chipmunkLayer.angle))));
+    
     self.trappedButtonPosition = localButtonPosition;
+    [self setNeedsDisplay];
     self.trappedButton = button;
     
     CGFloat degrees = 90;
@@ -95,7 +105,7 @@
     
     BWAnimation *rotation = [BWAnimation animation];
     rotation.fromAngle = cpBodyGetAngle(self.chipmunkLayer.body);
-    rotation.toAngle = cpBodyGetAngle(self.chipmunkLayer.body) + RADIANS(degrees);
+    rotation.toAngle = cpBodyGetAngle(self.chipmunkLayer.body) + RADIANS(angleOffset);
     rotation.duration = 2.0f;
     rotation.timing = BWAnimationTimingEaseInEaseOut;
     rotation.completionBlock = ^{
