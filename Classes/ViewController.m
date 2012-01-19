@@ -267,7 +267,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     
     
     CatmullRomSplineVIew *cat = [[[CatmullRomSplineVIew alloc] init] autorelease];
-    cat.frame = CGRectMake(10, 100, 500, 100);
+    cat.frame = CGRectMake(10, 100, 500, 500);
     [self.view addSubview:cat];
     
 }

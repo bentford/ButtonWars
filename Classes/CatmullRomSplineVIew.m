@@ -26,10 +26,10 @@
     
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSetStrokeColorWithColor(context, [UIColor greenColor].CGColor);
-    CGContextMoveToPoint(context, -10, self.bounds.size.height/2.0f);
+    CGContextMoveToPoint(context, 200.0f, self.bounds.size.height/2.0-50);
     for( CGFloat t = 0.0f; t < 1.01f; t += 0.05f ) {
-        CGFloat y = [self catmullRomForTime:t p0:self.bounds.size.height/2.0+50 p1:self.bounds.size.height/2.0-50 p2:self.bounds.size.height/2.0 p3:self.bounds.size.height/2.0];
-        CGFloat x = t * 500;
+        CGFloat x = [self catmullRomForTime:t p0:100.0f p1:200.0f p2:300.0f p3:400.0f];
+        CGFloat y = [self catmullRomForTime:t p0:self.bounds.size.height/2.0 p1:self.bounds.size.height/2.0-50 p2:self.bounds.size.height/2.0+50 p3:self.bounds.size.height/2.0];
         CGContextAddLineToPoint(context, x, y);
     }
     CGContextStrokePath(context);
@@ -41,4 +41,5 @@
           (2*P0 - 5*P1 + 4*P2 - P3) * powf(t,2.0f) +
           (-P0 + 3*P1- 3*P2 + P3) * powf(t, 3.0f));
 }
+
 @end
