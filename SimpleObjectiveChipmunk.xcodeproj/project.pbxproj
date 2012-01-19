@@ -33,6 +33,7 @@
 		B569D4E214C4DDA400F46D4B /* BWImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = B569D4E114C4DDA300F46D4B /* BWImageView.m */; };
 		B569D5DB14C61DBF00F46D4B /* BWAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = B569D5DA14C61DBF00F46D4B /* BWAnimation.m */; };
 		B569D5DF14C6292800F46D4B /* NSObject+PerformBlockAfterDelay.m in Sources */ = {isa = PBXBuildFile; fileRef = B569D5DE14C6292800F46D4B /* NSObject+PerformBlockAfterDelay.m */; };
+		B569D61314C8AEE000F46D4B /* CatmullRomSplineVIew.m in Sources */ = {isa = PBXBuildFile; fileRef = B569D61214C8AEDF00F46D4B /* CatmullRomSplineVIew.m */; };
 		B57E3581147877E90065B34F /* chipmunk.c in Sources */ = {isa = PBXBuildFile; fileRef = B57E3549147877E90065B34F /* chipmunk.c */; };
 		B57E358D147877E90065B34F /* cpArbiter.c in Sources */ = {isa = PBXBuildFile; fileRef = B57E3567147877E90065B34F /* cpArbiter.c */; };
 		B57E358E147877E90065B34F /* cpArray.c in Sources */ = {isa = PBXBuildFile; fileRef = B57E3569147877E90065B34F /* cpArray.c */; };
@@ -145,6 +146,8 @@
 		B569D5DA14C61DBF00F46D4B /* BWAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWAnimation.m; sourceTree = "<group>"; };
 		B569D5DD14C6292800F46D4B /* NSObject+PerformBlockAfterDelay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+PerformBlockAfterDelay.h"; sourceTree = "<group>"; };
 		B569D5DE14C6292800F46D4B /* NSObject+PerformBlockAfterDelay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+PerformBlockAfterDelay.m"; sourceTree = "<group>"; };
+		B569D61114C8AEDF00F46D4B /* CatmullRomSplineVIew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CatmullRomSplineVIew.h; sourceTree = "<group>"; };
+		B569D61214C8AEDF00F46D4B /* CatmullRomSplineVIew.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CatmullRomSplineVIew.m; sourceTree = "<group>"; };
 		B57E3549147877E90065B34F /* chipmunk.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = chipmunk.c; sourceTree = "<group>"; };
 		B57E354A147877E90065B34F /* chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk.h; sourceTree = "<group>"; };
 		B57E354B147877E90065B34F /* chipmunk_ffi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_ffi.h; sourceTree = "<group>"; };
@@ -439,6 +442,8 @@
 				B569D45E14BE555200F46D4B /* BWRotatingBumper.m */,
 				B5E7507C14C260A50021AFC0 /* BWSlidingBox.h */,
 				B5E7507D14C260A60021AFC0 /* BWSlidingBox.m */,
+				B569D61114C8AEDF00F46D4B /* CatmullRomSplineVIew.h */,
+				B569D61214C8AEDF00F46D4B /* CatmullRomSplineVIew.m */,
 			);
 			name = "Game Parts";
 			sourceTree = "<group>";
@@ -610,6 +615,7 @@
 				B569D4E214C4DDA400F46D4B /* BWImageView.m in Sources */,
 				B569D5DB14C61DBF00F46D4B /* BWAnimation.m in Sources */,
 				B569D5DF14C6292800F46D4B /* NSObject+PerformBlockAfterDelay.m in Sources */,
+				B569D61314C8AEE000F46D4B /* CatmullRomSplineVIew.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
