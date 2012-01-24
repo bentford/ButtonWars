@@ -264,12 +264,6 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     [self.view addSubview:countdownLabel];
     
     [self reloadMapWithLevelNamed:@"Level_1"];
-    
-    
-    CatmullRomSplineVIew *cat = [[[CatmullRomSplineVIew alloc] init] autorelease];
-    cat.frame = CGRectMake(10, 100, 500, 500);
-    [self.view addSubview:cat];
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {

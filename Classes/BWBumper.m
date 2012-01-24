@@ -17,11 +17,15 @@
 }
 
 - (id)init {
-    if( (self = [super initWithFrame:CGRectMake(0, 0, 100, 100)]) ) {
-        self.image = [UIImage imageNamed:@"Bumper_v2.png"];
+    if( (self = [super initWithFrame:CGRectMake(0, 0, 200, 200)]) ) {
+        self.image = [UIImage imageNamed:@"Bumper_v3.png"];
+        
         cpShapeSetElasticity(self.chipmunkLayer.shape, 1.0);
         cpShapeSetCollisionType(self.chipmunkLayer.shape, 3);
         cpBodySetMass(self.chipmunkLayer.body, 100.0);
+
+        cpShapeFree(self.chipmunkLayer.shape);
+        cpCircleShapeNew(self.chipmunkLayer.body, 50, cpvzero);
         
         cpBodySetUserData(self.chipmunkLayer.body, self);
         cpShapeSetUserData(self.chipmunkLayer.shape, self);
