@@ -14,7 +14,6 @@
 #import "BWRotatingBumper.h"
 #import "BWSlidingBox.h"
 #import "ChipmunkLayerView.h"
-#import "CatmullRomSplineVIew.h"
 
 #define kCountdownTimer 10
 
