@@ -159,6 +159,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 
 @interface ViewController(PrivateMethods)
 - (void)populateMapWithFileNamed:(NSString *)textMapName;
+- (void)populateWalls;
 @end
 
 @implementation ViewController
@@ -180,28 +181,15 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     cpBody *floorBody = cpSpaceGetStaticBody(space);
 
     // left
-	cpShape *floorShape = cpSegmentShapeNew(floorBody, cpv(0, 0), cpv(0, self.view.bounds.size.height-118), 0);
+	cpShape *floorShape = cpSegmentShapeNew(floorBody, cpv(0, 120), cpv(0, self.view.bounds.size.height-120), 0);
     cpShapeSetElasticity(floorShape, 1.0f);
 	cpShapeSetFriction(floorShape, 1.0f);
 	cpShapeSetCollisionType(floorShape, kFloorCollisionType);
     cpSpaceAddShape(space, floorShape);
 
     // right
-    floorShape = cpSegmentShapeNew(floorBody, cpv(self.view.bounds.size.width, 0), cpv(self.view.bounds.size.width, self.view.bounds.size.height-118), 0);
+    floorShape = cpSegmentShapeNew(floorBody, cpv(self.view.bounds.size.width, 120), cpv(self.view.bounds.size.width, self.view.bounds.size.height-120), 0);
     cpShapeSetElasticity(floorShape, 1.0f);
-	cpShapeSetFriction(floorShape, 1.0f);
-	cpShapeSetCollisionType(floorShape, kFloorCollisionType);
-    cpSpaceAddShape(space, floorShape);
-
-    // top
-    floorShape = cpSegmentShapeNew(floorBody, cpv(0, 50), cpv(self.view.bounds.size.width/2.0, 0), 0);
-    cpShapeSetElasticity(floorShape, 0.4f);
-	cpShapeSetFriction(floorShape, 1.0f);
-	cpShapeSetCollisionType(floorShape, kFloorCollisionType);
-    cpSpaceAddShape(space, floorShape);
-    
-    floorShape = cpSegmentShapeNew(floorBody, cpv(self.view.bounds.size.width/2.0, 0), cpv(self.view.bounds.size.width, 50), 0);
-    cpShapeSetElasticity(floorShape, 0.4f);
 	cpShapeSetFriction(floorShape, 1.0f);
 	cpShapeSetCollisionType(floorShape, kFloorCollisionType);
     cpSpaceAddShape(space, floorShape);
@@ -251,13 +239,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     
     [self reloadMapWithLevelNamed:@"Level_1"];
     
-    BaseWall *baseWall = [[[BaseWall alloc] initWithDirection:BaseWallDirectionNormal] autorelease];
-    [baseWall setupWithSpace:space position:cpv(self.view.bounds.size.width-153, self.view.bounds.size.height-60)];
-    [self.view insertSubview:baseWall belowSubview:bottomScore];
-    
-    baseWall = [[[BaseWall alloc] initWithDirection:BaseWallDirectionFlippedHorizontal] autorelease];
-    [baseWall setupWithSpace:space position:cpv(153, self.view.bounds.size.height-60)];
-    [self.view insertSubview:baseWall belowSubview:bottomScore];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -472,6 +454,8 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 @implementation ViewController(PrivateMethods)
 - (void)populateMapWithFileNamed:(NSString *)textMapName {
     
+    [self populateWalls];
+    
     NSUInteger mapRowCount = 33;
     NSUInteger mapColumnCount = 65;
     
@@ -613,5 +597,23 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
             pointsToWin = 15;
     } else
         pointsToWin = 15;
+}
+
+- (void)populateWalls {
+    BaseWall *baseWall = [[[BaseWall alloc] initWithDirection:BaseWallDirectionNormal] autorelease];
+    [baseWall setupWithSpace:space position:cpv(self.view.bounds.size.width-153, self.view.bounds.size.height-60)];
+    [self.view insertSubview:baseWall belowSubview:bottomScore];
+    
+    baseWall = [[[BaseWall alloc] initWithDirection:BaseWallDirectionFlippedHorizontal] autorelease];
+    [baseWall setupWithSpace:space position:cpv(153, self.view.bounds.size.height-60)];
+    [self.view insertSubview:baseWall belowSubview:bottomScore];
+    
+    baseWall = [[[BaseWall alloc] initWithDirection:BaseWallDirectionFlippedVertical] autorelease];
+    [baseWall setupWithSpace:space position:cpv(self.view.bounds.size.width-153, 60)];
+    [self.view insertSubview:baseWall belowSubview:bottomScore];
+    
+    baseWall = [[[BaseWall alloc] initWithDirection:BaseWallDirectionFlippedBoth] autorelease];
+    [baseWall setupWithSpace:space position:cpv(153, 60)];
+    [self.view insertSubview:baseWall belowSubview:bottomScore];
 }
 @end

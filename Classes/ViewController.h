@@ -56,5 +56,6 @@
 - (void)stopCountdownForColor:(ButtonColor)theColor;
 
 - (void)fireTrappedButton:(BWButton *)button;
+
 @end
 

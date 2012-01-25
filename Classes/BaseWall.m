@@ -36,13 +36,13 @@
             cpShapeFree(self.chipmunkLayer.shape);
             cpPolyShapeNew(self.chipmunkLayer.body, 4, verts, cpvzero);
         } else if( direction == BaseWallDirectionFlippedVertical ) {
-            self.image = [UIImage imageWithCGImage:normalImage.CGImage scale:1.0 orientation:UIImageOrientationDown];
-            cpVect verts[4] = {cpv(-151,-56), cpv(-150,53), cpv(141,56), cpv(145,25) };
+            self.image = [UIImage imageWithCGImage:normalImage.CGImage scale:1.0 orientation:UIImageOrientationDownMirrored];
+            cpVect verts[4] = {cpv(-141,-56), cpv(-145,-25), cpv(151,56), cpv(150,-53) };
             cpShapeFree(self.chipmunkLayer.shape);
             cpPolyShapeNew(self.chipmunkLayer.body, 4, verts, cpvzero);
         } else if( direction == BaseWallDirectionFlippedBoth ) {
-            self.image = [UIImage imageWithCGImage:normalImage.CGImage scale:1.0 orientation:UIImageOrientationDownMirrored];
-            cpVect verts[4] = {cpv(-151,-56), cpv(-150,53), cpv(141,56), cpv(145,25) };
+            self.image = [UIImage imageWithCGImage:normalImage.CGImage scale:1.0 orientation:UIImageOrientationDown];
+            cpVect verts[4] = {cpv(-150,-53), cpv(-151,56), cpv(145,-25), cpv(141,-56) };
             cpShapeFree(self.chipmunkLayer.shape);
             cpPolyShapeNew(self.chipmunkLayer.body, 4, verts, cpvzero);
         }
@@ -53,6 +53,7 @@
         
         
         cpShapeSetElasticity(self.chipmunkLayer.shape, 0.6f);
+        cpShapeSetFriction(self.chipmunkLayer.shape, 1.0);
         
         self.backgroundColor = [UIColor clearColor];
     }
