@@ -253,7 +253,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     bottomScore.font = [UIFont boldSystemFontOfSize:24];
     bottomScore.backgroundColor = [UIColor clearColor];    
     bottomScore.textColor = [UIColor whiteColor];
-    [self.view addSubview:bottomScore];
+    [self.view insertSubview:bottomScore belowSubview:topScore];
     
     countdownLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.bounds.size.width/2.0-200, self.view.bounds.size.height/2.0-40, 400, 80)];
     countdownLabel.textAlignment = UITextAlignmentCenter;
@@ -549,7 +549,14 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
             if( [character isEqualToString:@"r"] == YES && currentColumn+1 < [columns count] && [[columns objectAtIndex:currentColumn+1] isEqualToString:@"b"] == YES ) {
                 BWRotatingBumper *bumper = [[[BWRotatingBumper alloc] init] autorelease];
                 [bumper setupWithSpace:space position:currentPosition];
-                [self.view addSubview:bumper];
+                [self.view insertSubview:bumper aboveSubview:topScore];
+                
+                UIImageView *base = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"RotatingBumperBase.png"]] autorelease];
+                [base sizeToFit];
+                base.center = CGPointMake(currentPosition.x-45, currentPosition.y);
+                [self.view insertSubview:base belowSubview:bottomScore];
+                
+                [bumper setBaseView:base];
             }
 
             if( [character isEqualToString:@"s"] == YES && currentColumn+1 < [columns count] && [[columns objectAtIndex:currentColumn+1] isEqualToString:@"x"] == YES ) {            

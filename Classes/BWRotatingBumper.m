@@ -29,11 +29,11 @@
 }
 
 - (id)init {
-    if( (self = [super initWithFrame:CGRectMake(0, 0, 100, 100)]) ) {
+    if( (self = [super initWithFrame:CGRectMake(0, 0, 200, 200)]) ) {
         self.image = [UIImage imageNamed:@"RotatingBumper.png"];
-        
+
         cpShapeFree(self.chipmunkLayer.shape);
-        self.chipmunkLayer.shape = cpCircleShapeNew(self.chipmunkLayer.body, self.bounds.size.width/2.0-25, cpvzero);
+        self.chipmunkLayer.shape = cpCircleShapeNew(self.chipmunkLayer.body, 30, cpvzero);
         
         cpShapeSetElasticity(self.chipmunkLayer.shape, 1.0);
         cpShapeSetCollisionType(self.chipmunkLayer.shape, 5);
@@ -137,6 +137,17 @@
     CGContextFillEllipseInRect(context, CGRectMake(self.bounds.size.width/2.0+trappedButtonPosition.x-5, self.bounds.size.height/2.0+trappedButtonPosition.y-5, 10, 10));
 }
 #endif
+
+- (void)setBaseView:(UIImageView *)newBaseView {
+    baseView = newBaseView;
+}
+
+- (void)removeFromSuperview {
+    if( baseView != nil && baseView.superview != nil )
+        [baseView removeFromSuperview];
+
+    [super removeFromSuperview];
+}
 
 @end
 

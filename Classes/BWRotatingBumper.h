@@ -15,10 +15,14 @@
 @interface BWRotatingBumper : BWImageView <ChipmunkLayerView, BWChipmunkLayerDelegate> {
     NSMutableSet *recentlyTrappedButtons;
     CGPoint trappedButtonPosition;
+    
+    UIImageView *baseView;
 }
 
 - (void)setupWithSpace:(cpSpace *)space position:(CGPoint)position;
 
 - (void)trapButton:(BWButton *)button withSpace:(cpSpace *)space;
+
+- (void)setBaseView:(UIImageView *)newBaseView;
 
 @end
