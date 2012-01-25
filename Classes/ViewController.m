@@ -14,6 +14,7 @@
 #import "BWRotatingBumper.h"
 #import "BWSlidingBox.h"
 #import "ChipmunkLayerView.h"
+#import "BaseWall.h"
 
 #define kCountdownTimer 10
 
@@ -179,14 +180,14 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     cpBody *floorBody = cpSpaceGetStaticBody(space);
 
     // left
-	cpShape *floorShape = cpSegmentShapeNew(floorBody, cpv(0, 0), cpv(0, self.view.bounds.size.height), 0);
+	cpShape *floorShape = cpSegmentShapeNew(floorBody, cpv(0, 0), cpv(0, self.view.bounds.size.height-118), 0);
     cpShapeSetElasticity(floorShape, 1.0f);
 	cpShapeSetFriction(floorShape, 1.0f);
 	cpShapeSetCollisionType(floorShape, kFloorCollisionType);
     cpSpaceAddShape(space, floorShape);
 
     // right
-    floorShape = cpSegmentShapeNew(floorBody, cpv(self.view.bounds.size.width, 0), cpv(self.view.bounds.size.width, self.view.bounds.size.height), 0);
+    floorShape = cpSegmentShapeNew(floorBody, cpv(self.view.bounds.size.width, 0), cpv(self.view.bounds.size.width, self.view.bounds.size.height-118), 0);
     cpShapeSetElasticity(floorShape, 1.0f);
 	cpShapeSetFriction(floorShape, 1.0f);
 	cpShapeSetCollisionType(floorShape, kFloorCollisionType);
@@ -200,20 +201,6 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     cpSpaceAddShape(space, floorShape);
     
     floorShape = cpSegmentShapeNew(floorBody, cpv(self.view.bounds.size.width/2.0, 0), cpv(self.view.bounds.size.width, 50), 0);
-    cpShapeSetElasticity(floorShape, 0.4f);
-	cpShapeSetFriction(floorShape, 1.0f);
-	cpShapeSetCollisionType(floorShape, kFloorCollisionType);
-    cpSpaceAddShape(space, floorShape);
-
-
-    // bottom
-    floorShape = cpSegmentShapeNew(floorBody, cpv(0, self.view.bounds.size.height-50), cpv(self.view.bounds.size.width/2.0, self.view.bounds.size.height), 0);
-    cpShapeSetElasticity(floorShape, 0.4f);
-	cpShapeSetFriction(floorShape, 1.0f);
-	cpShapeSetCollisionType(floorShape, kFloorCollisionType);
-    cpSpaceAddShape(space, floorShape);
-    
-    floorShape = cpSegmentShapeNew(floorBody, cpv(self.view.bounds.size.width/2.0, self.view.bounds.size.height), cpv(self.view.bounds.size.width, self.view.bounds.size.height-50), 0);
     cpShapeSetElasticity(floorShape, 0.4f);
 	cpShapeSetFriction(floorShape, 1.0f);
 	cpShapeSetCollisionType(floorShape, kFloorCollisionType);
@@ -263,6 +250,14 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     [self.view addSubview:countdownLabel];
     
     [self reloadMapWithLevelNamed:@"Level_1"];
+    
+    BaseWall *baseWall = [[[BaseWall alloc] initWithDirection:BaseWallDirectionNormal] autorelease];
+    [baseWall setupWithSpace:space position:cpv(self.view.bounds.size.width-153, self.view.bounds.size.height-60)];
+    [self.view insertSubview:baseWall belowSubview:bottomScore];
+    
+    baseWall = [[[BaseWall alloc] initWithDirection:BaseWallDirectionFlippedHorizontal] autorelease];
+    [baseWall setupWithSpace:space position:cpv(153, self.view.bounds.size.height-60)];
+    [self.view insertSubview:baseWall belowSubview:bottomScore];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
