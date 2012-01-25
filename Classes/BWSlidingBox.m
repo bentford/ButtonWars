@@ -16,11 +16,18 @@
 }
 
 - (id)init {
-    if( (self = [super initWithFrame:CGRectMake(0, 0, 50, 50)]) ) {
+    if( (self = [super initWithFrame:CGRectMake(0, 0, 150, 150)]) ) {
+        self.image = [UIImage imageNamed:@"Sliding-BLock.png"];
+        
+        
         cpBodySetMass(self.chipmunkLayer.body, INFINITY);
         cpBodySetMoment(self.chipmunkLayer.body, cpMomentForBox(INFINITY, 50, 50));
         
-        self.backgroundColor = [UIColor blackColor];
+        cpShapeFree(self.chipmunkLayer.shape);
+        cpBoxShapeNew(self.chipmunkLayer.body, 50, 50);
+        cpShapeSetElasticity(self.chipmunkLayer.shape, 0.3f);
+        
+        self.backgroundColor = [UIColor clearColor];
     }
     return self;
 }

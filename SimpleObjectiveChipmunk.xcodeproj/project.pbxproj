@@ -33,6 +33,7 @@
 		B569D5DF14C6292800F46D4B /* NSObject+PerformBlockAfterDelay.m in Sources */ = {isa = PBXBuildFile; fileRef = B569D5DE14C6292800F46D4B /* NSObject+PerformBlockAfterDelay.m */; };
 		B569D65714CF76D200F46D4B /* Bumper_v3.png in Resources */ = {isa = PBXBuildFile; fileRef = B569D65614CF76D200F46D4B /* Bumper_v3.png */; };
 		B569D65914CF795700F46D4B /* RotatingBumperBase.png in Resources */ = {isa = PBXBuildFile; fileRef = B569D65814CF795700F46D4B /* RotatingBumperBase.png */; };
+		B569D65B14CFB31D00F46D4B /* Sliding-Block.png in Resources */ = {isa = PBXBuildFile; fileRef = B569D65A14CFB31C00F46D4B /* Sliding-Block.png */; };
 		B57E3581147877E90065B34F /* chipmunk.c in Sources */ = {isa = PBXBuildFile; fileRef = B57E3549147877E90065B34F /* chipmunk.c */; };
 		B57E358D147877E90065B34F /* cpArbiter.c in Sources */ = {isa = PBXBuildFile; fileRef = B57E3567147877E90065B34F /* cpArbiter.c */; };
 		B57E358E147877E90065B34F /* cpArray.c in Sources */ = {isa = PBXBuildFile; fileRef = B57E3569147877E90065B34F /* cpArray.c */; };
@@ -145,6 +146,7 @@
 		B569D5DE14C6292800F46D4B /* NSObject+PerformBlockAfterDelay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+PerformBlockAfterDelay.m"; sourceTree = "<group>"; };
 		B569D65614CF76D200F46D4B /* Bumper_v3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Bumper_v3.png; sourceTree = "<group>"; };
 		B569D65814CF795700F46D4B /* RotatingBumperBase.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RotatingBumperBase.png; sourceTree = "<group>"; };
+		B569D65A14CFB31C00F46D4B /* Sliding-Block.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Sliding-Block.png"; sourceTree = "<group>"; };
 		B57E3549147877E90065B34F /* chipmunk.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = chipmunk.c; sourceTree = "<group>"; };
 		B57E354A147877E90065B34F /* chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk.h; sourceTree = "<group>"; };
 		B57E354B147877E90065B34F /* chipmunk_ffi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_ffi.h; sourceTree = "<group>"; };
@@ -408,6 +410,7 @@
 		B5FE1A9A14A13ED900022983 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				B569D65A14CFB31C00F46D4B /* Sliding-Block.png */,
 				B569D65814CF795700F46D4B /* RotatingBumperBase.png */,
 				B569D65614CF76D200F46D4B /* Bumper_v3.png */,
 				B569D49B14C0E5DA00F46D4B /* Background_1.png */,
@@ -546,6 +549,7 @@
 				B569D49C14C0E5DA00F46D4B /* Background_1.png in Resources */,
 				B569D65714CF76D200F46D4B /* Bumper_v3.png in Resources */,
 				B569D65914CF795700F46D4B /* RotatingBumperBase.png in Resources */,
+				B569D65B14CFB31D00F46D4B /* Sliding-Block.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

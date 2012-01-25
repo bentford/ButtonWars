@@ -12,7 +12,7 @@
 #import "BWChipmunkLayerDelegate.h"
 
 @class BWButton;
-@interface BWRotatingBumper : BWImageView <ChipmunkLayerView, BWChipmunkLayerDelegate> {
+@interface BWRotatingBumper : UIImageView <ChipmunkLayerView, BWChipmunkLayerDelegate> {
     NSMutableSet *recentlyTrappedButtons;
     CGPoint trappedButtonPosition;
     

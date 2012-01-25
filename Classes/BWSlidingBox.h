@@ -10,7 +10,7 @@
 #import "ChipmunkLayerView.h"
 #import "AnimatedChipmunkLayer.h"
 
-@interface BWSlidingBox : UIView <ChipmunkLayerView, AnimatedChipmunkLayer> {
+@interface BWSlidingBox : UIImageView <ChipmunkLayerView, AnimatedChipmunkLayer> {
     CGPoint animationStartPoint;
 }
 
