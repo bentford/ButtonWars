@@ -90,8 +90,8 @@
     cpVect localButtonPosition = cpBodyWorld2Local(self.chipmunkLayer.body, cpBodyGetPos(button.chipmunkLayer.body));
 
     CGFloat targetAngle = 180;
-    if( button.color == ButtonColorGreen )
-        targetAngle = -180;
+//    if( button.color == ButtonColorGreen )
+//        targetAngle = -180;
     
     CGFloat angleOffset = targetAngle-DEGREES(cpvtoangle(cpvrotate(cpvnormalize(localButtonPosition), cpvforangle(self.chipmunkLayer.angle))));
     
@@ -99,14 +99,10 @@
     [self setNeedsDisplay];
     self.trappedButton = button;
     
-    CGFloat degrees = 90;
-    if( button.color == ButtonColorGreen )
-        degrees = -90;
-    
     BWAnimation *rotation = [BWAnimation animation];
     rotation.fromAngle = cpBodyGetAngle(self.chipmunkLayer.body);
     rotation.toAngle = cpBodyGetAngle(self.chipmunkLayer.body) + RADIANS(angleOffset);
-    rotation.duration = 2.0f;
+    rotation.duration = ((rotation.toAngle - rotation.fromAngle) / RADIANS(90.0f) ) * 1.0f;
     rotation.timing = BWAnimationTimingEaseInEaseOut;
     rotation.completionBlock = ^{
         // fire button when rotation completes
