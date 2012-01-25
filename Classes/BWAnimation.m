@@ -107,9 +107,16 @@ static inline float bezierat( float a, float b, float c, float d, CGFloat t )
         free(points);
         free(calculationValues);
     }
-    
-    if( [self isRotating] == YES ) 
-        body.angle = fromAngle + (toAngle-fromAngle)*interpolation;
+
+    if( [self isRotating] == YES ) { 
+        
+        // rotate in the shortest direction
+        CGFloat angleDelta = toAngle - fromAngle;
+        if( angleDelta < M_PI )
+            body.angle = fromAngle + angleDelta*interpolation;
+        else
+            body.angle = fromAngle - (RADIANS(360) - angleDelta)*interpolation;
+    }
     
     if( [self isMoving] == YES ) {
         CGFloat xPos = fromPoint.x+(toPoint.x-fromPoint.x)*interpolation;
