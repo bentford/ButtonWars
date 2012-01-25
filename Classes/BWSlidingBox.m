@@ -17,7 +17,7 @@
 
 - (id)init {
     if( (self = [super initWithFrame:CGRectMake(0, 0, 150, 150)]) ) {
-        self.image = [UIImage imageNamed:@"Sliding-BLock.png"];
+        self.image = [UIImage imageNamed:@"Sliding-Block.png"];
         
         
         cpBodySetMass(self.chipmunkLayer.body, INFINITY);
@@ -25,7 +25,7 @@
         
         cpShapeFree(self.chipmunkLayer.shape);
         cpBoxShapeNew(self.chipmunkLayer.body, 50, 50);
-        cpShapeSetElasticity(self.chipmunkLayer.shape, 0.3f);
+        cpShapeSetElasticity(self.chipmunkLayer.shape, 0.6f);
         
         self.backgroundColor = [UIColor clearColor];
     }
