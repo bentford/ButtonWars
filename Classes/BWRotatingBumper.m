@@ -96,7 +96,7 @@
     CGFloat angleOffset = targetAngle-DEGREES(cpvtoangle(cpvrotate(cpvnormalize(localButtonPosition), cpvforangle(self.chipmunkLayer.angle))));
     
     self.trappedButtonPosition = localButtonPosition;
-    [self setNeedsDisplay];
+
     self.trappedButton = button;
     
     BWAnimation *rotation = [BWAnimation animation];
