@@ -92,8 +92,20 @@ void postSolveCollisionWithButtonAndScorePost(cpArbiter *arbiter, cpSpace *space
     cpSpaceAddPostStepCallback(space, (cpPostStepFunc)postStepRemove, b, NULL);
 }
 
-void postSolveCollisionWithButtonAndShooter(cpArbiter *arbiter, cpSpace *space, void *data) {
+int beginCollisionWithButtonAndShooter(cpArbiter *arbiter, cpSpace *space, void *data) {
 
+    CP_ARBITER_GET_SHAPES(arbiter, a, b);
+    BWButton *button = a->data;
+    BWShooter *shooter = b->data;
+    
+    if( button.canDie == YES && button.color == shooter.buttonColor ) 
+        return 0;
+    else
+        return 1;
+}
+
+void postSolveCollisionWithButtonAndInnerShooter(cpArbiter *arbiter, cpSpace *space, void *data) {
+    
     CP_ARBITER_GET_SHAPES(arbiter, a, b);
     BWButton *button = a->data;
     BWShooter *shooter = b->data;
@@ -103,6 +115,7 @@ void postSolveCollisionWithButtonAndShooter(cpArbiter *arbiter, cpSpace *space, 
         cpSpaceAddPostStepCallback(space, (cpPostStepFunc)postStepRemoveButton, a, NULL);
     }
 }
+
 
 void postSolveCollisionWithButtonAndBumper(cpArbiter *arbiter, cpSpace *space, void *data) {
     CP_ARBITER_GET_SHAPES(arbiter, a, b);
@@ -170,6 +183,9 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 	[super viewDidLoad];
     self.wantsFullScreenLayout = YES;
     
+    topShooter = nil;
+    bottomShooter = nil;
+    
     CALayer *background = [CALayer layer];
     background.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
     background.contents = (id)[UIImage imageNamed:@"Background_1.png"].CGImage;
@@ -197,21 +213,9 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     cpSpaceAddCollisionHandler(space, 0, 1, NULL, NULL, (cpCollisionPostSolveFunc)postSolveCollision, NULL, NULL);
     cpSpaceAddCollisionHandler(space, 1, 2, (cpCollisionBeginFunc)beginCollisionWithButtonAndScorePost, NULL, NULL, NULL, self);
     cpSpaceAddCollisionHandler(space, 1, 3, NULL, NULL, (cpCollisionPostSolveFunc)postSolveCollisionWithButtonAndBumper, NULL, self);    
-    cpSpaceAddCollisionHandler(space, 1, 4, NULL, NULL, (cpCollisionPostSolveFunc)postSolveCollisionWithButtonAndShooter, NULL, self);
+    cpSpaceAddCollisionHandler(space, 1, 4, (cpCollisionBeginFunc)beginCollisionWithButtonAndShooter, NULL, NULL, NULL, self);
     cpSpaceAddCollisionHandler(space, 1, 5, (cpCollisionBeginFunc)beginSolveCollisionWithButtonAndRotatingBumper, NULL, NULL, NULL, self);
-    
-    topShooter = [[BWShooter alloc] initWithFrame:CGRectMake(0, 0, 170, 170) color:ButtonColorGreen];
-    [topShooter makeStaticBodyWithPosition:CGPointMake(self.view.bounds.size.width/2.0, 0)];
-    topShooter.gameDelegate = self;
-    cpSpaceAddShape(space, topShooter.shape);
-    [self.view addSubview:topShooter];
-    
-    bottomShooter = [[BWShooter alloc] initWithFrame:CGRectMake(0, 0, 170, 170) color:ButtonColorOrange];
-    [bottomShooter makeStaticBodyWithPosition:CGPointMake(self.view.bounds.size.width/2.0, self.view.bounds.size.height)];
-    bottomShooter.gameDelegate = self;
-    cpSpaceAddShape(space, bottomShooter.shape);
-    [self.view addSubview:bottomShooter];
-    [bottomShooter updatePosition];
+    cpSpaceAddCollisionHandler(space, 1, 6, NULL, NULL, (cpCollisionPostSolveFunc)postSolveCollisionWithButtonAndInnerShooter, NULL, self);
     
     UISwipeGestureRecognizer *swipeCleanGesture = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(chooseNewLevel:)] autorelease];
     [self.view addGestureRecognizer:swipeCleanGesture];
@@ -270,12 +274,6 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     
 	cpFloat dt = displayLink.duration * displayLink.frameInterval;
 	cpSpaceStep(space, dt);
-	
-    for( UIView *aView in self.view.subviews ) {
-        if( [[aView class] isSubclassOfClass:[UIViewBody class]] == YES ||
-           [[aView class] isSubclassOfClass:[UIImageViewBody class]] == YES )
-            [(UIViewBody *)aView updatePosition];
-    }
     
     for( CALayer *aLayer in self.view.layer.sublayers ) 
         if( [aLayer isKindOfClass:[BWChipmunkLayer class]] == YES )
@@ -300,10 +298,10 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     
     shooter.activeButtonCount++;
     BWButton *greenButton = [[[BWButton alloc] initWithColor:shooter.buttonColor] autorelease];
-    [greenButton setupWithSpace:space position:CGPointMake(shooter.body->p.x, shooter.body->p.y)];
+    [greenButton setupWithSpace:space position:shooter.center];
     [self.view insertSubview:greenButton belowSubview:topScore];
 
-    cpVect v = cpvmult(cpvforangle(shooter.body->a), 1000.0f);
+    cpVect v = cpvmult(cpvforangle(cpBodyGetAngle(shooter.chipmunkLayer.body)), 1000.0f);
 	cpBodyApplyImpulse(greenButton.chipmunkLayer.body, v, cpvzero);
 }
 #pragma mark -
@@ -615,5 +613,17 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     baseWall = [[[BaseWall alloc] initWithDirection:BaseWallDirectionFlippedBoth] autorelease];
     [baseWall setupWithSpace:space position:cpv(153, 60)];
     [self.view insertSubview:baseWall belowSubview:bottomScore];
+    
+    [topShooter release];
+    topShooter = [[BWShooter alloc] initWithButtonColor:ButtonColorGreen];
+    [topShooter setupWithSpace:space position:CGPointMake(self.view.bounds.size.width/2.0, 0)];
+    topShooter.gameDelegate = self;
+    [self.view addSubview:topShooter];
+    
+    [bottomShooter release];
+    bottomShooter = [[BWShooter alloc] initWithButtonColor:ButtonColorOrange];
+    [bottomShooter setupWithSpace:space position:CGPointMake(self.view.bounds.size.width/2.0, self.view.bounds.size.height)];
+    bottomShooter.gameDelegate = self;
+    [self.view addSubview:bottomShooter];
 }
 @end
