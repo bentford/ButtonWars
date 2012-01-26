@@ -18,45 +18,33 @@
 	CADisplayLink *displayLink;
 	cpSpace *space;
     
-    UILabel *topScore;
-    UILabel *bottomScore;
-    UILabel *countdownLabel;
+    NSUInteger greenScore;
+    NSUInteger orangeScore;
     
-    BWChipmunkLayer *buttonTest2;
+    UIView *topMark;
+    UIView *bottomMark;
     
-    NSUInteger frameCounter;
-    
-    NSTimer *gameTimer;
-    NSTimer *winnerTimer;
-    NSUInteger countdown;
-    
-    ButtonColor currentWinner;
     
     BWShooter *topShooter;
     BWShooter *bottomShooter;
     
     LevelPickerViewController *levelPickerViewController;
     
-    NSUInteger pointsToWin;
-    
     BWProgressBarAnimator *progressAnimator;
 }
 
-@property (nonatomic, retain) UILabel *topScore;
-@property (nonatomic, retain) UILabel *bottomScore;
+@property (nonatomic, assign) NSUInteger greenScore;
+@property (nonatomic, assign) NSUInteger orangeScore;
 
 - (void)removeButtons;
 - (void)removeLevelItems;
 
 - (void)resetBumper:(BWBumper *)theBumper;
 
-- (void)createScorePostsWithQuantity:(NSUInteger)quantity inRect:(CGRect)insideRect;
 - (void)reloadMapWithLevelNamed:(NSString *)levelName;
 
-- (void)startCountdownForColor:(ButtonColor)winningColor;
-- (void)iterateCountdown:(NSTimer *)countdownTimer;
 - (void)checkForWinner;
-- (void)stopCountdownForColor:(ButtonColor)theColor;
+
 
 - (void)fireTrappedButton:(BWButton *)button;
 

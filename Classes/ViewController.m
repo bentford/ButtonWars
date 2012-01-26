@@ -19,7 +19,6 @@
 #import "BWProgressBar.h"
 #import "BWProgressBarAnimator.h"
 
-#define kCountdownTimer 10
 
 static NSString *borderType = @"borderType";
 
@@ -59,40 +58,22 @@ int beginCollisionWithButtonAndScorePost(cpArbiter *arbiter, cpSpace *space, voi
     ViewController *viewController = data;
     
     if( button.color == ButtonColorGreen && scorePost.buttonColor != ButtonColorGreen ) {
-        viewController.topScore.text = [NSString stringWithFormat:@"%d", [viewController.topScore.text intValue] + 1];
+        viewController.greenScore += 1;
 
-        if( scorePost.buttonColor == ButtonColorOrange ) {
-            NSUInteger score = fmaxf([viewController.bottomScore.text intValue] - 1, 0);
-            viewController.bottomScore.text = [NSString stringWithFormat:@"%d", score];
-        }
-
+        if( scorePost.buttonColor == ButtonColorOrange ) 
+            viewController.orangeScore = fmaxf(viewController.orangeScore - 1, 0);
     } 
     if( button.color == ButtonColorOrange && scorePost.buttonColor != ButtonColorOrange ) {
-        viewController.bottomScore.text = [NSString stringWithFormat:@"%d", [viewController.bottomScore.text intValue] + 1];
+        viewController.orangeScore += 1;
         
-        if( scorePost.buttonColor == ButtonColorGreen ) {
-            NSUInteger score = fmaxf([viewController.topScore.text intValue] - 1, 0);
-            viewController.topScore.text = [NSString stringWithFormat:@"%d", score];
-        }
+        if( scorePost.buttonColor == ButtonColorGreen ) 
+            viewController.greenScore = fmaxf(viewController.greenScore - 1, 0);
     }
     
     scorePost.buttonColor = button.color;
-    [viewController checkForWinner];    
+    [viewController checkForWinner];
     
     return 0;
-}
-
-void postSolveCollisionWithButtonAndScorePost(cpArbiter *arbiter, cpSpace *space, void *data) {
-    CP_ARBITER_GET_SHAPES(arbiter, a, b);
-    BWButton *button = a->data;
-    ViewController *viewController = data;
-    
-    if( button.color == ButtonColorGreen )
-        viewController.topScore.text = [NSString stringWithFormat:@"%d", [viewController.topScore.text intValue] + 1];
-    else
-        viewController.bottomScore.text = [NSString stringWithFormat:@"%d", [viewController.bottomScore.text intValue] + 1];
-    
-    cpSpaceAddPostStepCallback(space, (cpPostStepFunc)postStepRemove, b, NULL);
 }
 
 int beginCollisionWithButtonAndShooter(cpArbiter *arbiter, cpSpace *space, void *data) {
@@ -179,8 +160,8 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 @end
 
 @implementation ViewController
-@synthesize topScore;
-@synthesize bottomScore;
+@synthesize greenScore;
+@synthesize orangeScore;
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
@@ -223,29 +204,15 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     UISwipeGestureRecognizer *swipeCleanGesture = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(chooseNewLevel:)] autorelease];
     [self.view addGestureRecognizer:swipeCleanGesture];
     
-    topScore = [[UILabel alloc] initWithFrame:CGRectMake(100, 25, 100, 50)];
-    topScore.text = @"0";
-    topScore.font = [UIFont boldSystemFontOfSize:24];
-    topScore.backgroundColor = [UIColor clearColor];
-    topScore.textColor = [UIColor whiteColor];    
-    [self.view addSubview:topScore];
-    
-    bottomScore = [[UILabel alloc] initWithFrame:CGRectMake(100, self.view.bounds.size.height-75, 100, 50)];
-    bottomScore.text = @"0";
-    bottomScore.font = [UIFont boldSystemFontOfSize:24];
-    bottomScore.backgroundColor = [UIColor clearColor];    
-    bottomScore.textColor = [UIColor whiteColor];
-    [self.view insertSubview:bottomScore belowSubview:topScore];
-    
-    countdownLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.bounds.size.width/2.0-200, self.view.bounds.size.height/2.0-40, 400, 80)];
-    countdownLabel.textAlignment = UITextAlignmentCenter;
-    countdownLabel.backgroundColor = [UIColor clearColor];
-    countdownLabel.text = @"";
-    countdownLabel.font = [UIFont boldSystemFontOfSize:34];
-    [self.view addSubview:countdownLabel];
-    
-    [self reloadMapWithLevelNamed:@"Level_1"];
+    //[self populateWalls];
+    //[self reloadMapWithLevelNamed:@"Level_1"];
 
+    topMark = [[UIView alloc] initWithFrame:CGRectZero];
+    [self.view addSubview:topMark];
+
+    bottomMark = [[UIView alloc] initWithFrame:CGRectZero];
+    [self.view insertSubview:bottomMark belowSubview:topMark];
+    
     progressAnimator = [[BWProgressBarAnimator alloc] init];
     
     
@@ -262,8 +229,6 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     [self.view addSubview:bar];
 
     [progressAnimator addBar:bar];
-    
-    [progressAnimator setRate:0.5 direction:ProgressDirectionLeft];
 
 }
 
@@ -320,7 +285,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     shooter.activeButtonCount++;
     BWButton *greenButton = [[[BWButton alloc] initWithColor:shooter.buttonColor] autorelease];
     [greenButton setupWithSpace:space position:shooter.center];
-    [self.view insertSubview:greenButton belowSubview:topScore];
+    [self.view insertSubview:greenButton belowSubview:topMark];
 
     cpVect v = cpvmult(cpvforangle(cpBodyGetAngle(shooter.chipmunkLayer.body)), 1000.0f);
 	cpBodyApplyImpulse(greenButton.chipmunkLayer.body, v, cpvzero);
@@ -369,19 +334,14 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 }
 
 - (void)reloadMapWithLevelNamed:(NSString *)levelName {
-    countdownLabel.text = @"";
-    currentWinner = 0;
-    countdown = 0;
     
-    topScore.text = @"0";
-    bottomScore.text = @"0";
+    greenScore = 0;
+    orangeScore = 0;
     
     [self removeButtons];
     [self removeLevelItems];
     
     [self populateMapWithFileNamed:levelName];
-    
-    [self.view bringSubviewToFront:countdownLabel];    
 }
 
 - (void)resetBumper:(NSArray *)parameters {
@@ -391,66 +351,14 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     theBumper.isBumping = NO;
 }
 
-- (void)createScorePostsWithQuantity:(NSUInteger)quantity inRect:(CGRect)insideRect {
-    for( int i = 0; i < quantity; i++ ) {
-        
-        BWScorePost *scorePost = [[[BWScorePost alloc] init] autorelease];
-        [scorePost setupWithSpace:space position:[Random randomPointInRect:insideRect]];
-        [self.view addSubview:scorePost];
-    }
-}
 - (void)checkForWinner {
-    if( [topScore.text intValue] >= pointsToWin )
-        [self startCountdownForColor:ButtonColorGreen];
-    else if( currentWinner == ButtonColorGreen )
-        [self stopCountdownForColor:ButtonColorGreen];
+    ProgressDirection newDirection = ProgressDirectionNone;
+    if( orangeScore > greenScore )
+        newDirection = ProgressDirectionLeft;
+    else if( orangeScore < greenScore )
+        newDirection = ProgressDirectionRight;
     
-    if( [bottomScore.text intValue] >= pointsToWin )
-        [self startCountdownForColor:ButtonColorOrange];
-    else if( currentWinner == ButtonColorOrange )
-        [self stopCountdownForColor:ButtonColorOrange];
-}
-
-- (void)startCountdownForColor:(ButtonColor)winningColor {
-
-    if( winningColor == currentWinner )
-        return;
-    
-    currentWinner = winningColor;
-    
-    [winnerTimer invalidate];
-    [winnerTimer release];
-    
-    countdown = 0;
-    winnerTimer = [[NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(iterateCountdown:) userInfo:[NSNumber numberWithInt:winningColor] repeats:YES] retain];
-}
-
-- (void)stopCountdownForColor:(ButtonColor)theColor {
-
-    currentWinner = ButtonColorNotSet;
-
-    [winnerTimer invalidate];
-    [winnerTimer release];
-    winnerTimer = nil;
-    
-    countdown = 0;
-    
-    countdownLabel.text = @"";
-}
-
-- (void)iterateCountdown:(NSTimer *)countdownTimer {
-    if( countdown == kCountdownTimer ) {
-        [winnerTimer invalidate];
-        [winnerTimer release];
-        winnerTimer = nil;
-        
-        NSString *winnerLabel = currentWinner == ButtonColorGreen ? @"Green" : @"Orange";
-        countdownLabel.text = [NSString stringWithFormat:@"%@ wins", winnerLabel];
-    } else {
-        countdown++;
-        countdownLabel.text = [NSString stringWithFormat:@"%d", (kCountdownTimer+1)-countdown];
-        
-    }
+    [progressAnimator setRate:1.0 direction:newDirection];
 }
 
 - (void)fireTrappedButton:(NSArray *)parameters {
@@ -547,12 +455,12 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
             if( [character isEqualToString:@"r"] == YES && currentColumn+1 < [columns count] && [[columns objectAtIndex:currentColumn+1] isEqualToString:@"b"] == YES ) {
                 BWRotatingBumper *bumper = [[[BWRotatingBumper alloc] init] autorelease];
                 [bumper setupWithSpace:space position:currentPosition];
-                [self.view insertSubview:bumper aboveSubview:topScore];
+                [self.view insertSubview:bumper aboveSubview:topMark];
                 
                 UIImageView *base = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"RotatingBumperBase.png"]] autorelease];
                 [base sizeToFit];
                 base.center = CGPointMake(currentPosition.x-45, currentPosition.y);
-                [self.view insertSubview:base belowSubview:bottomScore];
+                [self.view insertSubview:base belowSubview:bottomMark];
                 
                 [bumper setBaseView:base];
             }
@@ -610,31 +518,24 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
         
         [self.view addSubview:wall];
     }
-    
-    if( [mapRows count] >= 34 ) {
-        pointsToWin = [[mapRows objectAtIndex:33] intValue];
-        if( pointsToWin == 0 )
-            pointsToWin = 15;
-    } else
-        pointsToWin = 15;
 }
 
 - (void)populateWalls {
     BaseWall *baseWall = [[[BaseWall alloc] initWithDirection:BaseWallDirectionNormal] autorelease];
     [baseWall setupWithSpace:space position:cpv(self.view.bounds.size.width-153, self.view.bounds.size.height-60)];
-    [self.view insertSubview:baseWall belowSubview:bottomScore];
+    [self.view insertSubview:baseWall belowSubview:bottomMark];
     
     baseWall = [[[BaseWall alloc] initWithDirection:BaseWallDirectionFlippedHorizontal] autorelease];
     [baseWall setupWithSpace:space position:cpv(153, self.view.bounds.size.height-60)];
-    [self.view insertSubview:baseWall belowSubview:bottomScore];
+    [self.view insertSubview:baseWall belowSubview:bottomMark];
     
     baseWall = [[[BaseWall alloc] initWithDirection:BaseWallDirectionFlippedVertical] autorelease];
     [baseWall setupWithSpace:space position:cpv(self.view.bounds.size.width-153, 60)];
-    [self.view insertSubview:baseWall belowSubview:bottomScore];
+    [self.view insertSubview:baseWall belowSubview:bottomMark];
     
     baseWall = [[[BaseWall alloc] initWithDirection:BaseWallDirectionFlippedBoth] autorelease];
     [baseWall setupWithSpace:space position:cpv(153, 60)];
-    [self.view insertSubview:baseWall belowSubview:bottomScore];
+    [self.view insertSubview:baseWall belowSubview:bottomMark];
     
     [topShooter release];
     topShooter = [[BWShooter alloc] initWithButtonColor:ButtonColorGreen];
