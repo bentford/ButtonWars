@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "ChipmunkLayerView.h"
 
-@interface BWLevelWall : UIImageView <ChipmunkLayerView> {
-    
+@interface BWLevelWall : UIView <ChipmunkLayerView> {
+    UIImage *baseImage;
 }
 - (id)initWithLength:(CGFloat)newLength;
 @end
