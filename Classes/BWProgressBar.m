@@ -46,11 +46,8 @@
     
     CGContextDrawImage(context, CGRectMake(rect.size.width*value-kMidSection/2.0f, 0, CGImageGetWidth(dividerArea), CGImageGetHeight(dividerArea)), dividerArea);
     
-    for( CGFloat xPosition = kInsetAmount; xPosition < rect.size.width*value-kMidSection/2.0f; xPosition++)
-        CGContextDrawImage(context, CGRectMake(xPosition, 0, 1, CGImageGetHeight(leftExpansion)), leftExpansion);
-    
-    for( CGFloat xPosition = rect.size.width-kInsetAmount; xPosition > rect.size.width*value-kMidSection/2.0f; xPosition--)
-        CGContextDrawImage(context, CGRectMake(xPosition, 0, 1, CGImageGetHeight(rightExpansion)), rightExpansion);
+    CGContextDrawImage(context, CGRectMake(kInsetAmount, 0, rect.size.width*value-10, CGImageGetHeight(leftExpansion)), leftExpansion);
+    CGContextDrawImage(context, CGRectMake(rect.size.width*value+kMidSection/2.0f, 0, rect.size.width-rect.size.width*value-kInsetAmount-kMidSection/2.0f, CGImageGetHeight(rightExpansion)), rightExpansion);        
 }
 
 - (void)setCurrentValue:(CGFloat)newValue {
