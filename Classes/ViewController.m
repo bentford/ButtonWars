@@ -18,7 +18,7 @@
 #import "BWLevelWall.h"
 #import "BWProgressBar.h"
 #import "BWProgressBarAnimator.h"
-
+#import "JelloPopupAnimation.h"
 
 static NSString *borderType = @"borderType";
 
@@ -56,6 +56,9 @@ int beginCollisionWithButtonAndScorePost(cpArbiter *arbiter, cpSpace *space, voi
     BWButton *button = a->data;
     BWScorePost *scorePost = b->data;
     ViewController *viewController = data;
+    
+    if( viewController.gameSuspended == YES )
+        return 0;
     
     if( button.color == ButtonColorGreen && scorePost.buttonColor != ButtonColorGreen ) {
         viewController.greenScore += 1;
@@ -162,11 +165,13 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 @implementation ViewController
 @synthesize greenScore;
 @synthesize orangeScore;
+@synthesize gameSuspended;
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
     self.wantsFullScreenLayout = YES;
     
+    currentLevelName = nil;
     topShooter = nil;
     bottomShooter = nil;
     
@@ -230,6 +235,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 
     [progressAnimator addBar:bar];
 
+    progressAnimator.delegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -276,6 +282,30 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 
 }
 
+#pragma mark BWProgressAnimatorDelegate
+- (void)valueMaxedOut:(ProgressDirection)maxedDirection {
+    NSString *imageName = nil;
+    if( maxedDirection == ProgressDirectionLeft ) {
+        imageName = @"OrangeWins.png";
+        gameSuspended = YES;
+    } else if( maxedDirection == ProgressDirectionRight ) {
+        imageName = @"GreenWins.png";
+        gameSuspended = YES;
+    } else
+        return;
+            
+    playerWonPrompt = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
+    playerWonPrompt.center = CGPointMake(self.view.bounds.size.width/2.0f, self.view.bounds.size.height/2.0f);
+    playerWonPrompt.userInteractionEnabled = YES;
+    [self.view addSubview:playerWonPrompt];
+    
+    [JelloPopupAnimation animateView:playerWonPrompt];
+    
+    UITapGestureRecognizer *tap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(resetMap:)] autorelease];
+    [playerWonPrompt addGestureRecognizer:tap];
+}
+#pragma mark -
+
 #pragma mark GameDelegate
 - (void)shootWithShooter:(BWShooter *)shooter {
     
@@ -294,7 +324,9 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 
 #pragma mark LevelPickerDelegate
 - (void)didChooseLevel:(NSString *)levelName {
-    NSLog(@"didChooseLeveL: %@", levelName);
+    [currentLevelName release];
+    currentLevelName = [levelName retain];
+    
     [self reloadMapWithLevelNamed:levelName];
 }
 #pragma mark -
@@ -334,6 +366,8 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 }
 
 - (void)reloadMapWithLevelNamed:(NSString *)levelName {
+    
+    [progressAnimator reset];
     
     greenScore = 0;
     orangeScore = 0;
@@ -557,5 +591,20 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     [bottomShooter setupWithSpace:space position:CGPointMake(self.view.bounds.size.width/2.0, self.view.bounds.size.height)];
     bottomShooter.gameDelegate = self;
     [self.view addSubview:bottomShooter];
+}
+
+- (void)resetMap:(UITapGestureRecognizer *)tapGesture {
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        playerWonPrompt.alpha = 0.0; 
+    } completion:^(BOOL finished) {
+        if( finished == YES ) {
+            [playerWonPrompt removeFromSuperview];
+            [playerWonPrompt release];
+            playerWonPrompt = nil;
+        }
+    }];
+    gameSuspended = NO;
+    [self reloadMapWithLevelNamed:currentLevelName];
 }
 @end

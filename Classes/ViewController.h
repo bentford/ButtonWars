@@ -9,12 +9,13 @@
 #import "chipmunk.h"
 #import "GameData.h"
 #import "LevelPickerViewController.h"
+#import "BWProgressBarAnimator.h"
 
 @class BWProgressBarAnimator;
 @class BWButton;
 @class BWBumper;
 @class BWChipmunkLayer;
-@interface ViewController : UIViewController <GameDelegate, LevelPickerDelegate> {
+@interface ViewController : UIViewController <GameDelegate, LevelPickerDelegate, BWProgressAnimatorDelegate> {
 	CADisplayLink *displayLink;
 	cpSpace *space;
     
@@ -33,8 +34,14 @@
     BWProgressBarAnimator *progressAnimator;
     
     NSUInteger totalScorePosts;
+    
+    UIImageView *playerWonPrompt;
+    
+    NSString *currentLevelName;
+    
+    BOOL gameSuspended;
 }
-
+@property (nonatomic, assign) BOOL gameSuspended;
 @property (nonatomic, assign) NSUInteger greenScore;
 @property (nonatomic, assign) NSUInteger orangeScore;
 

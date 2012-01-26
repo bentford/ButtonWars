@@ -14,16 +14,26 @@ typedef enum {
     ProgressDirectionRight,
 } ProgressDirection;
 
+@protocol BWProgressAnimatorDelegate <NSObject>
+- (void)valueMaxedOut:(ProgressDirection)maxedDirection;
+@end
+
 @class BWProgressBar;
 @interface BWProgressBarAnimator : NSObject {
     NSMutableSet *bars;
     
     CGFloat value;
     CGFloat direction;
+    
+    BOOL hasMaxedOut;
 }
+
+@property (nonatomic, assign) id<BWProgressAnimatorDelegate> delegate;
 
 - (void)addBar:(BWProgressBar *)bar;
 - (void)removeBar:(BWProgressBar *)bar;
 
 - (void)setRate:(CGFloat)newRate direction:(ProgressDirection)newDirection;
+
+- (void)reset;
 @end

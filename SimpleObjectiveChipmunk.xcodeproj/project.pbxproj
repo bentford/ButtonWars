@@ -60,6 +60,9 @@
 		B5DE70EC14D1F5AD00CCF39E /* BWProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DE70EB14D1F5AD00CCF39E /* BWProgressBar.m */; };
 		B5DE70EF14D1F83A00CCF39E /* ProgressBar.png in Resources */ = {isa = PBXBuildFile; fileRef = B5DE70EE14D1F83A00CCF39E /* ProgressBar.png */; };
 		B5DE70F214D200AC00CCF39E /* BWProgressBarAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DE70F114D200AC00CCF39E /* BWProgressBarAnimator.m */; };
+		B5DE70FC14D2180100CCF39E /* JelloPopupAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DE70FB14D2180100CCF39E /* JelloPopupAnimation.m */; };
+		B5DE70FF14D2186000CCF39E /* GreenWins.png in Resources */ = {isa = PBXBuildFile; fileRef = B5DE70FD14D2186000CCF39E /* GreenWins.png */; };
+		B5DE710014D2186000CCF39E /* OrangeWins.png in Resources */ = {isa = PBXBuildFile; fileRef = B5DE70FE14D2186000CCF39E /* OrangeWins.png */; };
 		B5E3021914B7A8ED00556639 /* BWStaticBoxChipmunkLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B5E3021814B7A8EC00556639 /* BWStaticBoxChipmunkLayer.m */; };
 		B5E7503714B447C60021AFC0 /* cpConstraint.c in Sources */ = {isa = PBXBuildFile; fileRef = B5E7502C14B447C60021AFC0 /* cpConstraint.c */; };
 		B5E7503814B447C60021AFC0 /* cpDampedRotarySpring.c in Sources */ = {isa = PBXBuildFile; fileRef = B5E7502D14B447C60021AFC0 /* cpDampedRotarySpring.c */; };
@@ -202,6 +205,10 @@
 		B5DE70EE14D1F83A00CCF39E /* ProgressBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ProgressBar.png; sourceTree = "<group>"; };
 		B5DE70F014D200AC00CCF39E /* BWProgressBarAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWProgressBarAnimator.h; sourceTree = "<group>"; };
 		B5DE70F114D200AC00CCF39E /* BWProgressBarAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWProgressBarAnimator.m; sourceTree = "<group>"; };
+		B5DE70FA14D2180100CCF39E /* JelloPopupAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JelloPopupAnimation.h; sourceTree = "<group>"; };
+		B5DE70FB14D2180100CCF39E /* JelloPopupAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JelloPopupAnimation.m; sourceTree = "<group>"; };
+		B5DE70FD14D2186000CCF39E /* GreenWins.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GreenWins.png; sourceTree = "<group>"; };
+		B5DE70FE14D2186000CCF39E /* OrangeWins.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = OrangeWins.png; sourceTree = "<group>"; };
 		B5E3021714B7A8EC00556639 /* BWStaticBoxChipmunkLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWStaticBoxChipmunkLayer.h; sourceTree = "<group>"; };
 		B5E3021814B7A8EC00556639 /* BWStaticBoxChipmunkLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWStaticBoxChipmunkLayer.m; sourceTree = "<group>"; };
 		B5E7502C14B447C60021AFC0 /* cpConstraint.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cpConstraint.c; path = constraints/cpConstraint.c; sourceTree = "<group>"; };
@@ -345,6 +352,8 @@
 			children = (
 				B5FE1AD114A265E900022983 /* Random.h */,
 				B5FE1AD214A265E900022983 /* Random.m */,
+				B5DE70FA14D2180100CCF39E /* JelloPopupAnimation.h */,
+				B5DE70FB14D2180100CCF39E /* JelloPopupAnimation.m */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -431,6 +440,8 @@
 		B5FE1A9A14A13ED900022983 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				B5DE70FD14D2186000CCF39E /* GreenWins.png */,
+				B5DE70FE14D2186000CCF39E /* OrangeWins.png */,
 				B5DE70EE14D1F83A00CCF39E /* ProgressBar.png */,
 				B571B10B14D0DA30008BFA7D /* LevelWall.png */,
 				B571B0FF14D0B740008BFA7D /* BaseWall.png */,
@@ -587,6 +598,8 @@
 				B571B10014D0B740008BFA7D /* BaseWall.png in Resources */,
 				B571B10C14D0DA30008BFA7D /* LevelWall.png in Resources */,
 				B5DE70EF14D1F83A00CCF39E /* ProgressBar.png in Resources */,
+				B5DE70FF14D2186000CCF39E /* GreenWins.png in Resources */,
+				B5DE710014D2186000CCF39E /* OrangeWins.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -656,6 +669,7 @@
 				B571B10A14D0D917008BFA7D /* BWLevelWall.m in Sources */,
 				B5DE70EC14D1F5AD00CCF39E /* BWProgressBar.m in Sources */,
 				B5DE70F214D200AC00CCF39E /* BWProgressBarAnimator.m in Sources */,
+				B5DE70FC14D2180100CCF39E /* JelloPopupAnimation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -20,6 +20,7 @@
 
 @implementation BWProgressBarAnimator
 @synthesize rateTimer;
+@synthesize delegate;
 
 - (id)init {
     if( (self = [super init]) ) {
@@ -42,6 +43,15 @@
     
     [self.rateTimer invalidate];
     self.rateTimer = [NSTimer scheduledTimerWithTimeInterval:newRate target:self selector:@selector(tickRateTimer:) userInfo:nil repeats:YES];
+}
+
+- (void)reset {
+    hasMaxedOut = NO;
+    value = 0.5;
+    
+    [self setRate:1.0 direction:ProgressDirectionNone];
+    for( BWProgressBar *bar in bars )
+        [bar setCurrentValue:0.5];
 }
 
 - (void)dealloc {
@@ -69,5 +79,12 @@
     
     for( BWProgressBar *bar in bars )
         [bar setCurrentValue:value];
+    
+    if( value > 0.9 && hasMaxedOut == NO ) 
+        [delegate valueMaxedOut:ProgressDirectionRight];
+    else if( value < 0.1 && hasMaxedOut == NO)
+        [delegate valueMaxedOut:ProgressDirectionLeft];
+    
+    hasMaxedOut = (value > 0.9 || value < 0.1);
 }
 @end
