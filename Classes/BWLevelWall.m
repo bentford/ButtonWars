@@ -24,8 +24,9 @@
         cpBodySetMoment(self.chipmunkLayer.body, cpMomentForBox(INFINITY, 22, newLength));
         
         cpShapeFree(self.chipmunkLayer.shape);
-        cpBoxShapeNew(self.chipmunkLayer.body, 22, newLength);
+        cpBoxShapeNew(self.chipmunkLayer.body, 22, newLength-35);
         cpShapeSetElasticity(self.chipmunkLayer.shape, 0.6f);
+        cpShapeSetFriction(self.chipmunkLayer.shape, 1.0f);
         
         self.backgroundColor = [UIColor clearColor];
         
