@@ -57,6 +57,9 @@
 		B57E359B147877E90065B34F /* cpSpatialIndex.c in Sources */ = {isa = PBXBuildFile; fileRef = B57E357B147877E90065B34F /* cpSpatialIndex.c */; };
 		B57E359C147877E90065B34F /* cpSweep1D.c in Sources */ = {isa = PBXBuildFile; fileRef = B57E357D147877E90065B34F /* cpSweep1D.c */; };
 		B57E359D147877E90065B34F /* cpVect.c in Sources */ = {isa = PBXBuildFile; fileRef = B57E357E147877E90065B34F /* cpVect.c */; };
+		B5DE70EC14D1F5AD00CCF39E /* BWProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DE70EB14D1F5AD00CCF39E /* BWProgressBar.m */; };
+		B5DE70EF14D1F83A00CCF39E /* ProgressBar.png in Resources */ = {isa = PBXBuildFile; fileRef = B5DE70EE14D1F83A00CCF39E /* ProgressBar.png */; };
+		B5DE70F214D200AC00CCF39E /* BWProgressBarAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DE70F114D200AC00CCF39E /* BWProgressBarAnimator.m */; };
 		B5E3021914B7A8ED00556639 /* BWStaticBoxChipmunkLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B5E3021814B7A8EC00556639 /* BWStaticBoxChipmunkLayer.m */; };
 		B5E7503714B447C60021AFC0 /* cpConstraint.c in Sources */ = {isa = PBXBuildFile; fileRef = B5E7502C14B447C60021AFC0 /* cpConstraint.c */; };
 		B5E7503814B447C60021AFC0 /* cpDampedRotarySpring.c in Sources */ = {isa = PBXBuildFile; fileRef = B5E7502D14B447C60021AFC0 /* cpDampedRotarySpring.c */; };
@@ -194,6 +197,11 @@
 		B57E3580147877E90065B34F /* prime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prime.h; sourceTree = "<group>"; };
 		B586134414A1A5C800F7D9ED /* GameData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameData.h; sourceTree = "<group>"; };
 		B5AC6DF814B521B70084E1C7 /* ChipmunkLayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChipmunkLayerView.h; sourceTree = "<group>"; };
+		B5DE70EA14D1F5AD00CCF39E /* BWProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWProgressBar.h; sourceTree = "<group>"; };
+		B5DE70EB14D1F5AD00CCF39E /* BWProgressBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWProgressBar.m; sourceTree = "<group>"; };
+		B5DE70EE14D1F83A00CCF39E /* ProgressBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ProgressBar.png; sourceTree = "<group>"; };
+		B5DE70F014D200AC00CCF39E /* BWProgressBarAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWProgressBarAnimator.h; sourceTree = "<group>"; };
+		B5DE70F114D200AC00CCF39E /* BWProgressBarAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWProgressBarAnimator.m; sourceTree = "<group>"; };
 		B5E3021714B7A8EC00556639 /* BWStaticBoxChipmunkLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWStaticBoxChipmunkLayer.h; sourceTree = "<group>"; };
 		B5E3021814B7A8EC00556639 /* BWStaticBoxChipmunkLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWStaticBoxChipmunkLayer.m; sourceTree = "<group>"; };
 		B5E7502C14B447C60021AFC0 /* cpConstraint.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cpConstraint.c; path = constraints/cpConstraint.c; sourceTree = "<group>"; };
@@ -423,6 +431,7 @@
 		B5FE1A9A14A13ED900022983 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				B5DE70EE14D1F83A00CCF39E /* ProgressBar.png */,
 				B571B10B14D0DA30008BFA7D /* LevelWall.png */,
 				B571B0FF14D0B740008BFA7D /* BaseWall.png */,
 				B569D65A14CFB31C00F46D4B /* Sliding-Block.png */,
@@ -461,6 +470,10 @@
 				B571B10314D0B75B008BFA7D /* BaseWall.m */,
 				B571B10814D0D916008BFA7D /* BWLevelWall.h */,
 				B571B10914D0D916008BFA7D /* BWLevelWall.m */,
+				B5DE70EA14D1F5AD00CCF39E /* BWProgressBar.h */,
+				B5DE70EB14D1F5AD00CCF39E /* BWProgressBar.m */,
+				B5DE70F014D200AC00CCF39E /* BWProgressBarAnimator.h */,
+				B5DE70F114D200AC00CCF39E /* BWProgressBarAnimator.m */,
 			);
 			name = "Game Parts";
 			sourceTree = "<group>";
@@ -573,6 +586,7 @@
 				B569D65B14CFB31D00F46D4B /* Sliding-Block.png in Resources */,
 				B571B10014D0B740008BFA7D /* BaseWall.png in Resources */,
 				B571B10C14D0DA30008BFA7D /* LevelWall.png in Resources */,
+				B5DE70EF14D1F83A00CCF39E /* ProgressBar.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -640,6 +654,8 @@
 				B571B10414D0B75B008BFA7D /* BaseWall.m in Sources */,
 				B571B10714D0D6D9008BFA7D /* BWStaticCircleChipmunkLayer.m in Sources */,
 				B571B10A14D0D917008BFA7D /* BWLevelWall.m in Sources */,
+				B5DE70EC14D1F5AD00CCF39E /* BWProgressBar.m in Sources */,
+				B5DE70F214D200AC00CCF39E /* BWProgressBarAnimator.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

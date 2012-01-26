@@ -16,6 +16,8 @@
 #import "ChipmunkLayerView.h"
 #import "BaseWall.h"
 #import "BWLevelWall.h"
+#import "BWProgressBar.h"
+#import "BWProgressBarAnimator.h"
 
 #define kCountdownTimer 10
 
@@ -243,7 +245,25 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     [self.view addSubview:countdownLabel];
     
     [self reloadMapWithLevelNamed:@"Level_1"];
+
+    progressAnimator = [[BWProgressBarAnimator alloc] init];
     
+    
+    BWProgressBar *bar = [[[BWProgressBar alloc] init] autorelease];
+    bar.center = CGPointMake(600, self.view.bounds.size.height-45);
+    bar.transform = CGAffineTransformMakeRotation(RADIANS(344));
+    [self.view addSubview:bar];
+    
+    [progressAnimator addBar:bar];
+    
+    bar = [[[BWProgressBar alloc] init] autorelease];
+    bar.center = CGPointMake(168, 45);
+    bar.transform = CGAffineTransformMakeRotation(RADIANS(345));
+    [self.view addSubview:bar];
+
+    [progressAnimator addBar:bar];
+    
+    [progressAnimator setRate:0.5 direction:ProgressDirectionLeft];
 
 }
 

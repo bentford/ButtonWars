@@ -10,6 +10,7 @@
 #import "GameData.h"
 #import "LevelPickerViewController.h"
 
+@class BWProgressBarAnimator;
 @class BWButton;
 @class BWBumper;
 @class BWChipmunkLayer;
@@ -37,6 +38,8 @@
     LevelPickerViewController *levelPickerViewController;
     
     NSUInteger pointsToWin;
+    
+    BWProgressBarAnimator *progressAnimator;
 }
 
 @property (nonatomic, retain) UILabel *topScore;
