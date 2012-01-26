@@ -9,7 +9,7 @@
 #import "BWShooter.h"
 #import "BWButton.h"
 
-#import "BWChipmunkLayer.h"
+#import "BWStaticCircleChipmunkLayer.h"
 
 @interface BWShooter(PrivateMethods)
 - (void)tap:(UITapGestureRecognizer *)tapGesture;
@@ -23,7 +23,7 @@
 @synthesize activeButtonCount;
 
 + (Class)layerClass {
-    return [BWChipmunkLayer class];
+    return [BWStaticCircleChipmunkLayer class];
 }
 
 - (id)initWithFrame:(CGRect)frame {
@@ -61,7 +61,6 @@
 - (void)setupWithSpace:(cpSpace *)space position:(CGPoint)position {
     self.center = position;
     
-    cpSpaceAddBody(space, self.chipmunkLayer.body);
     cpSpaceAddShape(space, self.chipmunkLayer.shape);
     cpSpaceAddShape(space, innerShape);
 }
@@ -69,7 +68,6 @@
 - (void)removeFromSpace:(cpSpace *)space {
 
     cpSpaceRemoveShape(space, self.chipmunkLayer.shape);
-    cpSpaceRemoveBody(space, self.chipmunkLayer.body);
     cpSpaceRemoveShape(space, innerShape);
 }
 #pragma mark -
