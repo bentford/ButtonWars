@@ -37,6 +37,8 @@
 		B571B10014D0B740008BFA7D /* BaseWall.png in Resources */ = {isa = PBXBuildFile; fileRef = B571B0FF14D0B740008BFA7D /* BaseWall.png */; };
 		B571B10414D0B75B008BFA7D /* BaseWall.m in Sources */ = {isa = PBXBuildFile; fileRef = B571B10314D0B75B008BFA7D /* BaseWall.m */; };
 		B571B10714D0D6D9008BFA7D /* BWStaticCircleChipmunkLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B571B10614D0D6D9008BFA7D /* BWStaticCircleChipmunkLayer.m */; };
+		B571B10A14D0D917008BFA7D /* BWLevelWall.m in Sources */ = {isa = PBXBuildFile; fileRef = B571B10914D0D916008BFA7D /* BWLevelWall.m */; };
+		B571B10C14D0DA30008BFA7D /* LevelWall.png in Resources */ = {isa = PBXBuildFile; fileRef = B571B10B14D0DA30008BFA7D /* LevelWall.png */; };
 		B57E3581147877E90065B34F /* chipmunk.c in Sources */ = {isa = PBXBuildFile; fileRef = B57E3549147877E90065B34F /* chipmunk.c */; };
 		B57E358D147877E90065B34F /* cpArbiter.c in Sources */ = {isa = PBXBuildFile; fileRef = B57E3567147877E90065B34F /* cpArbiter.c */; };
 		B57E358E147877E90065B34F /* cpArray.c in Sources */ = {isa = PBXBuildFile; fileRef = B57E3569147877E90065B34F /* cpArray.c */; };
@@ -155,6 +157,9 @@
 		B571B10314D0B75B008BFA7D /* BaseWall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseWall.m; sourceTree = "<group>"; };
 		B571B10514D0D6D9008BFA7D /* BWStaticCircleChipmunkLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWStaticCircleChipmunkLayer.h; sourceTree = "<group>"; };
 		B571B10614D0D6D9008BFA7D /* BWStaticCircleChipmunkLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWStaticCircleChipmunkLayer.m; sourceTree = "<group>"; };
+		B571B10814D0D916008BFA7D /* BWLevelWall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWLevelWall.h; sourceTree = "<group>"; };
+		B571B10914D0D916008BFA7D /* BWLevelWall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWLevelWall.m; sourceTree = "<group>"; };
+		B571B10B14D0DA30008BFA7D /* LevelWall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LevelWall.png; sourceTree = "<group>"; };
 		B57E3549147877E90065B34F /* chipmunk.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = chipmunk.c; sourceTree = "<group>"; };
 		B57E354A147877E90065B34F /* chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk.h; sourceTree = "<group>"; };
 		B57E354B147877E90065B34F /* chipmunk_ffi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_ffi.h; sourceTree = "<group>"; };
@@ -418,6 +423,7 @@
 		B5FE1A9A14A13ED900022983 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				B571B10B14D0DA30008BFA7D /* LevelWall.png */,
 				B571B0FF14D0B740008BFA7D /* BaseWall.png */,
 				B569D65A14CFB31C00F46D4B /* Sliding-Block.png */,
 				B569D65814CF795700F46D4B /* RotatingBumperBase.png */,
@@ -453,6 +459,8 @@
 				B5E7507D14C260A60021AFC0 /* BWSlidingBox.m */,
 				B571B10214D0B75B008BFA7D /* BaseWall.h */,
 				B571B10314D0B75B008BFA7D /* BaseWall.m */,
+				B571B10814D0D916008BFA7D /* BWLevelWall.h */,
+				B571B10914D0D916008BFA7D /* BWLevelWall.m */,
 			);
 			name = "Game Parts";
 			sourceTree = "<group>";
@@ -564,6 +572,7 @@
 				B569D65914CF795700F46D4B /* RotatingBumperBase.png in Resources */,
 				B569D65B14CFB31D00F46D4B /* Sliding-Block.png in Resources */,
 				B571B10014D0B740008BFA7D /* BaseWall.png in Resources */,
+				B571B10C14D0DA30008BFA7D /* LevelWall.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -630,6 +639,7 @@
 				B569D5DF14C6292800F46D4B /* NSObject+PerformBlockAfterDelay.m in Sources */,
 				B571B10414D0B75B008BFA7D /* BaseWall.m in Sources */,
 				B571B10714D0D6D9008BFA7D /* BWStaticCircleChipmunkLayer.m in Sources */,
+				B571B10A14D0D917008BFA7D /* BWLevelWall.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

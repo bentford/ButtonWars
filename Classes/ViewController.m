@@ -15,6 +15,7 @@
 #import "BWSlidingBox.h"
 #import "ChipmunkLayerView.h"
 #import "BaseWall.h"
+#import "BWLevelWall.h"
 
 #define kCountdownTimer 10
 
@@ -583,9 +584,10 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
         
         CGPoint midVect = cpvadd(cpvclamp(cpvsub(firstPoint, secondPoint), length/2.0), secondPoint);
         
-        UIViewQuadBody *wall = [[[UIViewQuadBody alloc] initWithFrame:CGRectMake(0, 0, 20, length)] autorelease];
+        BWLevelWall *wall = [[[BWLevelWall alloc] initWithLength:length] autorelease];
         cpBodySetAngle(wall.chipmunkLayer.body, angle);
         [wall setupWithSpace:space position:midVect];
+        
         [self.view addSubview:wall];
     }
     
