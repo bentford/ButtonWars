@@ -353,12 +353,18 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 
 - (void)checkForWinner {
     ProgressDirection newDirection = ProgressDirectionNone;
-    if( orangeScore > greenScore )
-        newDirection = ProgressDirectionLeft;
-    else if( orangeScore < greenScore )
-        newDirection = ProgressDirectionRight;
+    CGFloat ratio = 0;
     
-    [progressAnimator setRate:1.0 direction:newDirection];
+    if( orangeScore > greenScore ) {
+        newDirection = ProgressDirectionLeft;
+        ratio = (CGFloat)orangeScore / (CGFloat)totalScorePosts;
+    } else if( orangeScore < greenScore ) {
+        newDirection = ProgressDirectionRight;
+        ratio = (CGFloat)greenScore / (CGFloat)totalScorePosts;
+    }
+    CGFloat rate = 1.1 - ratio;
+    
+    [progressAnimator setRate:rate direction:newDirection];
 }
 
 - (void)fireTrappedButton:(NSArray *)parameters {
@@ -380,6 +386,8 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 
 @implementation ViewController(PrivateMethods)
 - (void)populateMapWithFileNamed:(NSString *)textMapName {
+    
+    totalScorePosts = 0;
     
     [self populateWalls];
     
@@ -444,6 +452,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
                 BWScorePost *scorePost = [[[BWScorePost alloc] init] autorelease];
                 [scorePost setupWithSpace:space position:currentPosition];
                 [self.view addSubview:scorePost];
+                totalScorePosts++;
             }
             
             if( [character isEqualToString:@"b"] == YES && ( currentColumn == 0 || [[columns objectAtIndex:currentColumn-1] isEqualToString:@"r"] == NO) ) {

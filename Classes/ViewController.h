@@ -31,6 +31,8 @@
     LevelPickerViewController *levelPickerViewController;
     
     BWProgressBarAnimator *progressAnimator;
+    
+    NSUInteger totalScorePosts;
 }
 
 @property (nonatomic, assign) NSUInteger greenScore;
