@@ -32,6 +32,7 @@ typedef enum {
 @property (nonatomic, assign) CGFloat slideAmount;
 @property (nonatomic, assign) BWSlidingBoxDirection slideDirection;
 @property (nonatomic, assign) BWSlidingBoxStartPosition slideStartPosition;
+@property (nonatomic, assign) CGFloat startDelay;
 
 - (void)startAnimation;
 - (void)stopAnimation;

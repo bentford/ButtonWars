@@ -31,6 +31,7 @@ static inline float bezierat( float a, float b, float c, float d, CGFloat t )
 @synthesize autoreverses;
 @synthesize repeatCount;
 @synthesize completionBlock;
+@synthesize delay;
 
 + (BWAnimation *)animation {
     return [[[BWAnimation alloc] init] autorelease];
@@ -44,6 +45,7 @@ static inline float bezierat( float a, float b, float c, float d, CGFloat t )
         totalRepeatIterations = 0;
         autoreverses = NO;
         autoreverseDirection = AutoReverseDirectionForward;
+        delay = -1.0f;
     }
     return self;
 }
@@ -51,6 +53,14 @@ static inline float bezierat( float a, float b, float c, float d, CGFloat t )
 - (void)step:(CGFloat)timeDelta {
     elapsedTime += timeDelta;
 
+    if( delay > 0 && elapsedTime > delay ) {
+        delay = -1.0f;
+        elapsedTime = 0.0f;
+    }
+    
+    if( elapsedTime < delay )
+        return;
+    
     if( elapsedTime > duration ) {
         elapsedTime = 0;
 
@@ -85,6 +95,9 @@ static inline float bezierat( float a, float b, float c, float d, CGFloat t )
 }
 
 - (void)updateBody:(BWChipmunkLayer *)body {
+    
+    if( delay > 0 && elapsedTime < delay )
+        return;
     
     CGFloat interpolation = elapsedTime / duration;
     

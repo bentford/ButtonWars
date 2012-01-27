@@ -17,6 +17,7 @@
 @synthesize slideDirection;
 @synthesize slideAmount;
 @synthesize slideStartPosition;
+@synthesize startDelay;
 
 + (Class)layerClass {
     return [BWBoxChipmunkLayer class];
@@ -39,6 +40,8 @@
         
         slideAmount = 100.0f;
         slideDirection = BWSlidingBoxDirectionHorizontal;
+        slideStartPosition = BWSlidingBoxStartPositionNear;
+        startDelay = 0.0f;
     }
     return self;
 }
@@ -84,7 +87,7 @@
     
     //distance of 100 gives 3 seconds, which is good speed
     animation.duration = slideAmount / 33.0f; 
-    
+    animation.delay = startDelay;
     animation.autoreverses = YES;
     animation.repeatCount = INFINITY;
     animation.timing = BWAnimationTimingEaseInEaseOut;

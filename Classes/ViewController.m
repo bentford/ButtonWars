@@ -538,13 +538,15 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
                 
                 // position
                 NSString *positionString = [phrase substringWithRange:NSMakeRange(3, 1)];
-                BWSlidingBoxStartPosition position;
+                CGFloat delay;
                 if( [positionString isEqualToString:@"n"] == YES )
-                    position = BWSlidingBoxStartPositionNear;
-                else if( [positionString isEqualToString:@"c"] == YES ) 
-                    position = BWSlidingBoxStartPositionCenter;
-                else if( [positionString isEqualToString:@"f"] == YES ) 
-                    position = BWSlidingBoxStartPositionFar;
+                    delay = 0.0f;
+                else if( [positionString isEqualToString:@"s"] == YES ) 
+                    delay = 1.0f;
+                else if( [positionString isEqualToString:@"m"] == YES ) 
+                    delay = 2.0f;
+                else if( [positionString isEqualToString:@"l"] == YES ) 
+                    delay = 3.0f;
                 
                 // slid amount
                 CGFloat slideAmount = 0.0f;
@@ -557,10 +559,11 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
                 BWSlidingBox *slidingBox = [[[BWSlidingBox alloc] init] autorelease];
                 slidingBox.slideDirection = direction;
                 slidingBox.slideAmount = slideAmount;
-                slidingBox.slideStartPosition = position;
-    
+                slidingBox.startDelay = delay;
+                
                 [slidingBox setupWithSpace:space position:currentPosition];
                 [self.view addSubview:slidingBox];
+                
                 [slidingBox startAnimation];
                 
             }

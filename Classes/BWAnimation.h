@@ -42,6 +42,7 @@ typedef enum {
 
 @property (nonatomic, assign) NSUInteger repeatCount;
 @property (nonatomic, assign) CGFloat duration;
+@property (nonatomic, assign) CGFloat delay;
 @property (nonatomic, assign) BWAnimationTiming timing;
 
 
