@@ -19,6 +19,7 @@
 #import "BWProgressBar.h"
 #import "BWProgressBarAnimator.h"
 #import "JelloPopupAnimation.h"
+#import "BWSlidingBoxWithBounce.h"
 
 static NSString *borderType = @"borderType";
 
@@ -103,6 +104,14 @@ void postSolveCollisionWithButtonAndInnerShooter(cpArbiter *arbiter, cpSpace *sp
     }
 }
 
+void postSolveCollisionWithButtonAndSlidingBoxWithBounce(cpArbiter *arbiter, cpSpace *space, void *data) {
+    CP_ARBITER_GET_SHAPES(arbiter, a, b);
+    BWSlidingBoxWithBounce *box = b->data;
+    BWButton *button = a->data;
+
+    [box bumpButton:button withSpace:space];
+}
+
 
 void postSolveCollisionWithButtonAndBumper(cpArbiter *arbiter, cpSpace *space, void *data) {
     CP_ARBITER_GET_SHAPES(arbiter, a, b);
@@ -160,6 +169,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 @interface ViewController(PrivateMethods)
 - (void)populateMapWithFileNamed:(NSString *)textMapName;
 - (void)populateWalls;
+- (void)populateTestObjects;
 @end
 
 @implementation ViewController
@@ -205,6 +215,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     cpSpaceAddCollisionHandler(space, 1, 4, (cpCollisionBeginFunc)beginCollisionWithButtonAndShooter, NULL, NULL, NULL, self);
     cpSpaceAddCollisionHandler(space, 1, 5, (cpCollisionBeginFunc)beginSolveCollisionWithButtonAndRotatingBumper, NULL, NULL, NULL, self);
     cpSpaceAddCollisionHandler(space, 1, 6, NULL, NULL, (cpCollisionPostSolveFunc)postSolveCollisionWithButtonAndInnerShooter, NULL, self);
+    cpSpaceAddCollisionHandler(space, 1, 7, NULL, NULL, (cpCollisionPostSolveFunc)postSolveCollisionWithButtonAndSlidingBoxWithBounce, NULL, self);
     
     UISwipeGestureRecognizer *swipeCleanGesture = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(chooseNewLevel:)] autorelease];
     [self.view addGestureRecognizer:swipeCleanGesture];
@@ -424,6 +435,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     totalScorePosts = 0;
     
     [self populateWalls];
+    [self populateTestObjects];
     
     NSUInteger mapRowCount = 33;
     NSUInteger mapColumnCount = 65;
@@ -510,6 +522,14 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 
             if( [character isEqualToString:@"s"] == YES && currentColumn+1 < [columns count] && [[columns objectAtIndex:currentColumn+1] isEqualToString:@"x"] == YES ) {            
                 BWSlidingBox *slidingBox = [[[BWSlidingBox alloc] init] autorelease];
+                [slidingBox setupWithSpace:space position:currentPosition];
+                [self.view addSubview:slidingBox];
+                [slidingBox startAnimation];
+                
+            }
+            
+            if( [character isEqualToString:@"s"] == YES && currentColumn+1 < [columns count] && [[columns objectAtIndex:currentColumn+1] isEqualToString:@"y"] == YES ) {            
+                BWSlidingBoxWithBounce *slidingBox = [[[BWSlidingBoxWithBounce alloc] init] autorelease];
                 [slidingBox setupWithSpace:space position:currentPosition];
                 [self.view addSubview:slidingBox];
                 [slidingBox startAnimation];
@@ -606,5 +626,10 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     }];
     gameSuspended = NO;
     [self reloadMapWithLevelNamed:currentLevelName];
+}
+
+- (void)populateTestObjects {
+    
+    
 }
 @end
