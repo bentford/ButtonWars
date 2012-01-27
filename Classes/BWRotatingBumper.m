@@ -88,10 +88,8 @@
     
     // rotate the button
     cpVect localButtonPosition = cpBodyWorld2Local(self.chipmunkLayer.body, cpBodyGetPos(button.chipmunkLayer.body));
-
-    CGFloat targetAngle = 180;
     
-    CGFloat angleOffset = targetAngle-DEGREES(cpvtoangle(cpvrotate(cpvnormalize(localButtonPosition), cpvforangle(self.chipmunkLayer.angle))));
+    CGFloat angleOffset = targetAngleInDegrees-DEGREES(cpvtoangle(cpvrotate(cpvnormalize(localButtonPosition), cpvforangle(self.chipmunkLayer.angle))));
     
     CGFloat fromAngle = cpBodyGetAngle(self.chipmunkLayer.body);
     CGFloat toAngle = cpBodyGetAngle(self.chipmunkLayer.body) + RADIANS(angleOffset);
@@ -146,8 +144,17 @@
 }
 #endif
 
-- (void)setBaseView:(UIImageView *)newBaseView {
-    baseView = newBaseView;
+- (void)addRelatedViewsToView:(UIView *)parentView withTopMark:(UIView *)topMark bottomMark:(UIView *)bottomMark angle:(CGFloat)angle {
+    
+    [baseView release];
+    baseView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"RotatingBumperBase.png"]];
+    [baseView sizeToFit];
+    baseView.center = CGPointMake(self.center.x, self.center.y);
+    
+    baseView.transform = CGAffineTransformTranslate(CGAffineTransformMakeRotation(angle), 45, 0);;
+    targetAngleInDegrees = DEGREES(angle);
+    
+    [parentView insertSubview:baseView belowSubview:bottomMark];
 }
 
 - (void)removeFromSuperview {

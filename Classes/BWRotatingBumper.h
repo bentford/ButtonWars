@@ -17,12 +17,13 @@
     CGPoint trappedButtonPosition;
     
     UIImageView *baseView;
+    
+    CGFloat targetAngleInDegrees;
 }
 
 - (void)setupWithSpace:(cpSpace *)space position:(CGPoint)position;
 
 - (void)trapButton:(BWButton *)button withSpace:(cpSpace *)space;
 
-- (void)setBaseView:(UIImageView *)newBaseView;
-
+- (void)addRelatedViewsToView:(UIView *)parentView withTopMark:(UIView *)topMark bottomMark:(UIView *)bottomMark angle:(CGFloat)angle;
 @end

@@ -65,6 +65,7 @@
 		B5DE710014D2186000CCF39E /* OrangeWins.png in Resources */ = {isa = PBXBuildFile; fileRef = B5DE70FE14D2186000CCF39E /* OrangeWins.png */; };
 		B5DE710314D2218D00CCF39E /* BWSlidingBoxWithBounce.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DE710214D2218D00CCF39E /* BWSlidingBoxWithBounce.m */; };
 		B5DE710514D221D400CCF39E /* Sliding-Block-with-Bounce.png in Resources */ = {isa = PBXBuildFile; fileRef = B5DE710414D221D400CCF39E /* Sliding-Block-with-Bounce.png */; };
+		B5DE710B14D32F2700CCF39E /* NSString+Ext.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DE710A14D32F2700CCF39E /* NSString+Ext.m */; };
 		B5E3021914B7A8ED00556639 /* BWStaticBoxChipmunkLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B5E3021814B7A8EC00556639 /* BWStaticBoxChipmunkLayer.m */; };
 		B5E7503714B447C60021AFC0 /* cpConstraint.c in Sources */ = {isa = PBXBuildFile; fileRef = B5E7502C14B447C60021AFC0 /* cpConstraint.c */; };
 		B5E7503814B447C60021AFC0 /* cpDampedRotarySpring.c in Sources */ = {isa = PBXBuildFile; fileRef = B5E7502D14B447C60021AFC0 /* cpDampedRotarySpring.c */; };
@@ -214,6 +215,8 @@
 		B5DE710114D2218D00CCF39E /* BWSlidingBoxWithBounce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWSlidingBoxWithBounce.h; sourceTree = "<group>"; };
 		B5DE710214D2218D00CCF39E /* BWSlidingBoxWithBounce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWSlidingBoxWithBounce.m; sourceTree = "<group>"; };
 		B5DE710414D221D400CCF39E /* Sliding-Block-with-Bounce.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Sliding-Block-with-Bounce.png"; sourceTree = "<group>"; };
+		B5DE710914D32F2700CCF39E /* NSString+Ext.h */ = {isa = PBXFileReference; fileEncoding = 4; path = "NSString+Ext.h"; sourceTree = "<group>"; };
+		B5DE710A14D32F2700CCF39E /* NSString+Ext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Ext.m"; sourceTree = "<group>"; };
 		B5E3021714B7A8EC00556639 /* BWStaticBoxChipmunkLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWStaticBoxChipmunkLayer.h; sourceTree = "<group>"; };
 		B5E3021814B7A8EC00556639 /* BWStaticBoxChipmunkLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWStaticBoxChipmunkLayer.m; sourceTree = "<group>"; };
 		B5E7502C14B447C60021AFC0 /* cpConstraint.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cpConstraint.c; path = constraints/cpConstraint.c; sourceTree = "<group>"; };
@@ -368,6 +371,8 @@
 			children = (
 				B569D5DD14C6292800F46D4B /* NSObject+PerformBlockAfterDelay.h */,
 				B569D5DE14C6292800F46D4B /* NSObject+PerformBlockAfterDelay.m */,
+				B5DE710914D32F2700CCF39E /* NSString+Ext.h */,
+				B5DE710A14D32F2700CCF39E /* NSString+Ext.m */,
 			);
 			name = Extension;
 			sourceTree = "<group>";
@@ -680,6 +685,7 @@
 				B5DE70F214D200AC00CCF39E /* BWProgressBarAnimator.m in Sources */,
 				B5DE70FC14D2180100CCF39E /* JelloPopupAnimation.m in Sources */,
 				B5DE710314D2218D00CCF39E /* BWSlidingBoxWithBounce.m in Sources */,
+				B5DE710B14D32F2700CCF39E /* NSString+Ext.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -20,6 +20,7 @@
 #import "BWProgressBarAnimator.h"
 #import "JelloPopupAnimation.h"
 #import "BWSlidingBoxWithBounce.h"
+#import "NSString+Ext.h"
 
 static NSString *borderType = @"borderType";
 
@@ -470,8 +471,14 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
             NSString *character  = [NSString stringWithFormat:@"%c", [row characterAtIndex:i]];
             [columns addObject:character];
         }
+        
+        NSString *previousCharacter = @" ";
         for( NSString *character in columns ) {
             
+            // create a phrase that is at least 5 characters long
+            NSString *phrase = [row substringFromIndex:currentColumn];
+            while( [phrase length] < 5 )
+                phrase = [NSString stringWithFormat:@"%@ ", phrase];
             
             CGFloat xPoint = 0;
             CGFloat yPoint = 0;
@@ -501,23 +508,21 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
                 totalScorePosts++;
             }
             
-            if( [character isEqualToString:@"b"] == YES && ( currentColumn == 0 || [[columns objectAtIndex:currentColumn-1] isEqualToString:@"r"] == NO) ) {
+            if( [character isEqualToString:@"b"] == YES && [previousCharacter isEqualToString:@"r"] == NO ) {
                 BWBumper *bumper = [[[BWBumper alloc] init] autorelease];
                 [bumper setupWithSpace:space position:currentPosition];
                 [self.view addSubview:bumper];
             }
             
-            if( [character isEqualToString:@"r"] == YES && currentColumn+1 < [columns count] && [[columns objectAtIndex:currentColumn+1] isEqualToString:@"b"] == YES ) {
+            if( [phrase extBeginsWithString:@"rb"] ) {
+                NSUInteger angle = [[phrase substringFromIndex:2] intValue];
+                
                 BWRotatingBumper *bumper = [[[BWRotatingBumper alloc] init] autorelease];
                 [bumper setupWithSpace:space position:currentPosition];
+                
                 [self.view insertSubview:bumper aboveSubview:topMark];
-                
-                UIImageView *base = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"RotatingBumperBase.png"]] autorelease];
-                [base sizeToFit];
-                base.center = CGPointMake(currentPosition.x-45, currentPosition.y);
-                [self.view insertSubview:base belowSubview:bottomMark];
-                
-                [bumper setBaseView:base];
+                [bumper addRelatedViewsToView:self.view withTopMark:topMark bottomMark:bottomMark angle:RADIANS(angle)];
+
             }
 
             if( [character isEqualToString:@"s"] == YES && currentColumn+1 < [columns count] && [[columns objectAtIndex:currentColumn+1] isEqualToString:@"x"] == YES ) {            
@@ -549,6 +554,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 
             
             currentColumn++;
+            previousCharacter = character;
             if( currentColumn == mapColumnCount+1 )
                 break;
         }
