@@ -24,7 +24,7 @@
         cpBodySetMass(self.chipmunkLayer.body, 100.0);
 
         cpShapeFree(self.chipmunkLayer.shape);
-        cpCircleShapeNew(self.chipmunkLayer.body, 50, cpvzero);
+        self.chipmunkLayer.shape = cpCircleShapeNew(self.chipmunkLayer.body, 50, cpvzero);
         
         cpShapeSetElasticity(self.chipmunkLayer.shape, 1.0);
         cpShapeSetCollisionType(self.chipmunkLayer.shape, 3);
