@@ -371,8 +371,10 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 - (void)reloadMapWithLevelNamed:(NSString *)levelName {
     gameSuspended = NO;
     
-    [currentLevelName release];
-    currentLevelName = [levelName retain];
+    if( currentLevelName != levelName ) {
+        [currentLevelName release];
+        currentLevelName = [levelName retain];
+    }
     
     [self hideWinnerPrompt];
     [progressAnimator reset];
