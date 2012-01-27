@@ -171,6 +171,9 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 - (void)populateMapWithFileNamed:(NSString *)textMapName;
 - (void)populateWalls;
 - (void)populateTestObjects;
+
+- (void)resetMap:(UITapGestureRecognizer *)tapGesture;
+- (void)hideWinnerPrompt;
 @end
 
 @implementation ViewController
@@ -220,9 +223,6 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     
     UISwipeGestureRecognizer *swipeCleanGesture = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(chooseNewLevel:)] autorelease];
     [self.view addGestureRecognizer:swipeCleanGesture];
-    
-    //[self populateWalls];
-    //[self reloadMapWithLevelNamed:@"Level_1"];
 
     topMark = [[UIView alloc] initWithFrame:CGRectZero];
     [self.view addSubview:topMark];
@@ -231,23 +231,9 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     [self.view insertSubview:bottomMark belowSubview:topMark];
     
     progressAnimator = [[BWProgressBarAnimator alloc] init];
-    
-    
-    BWProgressBar *bar = [[[BWProgressBar alloc] init] autorelease];
-    bar.center = CGPointMake(600, self.view.bounds.size.height-45);
-    bar.transform = CGAffineTransformMakeRotation(RADIANS(344));
-    [self.view addSubview:bar];
-    
-    [progressAnimator addBar:bar];
-    
-    bar = [[[BWProgressBar alloc] init] autorelease];
-    bar.center = CGPointMake(168, 45);
-    bar.transform = CGAffineTransformMakeRotation(RADIANS(345));
-    [self.view addSubview:bar];
-
-    [progressAnimator addBar:bar];
-
     progressAnimator.delegate = self;
+    
+    [self didChooseLevel:@"Level_1"];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -275,7 +261,6 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 }
 
 - (void)step {
-    
 	cpFloat dt = displayLink.duration * displayLink.frameInterval;
 	cpSpaceStep(space, dt);
     
@@ -336,14 +321,15 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 
 #pragma mark LevelPickerDelegate
 - (void)didChooseLevel:(NSString *)levelName {
-    [currentLevelName release];
-    currentLevelName = [levelName retain];
-    
+
+
     [self reloadMapWithLevelNamed:levelName];
+
 }
 #pragma mark -
 
 - (void)chooseNewLevel:(UISwipeGestureRecognizer *)swipeGesture {
+
     if( levelPickerViewController == nil ) {
         levelPickerViewController = [[LevelPickerViewController alloc] init];
         levelPickerViewController.delegate = self;
@@ -374,11 +360,21 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
             [itemToRemove removeFromSpace:space];
             [itemToRemove removeFromSuperview];
         }
+        
+        if( [potentialLevelItem isKindOfClass:[BWProgressBar class]] == YES ) {
+            [progressAnimator removeBar:(BWProgressBar *)potentialLevelItem];
+            [potentialLevelItem removeFromSuperview];
+        }
     }
 }
 
 - (void)reloadMapWithLevelNamed:(NSString *)levelName {
+    gameSuspended = NO;
     
+    [currentLevelName release];
+    currentLevelName = [levelName retain];
+    
+    [self hideWinnerPrompt];
     [progressAnimator reset];
     
     greenScore = 0;
@@ -625,6 +621,23 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     [baseWall setupWithSpace:space position:cpv(153, 60)];
     [self.view insertSubview:baseWall belowSubview:bottomMark];
     
+    
+    BWProgressBar *bar = [[[BWProgressBar alloc] init] autorelease];
+    bar.center = CGPointMake(600, self.view.bounds.size.height-45);
+    bar.transform = CGAffineTransformMakeRotation(RADIANS(344));
+    [self.view addSubview:bar];
+    
+    [progressAnimator addBar:bar];
+    
+    bar = [[[BWProgressBar alloc] init] autorelease];
+    bar.center = CGPointMake(168, 45);
+    bar.transform = CGAffineTransformMakeRotation(RADIANS(345));
+    [self.view addSubview:bar];
+    
+    [progressAnimator addBar:bar];
+    
+    
+    
     [topShooter release];
     topShooter = [[BWShooter alloc] initWithButtonColor:ButtonColorGreen];
     [topShooter setupWithSpace:space position:CGPointMake(self.view.bounds.size.width/2.0, 0)];
@@ -640,6 +653,16 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 
 - (void)resetMap:(UITapGestureRecognizer *)tapGesture {
     
+
+    [self reloadMapWithLevelNamed:currentLevelName];
+}
+
+- (void)populateTestObjects {
+    
+
+}
+
+- (void)hideWinnerPrompt {
     [UIView animateWithDuration:0.5 animations:^{
         playerWonPrompt.alpha = 0.0; 
     } completion:^(BOOL finished) {
@@ -649,12 +672,5 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
             playerWonPrompt = nil;
         }
     }];
-    gameSuspended = NO;
-    [self reloadMapWithLevelNamed:currentLevelName];
-}
-
-- (void)populateTestObjects {
-    
-    
 }
 @end
