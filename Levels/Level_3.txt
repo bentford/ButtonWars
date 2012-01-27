@@ -1,39 +1,39 @@
-                                s1                               x
-                                                                 x
-                                                                 x
-          p  p  p  p                            p  p  p  p       x
-                                                                 x
-                                                                 x
-                                                          P      x
-                                                       w3 p      x
-                                                          p      x
-                                                          p      x
-                                                          p      x
-      w1       w1                                      w3 p      x
-           p                                                     x
-                                                                 x
-                                                                 x
-           b                                                     x
-                                                                 x
-                                                          b      x
-                                                                 x
-                                                                 x
-           p                                                     x
-      w4       w4                                 w2          w2 x
-                                                                 x
-                                                                 x
-                                                                 x
-                                                                 x
-                                                                 x
-      p  p  p  p                                 p  p  p  p      x
-                                                                 x
-                                                                 x
-                                                                 x
-                                                                 x
-                                s2                               x
+                                s1                               x
+                                                                 x
+                                                                 x
+          p  p  p  p                            p  p  p  p       x
+                                                                 x
+                                                                 x
+                                                          P      x
+                                                       w3 p      x
+                                                          p      x
+                                                          p      x
+                                                          p      x
+      w1       w1                                      w3 p      x
+           p         sxhn180                                     x
+                                                                 x
+                     sxhs180                                     x
+           b                   p                                 x
+                                                                 x
+                     sxhm180                             b       x
+                                                         x
+                                                                 x
+           p                                                     x
+      w4       w4                                 w2          w2 x
+                                                                 x
+                                                                 x
+                                                                 x
+                                                                 x
+                                 w5                               x
+      p  p  p  p                                 p  p  p  p      x
+                                                                 x
+                                                                 x
+                                                                 x
+                                                                 x
+                                s2                               x
 
-65 chars x 33 chars 
+65 chars x 33 chars 
 
 center point( 33, 17 )
 
-vertical guide is on col 66 
+vertical guide is on col 66 
