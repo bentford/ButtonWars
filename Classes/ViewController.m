@@ -525,8 +525,27 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 
             }
 
-            if( [character isEqualToString:@"s"] == YES && currentColumn+1 < [columns count] && [[columns objectAtIndex:currentColumn+1] isEqualToString:@"x"] == YES ) {            
+            if( [phrase extBeginsWithString:@"sx"] ) {
+                NSString *directionString = [phrase substringWithRange:NSMakeRange(2, 1)];
+                
+                BWSlidingBoxDirection direction;
+                if( [directionString isEqualToString:@"h"] == YES || [directionString isEqualToString:@" "] == YES )
+                    direction = BWSlidingBoxDirectionHorizontal;
+                else if( [directionString isEqualToString:@"v"] == YES )
+                    direction = BWSlidingBoxDirectionVertical;
+                else if( [directionString isEqualToString:@"s"] == YES )
+                    direction = BWSlidingBoxDirectionStopped;
+                
+                CGFloat slideAmount = 0.0f;
+                NSString *amountString = [phrase substringWithRange:NSMakeRange(3, 3)];
+                if( [[amountString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length] == 0 )
+                    slideAmount = 100.0f;
+                else
+                    slideAmount = [amountString floatValue];
+                
                 BWSlidingBox *slidingBox = [[[BWSlidingBox alloc] init] autorelease];
+                slidingBox.slideDirection = direction;
+                slidingBox.slideAmount = slideAmount;
                 [slidingBox setupWithSpace:space position:currentPosition];
                 [self.view addSubview:slidingBox];
                 [slidingBox startAnimation];

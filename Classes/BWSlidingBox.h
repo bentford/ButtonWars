@@ -10,9 +10,21 @@
 #import "ChipmunkLayerView.h"
 #import "AnimatedChipmunkLayer.h"
 
+typedef enum {
+    BWSlidingBoxDirectionStopped,
+    BWSlidingBoxDirectionVertical,
+    BWSlidingBoxDirectionHorizontal,
+} BWSlidingBoxDirection;
+
 @interface BWSlidingBox : UIImageView <ChipmunkLayerView, AnimatedChipmunkLayer> {
     CGPoint animationStartPoint;
+    
+    CGFloat slideAmount;
+    BWSlidingBoxDirection slideDirection;
 }
+
+@property (nonatomic, assign) CGFloat slideAmount;
+@property (nonatomic, assign) BWSlidingBoxDirection slideDirection;
 
 - (void)startAnimation;
 - (void)stopAnimation;

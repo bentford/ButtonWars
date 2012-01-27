@@ -10,6 +10,8 @@
 #import "BWBoxChipmunkLayer.h"
 
 @implementation BWSlidingBox
+@synthesize slideDirection;
+@synthesize slideAmount;
 
 + (Class)layerClass {
     return [BWBoxChipmunkLayer class];
@@ -28,6 +30,9 @@
         cpShapeSetElasticity(self.chipmunkLayer.shape, 0.6f);
         
         self.backgroundColor = [UIColor clearColor];
+        
+        slideAmount = 100.0f;
+        slideDirection = BWSlidingBoxDirectionHorizontal;
     }
     return self;
 }
@@ -56,13 +61,30 @@
 
 #pragma mark AnimatedChipmunkLayer
 - (void)startAnimation {
-    NSUInteger fromPos = animationStartPoint.x - 100;
-    NSUInteger toPos = animationStartPoint.x + 100;
+    CGPoint fromPoint;
+    CGPoint toPoint;
+    
+    if( slideDirection == BWSlidingBoxDirectionHorizontal ) {
+        NSUInteger fromPos = animationStartPoint.x - slideAmount;
+        NSUInteger toPos = animationStartPoint.x + slideAmount;
+        fromPoint = CGPointMake(fromPos, self.center.y);
+        toPoint = CGPointMake(toPos, self.center.y);
+        
+    } else if( slideDirection == BWSlidingBoxDirectionVertical ) {
+        NSUInteger fromPos = animationStartPoint.y - slideAmount;
+        NSUInteger toPos = animationStartPoint.y + slideAmount;
+        fromPoint = CGPointMake(self.center.x, fromPos);
+        toPoint = CGPointMake(self.center.x, toPos);        
+    } else 
+        return;
     
     BWAnimation *animation = [BWAnimation animation];
-    animation.fromPoint = CGPointMake(fromPos, self.center.y);
-    animation.toPoint = CGPointMake(toPos, self.center.y);
-    animation.duration = 3.0f;
+    animation.fromPoint = fromPoint;
+    animation.toPoint = toPoint;
+    
+    //distance of 100 gives 3 seconds, which is good speed
+    animation.duration = slideAmount / 33.0f; 
+    
     animation.autoreverses = YES;
     animation.repeatCount = INFINITY;
     animation.timing = BWAnimationTimingEaseInEaseOut;
