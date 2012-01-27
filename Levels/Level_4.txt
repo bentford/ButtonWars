@@ -1,40 +1,43 @@
-                                s2                               x
-                                                               	 x
-                                                                 x
-                                                                 x
-                                                                 x
-                                                                 x
-                                                                 x
-                                                                 x
-                                                                 x
-                                                                 x
-                                                                 x
-                                                                 x
-                                                                 x
-                                                                 x
-                                                                 x
-                                                                 x
-                                b                             	 x
-                                                               	 x
-                                                                 x
-                                                                 x
-                                                                 x
-                                                                 x
-                                                                 x
-                                                                 x
-                                                                 x
-                                                                 x
-                                                                 x
-                                                                 x
-                                                                 x
-                                                                 x
-                                                                 x
-                                                                 x
-                                s2                               x
-                                                                 
-                                                                 
-65 chars x 33 chars 
+                                s2                               x
+                                                               	 x
+                                                                 x
+                                                                 x
+                                                                 x
+                sxvn50                                           x
+                                                                 x
+                                                           x
+                                                                 x
+   rb90                                     rb190                x
+                                p  p                             x
+                                                                 x
+                                                                 x
+                                                                 x
+                                                              x
+   sxhm50                                                        x
+                                 p  p                            x
+                                                               	 x
+                                                                 x
+                                                             w2  x
+    rb0                                       rb270w2             x
+                                                                 x
+                                 p  p                            x
+                                                                 x
+                                                                 x
+                                                                 x
+                                                                               x
+                                                                 x
+                                                                 x
+                                                                 x
+                                                                 x
+                                                                 x
+                                s2                               x
+
+
+line 34 is the points need to win
+
+MapData:                                                                 
+65 chars x 33 chars 
 
 center point( 33, 17 )
 
-vertical guide is on col 66 
+vertical guide is on col 66 
