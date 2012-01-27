@@ -9,9 +9,14 @@
 #import "BWSlidingBox.h"
 #import "BWBoxChipmunkLayer.h"
 
+@interface BWSlidingBox(PrivateMethods)
+- (NSArray *)generateAnimationPoints;
+@end
+
 @implementation BWSlidingBox
 @synthesize slideDirection;
 @synthesize slideAmount;
+@synthesize slideStartPosition;
 
 + (Class)layerClass {
     return [BWBoxChipmunkLayer class];
@@ -64,20 +69,14 @@
 - (void)startAnimation {
     CGPoint fromPoint;
     CGPoint toPoint;
+    NSArray *points = [self generateAnimationPoints];
     
-    if( slideDirection == BWSlidingBoxDirectionHorizontal ) {
-        NSUInteger fromPos = animationStartPoint.x - slideAmount;
-        NSUInteger toPos = animationStartPoint.x + slideAmount;
-        fromPoint = CGPointMake(fromPos, self.center.y);
-        toPoint = CGPointMake(toPos, self.center.y);
-        
-    } else if( slideDirection == BWSlidingBoxDirectionVertical ) {
-        NSUInteger fromPos = animationStartPoint.y - slideAmount;
-        NSUInteger toPos = animationStartPoint.y + slideAmount;
-        fromPoint = CGPointMake(self.center.x, fromPos);
-        toPoint = CGPointMake(self.center.x, toPos);        
-    } else 
+    // if nil, don't animate
+    if( points == nil )
         return;
+    
+    fromPoint = [(NSValue *)[points objectAtIndex:0] CGPointValue];
+    toPoint = [(NSValue *)[points objectAtIndex:1] CGPointValue];
     
     BWAnimation *animation = [BWAnimation animation];
     animation.fromPoint = fromPoint;
@@ -97,4 +96,41 @@
     [self.layer removeAllAnimations];
 }
 #pragma mark -
+@end
+
+@implementation BWSlidingBox(PrivateMethods)
+- (NSArray *)generateAnimationPoints {
+    CGPoint fromPoint;
+    CGPoint toPoint;
+    
+    if( slideDirection == BWSlidingBoxDirectionHorizontal ) {
+        NSUInteger fromPos, toPos;
+        if( slideStartPosition ==  BWSlidingBoxStartPositionCenter ) {
+            fromPos = animationStartPoint.x - slideAmount;
+            toPos = animationStartPoint.x + slideAmount;
+            fromPoint = CGPointMake(fromPos, self.center.y);
+            toPoint = CGPointMake(toPos, self.center.y);
+        } else if( slideStartPosition ==  BWSlidingBoxStartPositionNear ) {
+            fromPos = animationStartPoint.x;
+            toPos = animationStartPoint.x + slideAmount*2.0f;
+            fromPoint = CGPointMake(fromPos, self.center.y);
+            toPoint = CGPointMake(toPos, self.center.y);
+        } else if( slideStartPosition ==  BWSlidingBoxStartPositionFar ) {
+            fromPos = animationStartPoint.x + slideAmount*2.0f;
+            toPos = animationStartPoint.x;
+        }
+        fromPoint = CGPointMake(fromPos, self.center.y);
+        toPoint = CGPointMake(toPos, self.center.y);
+
+        
+    } else if( slideDirection == BWSlidingBoxDirectionVertical ) {
+        NSUInteger fromPos = animationStartPoint.y - slideAmount;
+        NSUInteger toPos = animationStartPoint.y + slideAmount;
+        fromPoint = CGPointMake(self.center.x, fromPos);
+        toPoint = CGPointMake(self.center.x, toPos);        
+    } else 
+        return nil;
+    
+    return [NSArray arrayWithObjects:[NSValue valueWithCGPoint:fromPoint], [NSValue valueWithCGPoint:toPoint], nil];
+}
 @end

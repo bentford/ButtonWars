@@ -475,7 +475,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
             
             // create a phrase that is at least 5 characters long
             NSString *phrase = [row substringFromIndex:currentColumn];
-            while( [phrase length] < 5 )
+            while( [phrase length] < 6 )
                 phrase = [NSString stringWithFormat:@"%@ ", phrase];
             
             CGFloat xPoint = 0;
@@ -524,8 +524,10 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
             }
 
             if( [phrase extBeginsWithString:@"sx"] ) {
-                NSString *directionString = [phrase substringWithRange:NSMakeRange(2, 1)];
                 
+                
+                // direction
+                NSString *directionString = [phrase substringWithRange:NSMakeRange(2, 1)];
                 BWSlidingBoxDirection direction;
                 if( [directionString isEqualToString:@"h"] == YES || [directionString isEqualToString:@" "] == YES )
                     direction = BWSlidingBoxDirectionHorizontal;
@@ -534,8 +536,19 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
                 else if( [directionString isEqualToString:@"s"] == YES )
                     direction = BWSlidingBoxDirectionStopped;
                 
+                // position
+                NSString *positionString = [phrase substringWithRange:NSMakeRange(3, 1)];
+                BWSlidingBoxStartPosition position;
+                if( [positionString isEqualToString:@"n"] == YES )
+                    position = BWSlidingBoxStartPositionNear;
+                else if( [positionString isEqualToString:@"c"] == YES ) 
+                    position = BWSlidingBoxStartPositionCenter;
+                else if( [positionString isEqualToString:@"f"] == YES ) 
+                    position = BWSlidingBoxStartPositionFar;
+                
+                // slid amount
                 CGFloat slideAmount = 0.0f;
-                NSString *amountString = [phrase substringWithRange:NSMakeRange(3, 3)];
+                NSString *amountString = [phrase substringWithRange:NSMakeRange(4, 3)];
                 if( [[amountString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] length] == 0 )
                     slideAmount = 100.0f;
                 else
@@ -544,6 +557,8 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
                 BWSlidingBox *slidingBox = [[[BWSlidingBox alloc] init] autorelease];
                 slidingBox.slideDirection = direction;
                 slidingBox.slideAmount = slideAmount;
+                slidingBox.slideStartPosition = position;
+    
                 [slidingBox setupWithSpace:space position:currentPosition];
                 [self.view addSubview:slidingBox];
                 [slidingBox startAnimation];

@@ -16,6 +16,12 @@ typedef enum {
     BWSlidingBoxDirectionHorizontal,
 } BWSlidingBoxDirection;
 
+typedef enum {
+    BWSlidingBoxStartPositionCenter,
+    BWSlidingBoxStartPositionNear,
+    BWSlidingBoxStartPositionFar,
+} BWSlidingBoxStartPosition;
+
 @interface BWSlidingBox : UIImageView <ChipmunkLayerView, AnimatedChipmunkLayer> {
     CGPoint animationStartPoint;
     
@@ -25,6 +31,7 @@ typedef enum {
 
 @property (nonatomic, assign) CGFloat slideAmount;
 @property (nonatomic, assign) BWSlidingBoxDirection slideDirection;
+@property (nonatomic, assign) BWSlidingBoxStartPosition slideStartPosition;
 
 - (void)startAnimation;
 - (void)stopAnimation;
