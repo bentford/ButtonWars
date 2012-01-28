@@ -91,6 +91,50 @@
 }
 #pragma mark -
 
+- (IBAction)clearMap:(id)sender {
+
+    textView.text = @"                                s1                               x\
+                                                                 x\
+                                                                 x\
+                                                                 x\
+                                                                 x\
+                                                                 x\
+                                                                 x\
+                                                                 x\
+                                                                 x\
+                                                                 x\
+                                                                 x\
+                                                                 x\
+                                                                 x\
+                                                                 x\
+                                                                 x\
+                                                                 x\
+                                                                 x\
+                                                                 x\
+                                                                 x\
+                                                                 x\
+                                                                 x\
+                                                                 x\
+                                                                 x\
+                                                                 x\
+                                                                 x\
+                                                                 x\
+                                                                 x\
+                                                                 x\
+                                                                 x\
+                                                                 x\
+                                                                 x\
+                                                                 x\
+                                s2                               x\
+\
+65 chars x 33 chars \
+\
+center point( 33, 17 )\
+\
+vertical guide is on col 66";
+    
+}
+
 - (IBAction)close:(id)sender {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }

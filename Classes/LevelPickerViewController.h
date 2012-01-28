@@ -27,4 +27,6 @@
 - (IBAction)saveChanges:(id)sender;
 
 - (IBAction)reloadFromBundle:(id)sender;
+
+- (IBAction)clearMap:(id)sender;
 @end
