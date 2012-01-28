@@ -143,12 +143,14 @@ void postSolveCollisionWithButtonAndBumper(cpArbiter *arbiter, cpSpace *space, v
     [viewController performSelector:@selector(resetBumper:) withObject:parameters afterDelay:0.1];
 }
 
-void beginSolveCollisionWithButtonAndRotatingBumper(cpArbiter *arbiter, cpSpace *space, void *data) {
+int beginSolveCollisionWithButtonAndRotatingBumper(cpArbiter *arbiter, cpSpace *space, void *data) {
     CP_ARBITER_GET_SHAPES(arbiter, a, b);
     BWRotatingBumper *bumper = b->data;
     BWButton *button = a->data;
 
     [bumper trapButton:button withSpace:space];
+    
+    return 0;
 }
 
 void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
