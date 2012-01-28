@@ -141,6 +141,10 @@
     [bwAnimations addObject:animation];
 }
 
+- (void)cancelAllAnimations {
+    [bwAnimations removeAllObjects];
+}
+
 - (void)dealloc {
     cpShapeFree(shape);
     cpBodyFree(body);

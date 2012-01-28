@@ -13,7 +13,7 @@
 
 @class BWButton;
 @interface BWRotatingBumper : UIImageView <ChipmunkLayerView, BWChipmunkLayerDelegate> {
-    NSMutableSet *recentlyTrappedButtons;
+    BWButton *currentlyTrappedButton;
     CGPoint trappedButtonPosition;
     
     UIImageView *baseView;

@@ -35,4 +35,5 @@
 + (CGFloat)momentForBodyWithSize:(CGSize)momentSize mass:(CGFloat)mass;
 
 - (void)addBWAnimation:(BWAnimation *)animation;
+- (void)cancelAllAnimations;
 @end

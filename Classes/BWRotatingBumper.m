@@ -17,8 +17,8 @@
 @end
 
 @interface BWRotatingBumper(PrivateMethods)
-- (void)forgetButton:(BWButton *)button;
-- (void)fireTrappedButton:(BWButton *)button;
+- (void)fireButton:(BWButton *)button;
+- (void)fireCurrentlyTrappedButton;
 @end
 
 @implementation BWRotatingBumper
@@ -44,9 +44,9 @@
         cpBodySetUserData(self.chipmunkLayer.body, self);
         cpShapeSetUserData(self.chipmunkLayer.shape, self);
         
-        recentlyTrappedButtons = [[NSMutableSet alloc] initWithCapacity:2];
-        
         self.chipmunkLayer.chipmunkLayerDelegate = self;
+
+        self.trappedButton = nil;
     }
     return self;
 }
@@ -74,17 +74,16 @@
 }
 
 - (void)trapButton:(BWButton *)button withSpace:(cpSpace *)space {
-    if( [recentlyTrappedButtons count] > 0 )
-        return;
-
+    if( self.trappedButton != nil ) 
+        [self fireButton:self.trappedButton];
+    
+    self.trappedButton = button;
+    
     // freeze button
     button.ignoreGuideForce = YES;
     cpBodySetVel(button.chipmunkLayer.body, cpvzero);    
     cpBodySetAngVel(button.chipmunkLayer.body, 0);
     
-    // ignore collisions for this button button for a short moment
-    [recentlyTrappedButtons addObject:button];
-    [self performSelector:@selector(forgetButton:) withObject:button afterDelay:1.0];
     
     // rotate the button
     cpVect localButtonPosition = cpBodyWorld2Local(self.chipmunkLayer.body, cpBodyGetPos(button.chipmunkLayer.body));
@@ -103,7 +102,7 @@
     
     self.trappedButtonPosition = localButtonPosition;
 
-    self.trappedButton = button;
+    [self.chipmunkLayer cancelAllAnimations];
     
     BWAnimation *rotation = [BWAnimation animation];
     rotation.fromAngle = fromAngle;
@@ -111,12 +110,9 @@
     rotation.duration = (angleDelta / RADIANS(90.0f) ) * 1.0f;
     rotation.timing = BWAnimationTimingEaseInEaseOut;
     rotation.completionBlock = ^{
-        // fire button when rotation completes
-        [self fireTrappedButton:button];
-    };
-    
-        
 
+        [self fireCurrentlyTrappedButton];
+    };
     
     [self.chipmunkLayer addBWAnimation:rotation];
 }
@@ -167,11 +163,12 @@
 @end
 
 @implementation BWRotatingBumper(PrivateMethods)
-- (void)forgetButton:(BWButton *)button {
-    [recentlyTrappedButtons removeObject:button];
+- (void)fireCurrentlyTrappedButton {
+    [self fireButton:self.trappedButton];
+    self.trappedButton = nil;
 }
 
-- (void)fireTrappedButton:(BWButton *)button {
+- (void)fireButton:(BWButton *)button {
     
     button.ignoreGuideForce = NO;
     
