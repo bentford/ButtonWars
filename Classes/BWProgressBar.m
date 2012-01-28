@@ -63,12 +63,6 @@
 
     
     [baseImage release];
-    
-    CGImageRelease(leftCap);
-    CGImageRelease(rightCap);
-    CGImageRelease(dividerArea);
-    CGImageRelease(leftExpansion);
-    CGImageRelease(rightExpansion);
 }
 @end
 
