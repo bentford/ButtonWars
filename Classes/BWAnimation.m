@@ -96,10 +96,13 @@ static inline float bezierat( float a, float b, float c, float d, CGFloat t )
 
 - (void)updateBody:(BWChipmunkLayer *)body {
     
-    if( delay > 0 && elapsedTime < delay )
-        return;
+    CGFloat overriddenElapsedTime = elapsedTime;
     
-    CGFloat interpolation = elapsedTime / duration;
+    // if there is a delay, override elapsed time to be zero
+    if( delay > 0.0f && elapsedTime < delay )
+        overriddenElapsedTime = 0.0f;
+    
+    CGFloat interpolation = overriddenElapsedTime / duration;
     
     if( (timing == BWAnimationTimingEaseIn && interpolation > 0.5) ||
         (timing == BWAnimationTimingEaseOut && interpolation < 0.5) ||
