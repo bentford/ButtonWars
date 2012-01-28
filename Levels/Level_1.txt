@@ -1,44 +1,44 @@
-                                s2                               x
-                                                               	 x
-                                                                 x
-                                                                 x
-      p                                                p         x
-                                                                 x
-                                                                 x
-                                                                 x
-                                                                 x
-                                                                 x
-                                                                 x
-                                                                 x
-                                                                 x
-                          w2       w2                            x
-                                                                 x
-                                                                 x
-  b      p   sxvn75p. p         rb180  p  p   sxvs75p      rb180   x
-                                                               	 x
-                                                                 x
-                          w1       w1                            x
-                                                                 x
-                                                                 x
-                                                                 x
-                                                                 x
-                                                                 x
-                                                                 x
-      p                                                p         x
-                                                                 x
-                                                                 x
-                                                                 x
-                                                                 x
-                                                                 x
-                                s2                               x
+                                s2                               x
+                                                               	 x
+                                                                 x
+                                                                 x
+      p                                                p         x
+                                                                 x
+                                                                 x
+                                                                 x
+                                                                 x
+                                                                 x
+                                                                 x
+                                                                 x
+                                                                 x
+                          w2       w2                            x
+                                                                 x
+                                                                 x
+  b      p   sxvn75p. p       rb180  p  p   sxvs75p      rb180   x
+                                                               	 x
+                                                                 x
+                          w1       w1                            x
+                                                                 x
+                                                                 x
+                                                                 x
+                                                                 x
+                                                                 x
+                                                                 x
+      p                                                p         x
+                                                                 x
+                                                                 x
+                                                                 x
+                                                                 x
+                                                                 x
+                                s2                               x
 10
 
 
 line 34 is the points need to win
 
-MapData:                                                                 
-65 chars x 33 chars 
+MapData:                                                                 
+65 chars x 33 chars 
 
 center point( 33, 17 )
 
-vertical guide is on col 66 
+vertical guide is on col 66 
