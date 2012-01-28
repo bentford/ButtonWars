@@ -2,31 +2,31 @@
                                                                  x
                                                                  x
                                                                  x
-           p              p                 p              p     x
-                                                                 x
-           w1                               p              p     x
                                                                  x
                                                                  x
                                                                  x
-           p                                 p            b      x
                                                                  x
                                                                  x
-                               w1                                x
                                                                  x
-                                                        w3   w3  x
+                                                                 x
+                                                                 x
+                                                                 x
+                                                                 x
+                                                                 x
+                                                                 x
                                                                  x 
                                                                  x
-                                       w2                        x
-       b                                                         x
-                                                                 x
-                                                            b    x
-           p                                                     x
                                                                  x
                                                                  x
-           w2              p                 p              p    x
                                                                  x
                                                                  x
-           p              p                 p              p     x
+                                                                 x
+                                                                 x
+                                                                 x
+                                                                 x
+                                                                 x
+                                                                 x
+                                                                 x
                                                                  x
                                                                  x
                                                                  x
