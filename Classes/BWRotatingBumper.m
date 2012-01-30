@@ -99,6 +99,7 @@
     else
         angleDelta = toAngle - fromAngle;
     
+    CGFloat duration = (fabsf(angleDelta) / RADIANS(90.0f) ) * 1.0f;
     
     self.trappedButtonPosition = localButtonPosition;
 
@@ -107,7 +108,7 @@
     BWAnimation *rotation = [BWAnimation animation];
     rotation.fromAngle = fromAngle;
     rotation.toAngle = toAngle;
-    rotation.duration = (angleDelta / RADIANS(90.0f) ) * 1.0f;
+    rotation.duration = duration;
     rotation.timing = BWAnimationTimingEaseInEaseOut;
     rotation.completionBlock = ^{
 
