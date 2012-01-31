@@ -43,9 +43,15 @@
 
 - (void)startGame {
     gameViewController = [[ViewController alloc] init];
-    [viewController.view removeFromSuperview];
+
+    [window insertSubview:gameViewController.view belowSubview:viewController.view];
     
-    [window addSubview:gameViewController.view];
+    [UIView animateWithDuration:0.5 animations:^{
+        viewController.view.alpha = 0.0;
+    } completion:^(BOOL completed) {
+        if( completed == YES ) 
+            [viewController.view removeFromSuperview];[window addSubview:gameViewController.view];
+    }];
 }
 
 - (void)dealloc {
