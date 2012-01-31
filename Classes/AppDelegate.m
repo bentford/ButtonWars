@@ -1,5 +1,6 @@
 #import "AppDelegate.h"
 #import "ViewController.h"
+#import "LaunchScreenViewController.h"
 
 #import <AudioToolbox/AudioToolbox.h>
 #import <OpenAL/alc.h>
@@ -34,6 +35,17 @@
 	[window makeKeyAndVisible];
 
 	return YES;
+}
+
++ (AppDelegate *)delegate {
+    return (AppDelegate *)[UIApplication sharedApplication].delegate;
+}
+
+- (void)startGame {
+    gameViewController = [[ViewController alloc] init];
+    [viewController.view removeFromSuperview];
+    
+    [window addSubview:gameViewController.view];
 }
 
 - (void)dealloc {

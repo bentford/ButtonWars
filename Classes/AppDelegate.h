@@ -1,14 +1,18 @@
 #import <UIKit/UIKit.h>
 
+@class LaunchScreenViewController;
 @class ViewController;
-
 @interface AppDelegate : NSObject <UIApplicationDelegate> {
     UIWindow *window;
-    ViewController *viewController;
+    LaunchScreenViewController *viewController;
+    ViewController *gameViewController;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
-@property (nonatomic, retain) IBOutlet ViewController *viewController;
+@property (nonatomic, retain) IBOutlet LaunchScreenViewController *viewController;
 
+- (void)startGame;
+
++ (AppDelegate *)delegate;
 @end
 

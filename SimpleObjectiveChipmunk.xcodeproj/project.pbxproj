@@ -66,6 +66,14 @@
 		B5DE710314D2218D00CCF39E /* BWSlidingBoxWithBounce.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DE710214D2218D00CCF39E /* BWSlidingBoxWithBounce.m */; };
 		B5DE710514D221D400CCF39E /* Sliding-Block-with-Bounce.png in Resources */ = {isa = PBXBuildFile; fileRef = B5DE710414D221D400CCF39E /* Sliding-Block-with-Bounce.png */; };
 		B5DE710B14D32F2700CCF39E /* NSString+Ext.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DE710A14D32F2700CCF39E /* NSString+Ext.m */; };
+		B5DE716514D72E1900CCF39E /* Sliding-Half-Block.png in Resources */ = {isa = PBXBuildFile; fileRef = B5DE716414D72E1900CCF39E /* Sliding-Half-Block.png */; };
+		B5DE716814D72E6C00CCF39E /* BWSlidingHalfBox.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DE716714D72E6B00CCF39E /* BWSlidingHalfBox.m */; };
+		B5DE716C14D7571A00CCF39E /* Launch-Screen-Background.png in Resources */ = {isa = PBXBuildFile; fileRef = B5DE716B14D7571A00CCF39E /* Launch-Screen-Background.png */; };
+		B5DE717014D7572B00CCF39E /* Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = B5DE716D14D7572B00CCF39E /* Logo.png */; };
+		B5DE717114D7572B00CCF39E /* One-Player.png in Resources */ = {isa = PBXBuildFile; fileRef = B5DE716E14D7572B00CCF39E /* One-Player.png */; };
+		B5DE717214D7572B00CCF39E /* Two-Player.png in Resources */ = {isa = PBXBuildFile; fileRef = B5DE716F14D7572B00CCF39E /* Two-Player.png */; };
+		B5DE717514D7576B00CCF39E /* LaunchScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DE717414D7576A00CCF39E /* LaunchScreenViewController.m */; };
+		B5DE717714D7578F00CCF39E /* LaunchScreenView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5DE717614D7578E00CCF39E /* LaunchScreenView.xib */; };
 		B5E3021914B7A8ED00556639 /* BWStaticBoxChipmunkLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B5E3021814B7A8EC00556639 /* BWStaticBoxChipmunkLayer.m */; };
 		B5E7503714B447C60021AFC0 /* cpConstraint.c in Sources */ = {isa = PBXBuildFile; fileRef = B5E7502C14B447C60021AFC0 /* cpConstraint.c */; };
 		B5E7503814B447C60021AFC0 /* cpDampedRotarySpring.c in Sources */ = {isa = PBXBuildFile; fileRef = B5E7502D14B447C60021AFC0 /* cpDampedRotarySpring.c */; };
@@ -215,8 +223,18 @@
 		B5DE710114D2218D00CCF39E /* BWSlidingBoxWithBounce.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWSlidingBoxWithBounce.h; sourceTree = "<group>"; };
 		B5DE710214D2218D00CCF39E /* BWSlidingBoxWithBounce.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWSlidingBoxWithBounce.m; sourceTree = "<group>"; };
 		B5DE710414D221D400CCF39E /* Sliding-Block-with-Bounce.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Sliding-Block-with-Bounce.png"; sourceTree = "<group>"; };
-		B5DE710914D32F2700CCF39E /* NSString+Ext.h */ = {isa = PBXFileReference; fileEncoding = 4; path = "NSString+Ext.h"; sourceTree = "<group>"; };
+		B5DE710914D32F2700CCF39E /* NSString+Ext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Ext.h"; sourceTree = "<group>"; };
 		B5DE710A14D32F2700CCF39E /* NSString+Ext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Ext.m"; sourceTree = "<group>"; };
+		B5DE716414D72E1900CCF39E /* Sliding-Half-Block.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Sliding-Half-Block.png"; sourceTree = "<group>"; };
+		B5DE716614D72E6A00CCF39E /* BWSlidingHalfBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWSlidingHalfBox.h; sourceTree = "<group>"; };
+		B5DE716714D72E6B00CCF39E /* BWSlidingHalfBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWSlidingHalfBox.m; sourceTree = "<group>"; };
+		B5DE716B14D7571A00CCF39E /* Launch-Screen-Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Launch-Screen-Background.png"; sourceTree = "<group>"; };
+		B5DE716D14D7572B00CCF39E /* Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Logo.png; sourceTree = "<group>"; };
+		B5DE716E14D7572B00CCF39E /* One-Player.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "One-Player.png"; sourceTree = "<group>"; };
+		B5DE716F14D7572B00CCF39E /* Two-Player.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Two-Player.png"; sourceTree = "<group>"; };
+		B5DE717314D7576900CCF39E /* LaunchScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchScreenViewController.h; sourceTree = "<group>"; };
+		B5DE717414D7576A00CCF39E /* LaunchScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchScreenViewController.m; sourceTree = "<group>"; };
+		B5DE717614D7578E00CCF39E /* LaunchScreenView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreenView.xib; sourceTree = "<group>"; };
 		B5E3021714B7A8EC00556639 /* BWStaticBoxChipmunkLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BWStaticBoxChipmunkLayer.h; sourceTree = "<group>"; };
 		B5E3021814B7A8EC00556639 /* BWStaticBoxChipmunkLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BWStaticBoxChipmunkLayer.m; sourceTree = "<group>"; };
 		B5E7502C14B447C60021AFC0 /* cpConstraint.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = cpConstraint.c; path = constraints/cpConstraint.c; sourceTree = "<group>"; };
@@ -296,6 +314,9 @@
 				B569D41E14BD0A1400F46D4B /* LevelPickerViewController.h */,
 				B569D41F14BD0A1400F46D4B /* LevelPickerViewController.m */,
 				B569D42114BD0A5A00F46D4B /* LevelPicker.xib */,
+				B5DE717314D7576900CCF39E /* LaunchScreenViewController.h */,
+				B5DE717414D7576A00CCF39E /* LaunchScreenViewController.m */,
+				B5DE717614D7578E00CCF39E /* LaunchScreenView.xib */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -450,6 +471,11 @@
 		B5FE1A9A14A13ED900022983 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				B5DE716D14D7572B00CCF39E /* Logo.png */,
+				B5DE716E14D7572B00CCF39E /* One-Player.png */,
+				B5DE716F14D7572B00CCF39E /* Two-Player.png */,
+				B5DE716B14D7571A00CCF39E /* Launch-Screen-Background.png */,
+				B5DE716414D72E1900CCF39E /* Sliding-Half-Block.png */,
 				B5DE710414D221D400CCF39E /* Sliding-Block-with-Bounce.png */,
 				B5DE70FD14D2186000CCF39E /* GreenWins.png */,
 				B5DE70FE14D2186000CCF39E /* OrangeWins.png */,
@@ -498,6 +524,8 @@
 				B5DE70EB14D1F5AD00CCF39E /* BWProgressBar.m */,
 				B5DE70F014D200AC00CCF39E /* BWProgressBarAnimator.h */,
 				B5DE70F114D200AC00CCF39E /* BWProgressBarAnimator.m */,
+				B5DE716614D72E6A00CCF39E /* BWSlidingHalfBox.h */,
+				B5DE716714D72E6B00CCF39E /* BWSlidingHalfBox.m */,
 			);
 			name = "Game Parts";
 			sourceTree = "<group>";
@@ -614,6 +642,12 @@
 				B5DE70FF14D2186000CCF39E /* GreenWins.png in Resources */,
 				B5DE710014D2186000CCF39E /* OrangeWins.png in Resources */,
 				B5DE710514D221D400CCF39E /* Sliding-Block-with-Bounce.png in Resources */,
+				B5DE716514D72E1900CCF39E /* Sliding-Half-Block.png in Resources */,
+				B5DE716C14D7571A00CCF39E /* Launch-Screen-Background.png in Resources */,
+				B5DE717014D7572B00CCF39E /* Logo.png in Resources */,
+				B5DE717114D7572B00CCF39E /* One-Player.png in Resources */,
+				B5DE717214D7572B00CCF39E /* Two-Player.png in Resources */,
+				B5DE717714D7578F00CCF39E /* LaunchScreenView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -686,6 +720,8 @@
 				B5DE70FC14D2180100CCF39E /* JelloPopupAnimation.m in Sources */,
 				B5DE710314D2218D00CCF39E /* BWSlidingBoxWithBounce.m in Sources */,
 				B5DE710B14D32F2700CCF39E /* NSString+Ext.m in Sources */,
+				B5DE716814D72E6C00CCF39E /* BWSlidingHalfBox.m in Sources */,
+				B5DE717514D7576B00CCF39E /* LaunchScreenViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

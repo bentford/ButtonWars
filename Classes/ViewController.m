@@ -13,13 +13,14 @@
 #import "UIViewBody.h"
 #import "BWRotatingBumper.h"
 #import "BWSlidingBox.h"
+#import "BWSlidingHalfBox.h"
 #import "ChipmunkLayerView.h"
 #import "BaseWall.h"
 #import "BWLevelWall.h"
 #import "BWProgressBar.h"
 #import "BWProgressBarAnimator.h"
 #import "JelloPopupAnimation.h"
-#import "BWSlidingBoxWithBounce.h"
+
 #import "NSString+Ext.h"
 
 static NSString *borderType = @"borderType";
@@ -103,14 +104,6 @@ void postSolveCollisionWithButtonAndInnerShooter(cpArbiter *arbiter, cpSpace *sp
         shooter.activeButtonCount--;
         cpSpaceAddPostStepCallback(space, (cpPostStepFunc)postStepRemoveButton, a, NULL);
     }
-}
-
-void postSolveCollisionWithButtonAndSlidingBoxWithBounce(cpArbiter *arbiter, cpSpace *space, void *data) {
-    CP_ARBITER_GET_SHAPES(arbiter, a, b);
-    BWSlidingBoxWithBounce *box = b->data;
-    BWButton *button = a->data;
-
-    [box bumpButton:button withSpace:space];
 }
 
 
@@ -221,7 +214,6 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     cpSpaceAddCollisionHandler(space, 1, 4, (cpCollisionBeginFunc)beginCollisionWithButtonAndShooter, NULL, NULL, NULL, self);
     cpSpaceAddCollisionHandler(space, 1, 5, (cpCollisionBeginFunc)beginSolveCollisionWithButtonAndRotatingBumper, NULL, NULL, NULL, self);
     cpSpaceAddCollisionHandler(space, 1, 6, NULL, NULL, (cpCollisionPostSolveFunc)postSolveCollisionWithButtonAndInnerShooter, NULL, self);
-    cpSpaceAddCollisionHandler(space, 1, 7, NULL, NULL, (cpCollisionPostSolveFunc)postSolveCollisionWithButtonAndSlidingBoxWithBounce, NULL, self);
     
     UISwipeGestureRecognizer *swipeCleanGesture = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(chooseNewLevel:)] autorelease];
     [self.view addGestureRecognizer:swipeCleanGesture];
@@ -525,9 +517,11 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 
             }
 
-            if( [phrase extBeginsWithString:@"sx"] ) {
+            if( [phrase extBeginsWithString:@"sx"] || [phrase extBeginsWithString:@"sy"] ) {
                 
-                
+                // type
+                NSString *typeString = [phrase substringWithRange:NSMakeRange(1, 1)];
+                   
                 // direction
                 NSString *directionString = [phrase substringWithRange:NSMakeRange(2, 1)];
                 BWSlidingBoxDirection direction;
@@ -558,7 +552,12 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
                 else
                     slideAmount = [amountString floatValue];
                 
-                BWSlidingBox *slidingBox = [[[BWSlidingBox alloc] init] autorelease];
+                BWSlidingBox *slidingBox = nil;
+                if( [typeString isEqualToString:@"x"] )
+                    slidingBox = [[[BWSlidingBox alloc] init] autorelease];
+                else // y
+                    slidingBox = [[[BWSlidingHalfBox alloc] init] autorelease];
+                
                 slidingBox.slideDirection = direction;
                 slidingBox.slideAmount = slideAmount;
                 slidingBox.startDelay = delay;
@@ -566,14 +565,6 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
                 [slidingBox setupWithSpace:space position:currentPosition];
                 [self.view addSubview:slidingBox];
                 
-                [slidingBox startAnimation];
-                
-            }
-            
-            if( [character isEqualToString:@"s"] == YES && currentColumn+1 < [columns count] && [[columns objectAtIndex:currentColumn+1] isEqualToString:@"y"] == YES ) {            
-                BWSlidingBoxWithBounce *slidingBox = [[[BWSlidingBoxWithBounce alloc] init] autorelease];
-                [slidingBox setupWithSpace:space position:currentPosition];
-                [self.view addSubview:slidingBox];
                 [slidingBox startAnimation];
                 
             }
