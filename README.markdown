@@ -23,7 +23,7 @@ To invoke the level editor, make a horizontal swipe gesture to the right in the 
 Type in characters in the 65 x 33 character grid.  Good luck!
 
 * p - peg
-* w&lt;num&gt; - makes a wall
+* w&lt;num&gt; - makes a wall, must be in pairs and each pair must have a unique number w1 and w1 go together, w2 and w2 go together, etc..
 * rb&lt;degrees&gt; - makes a rotating bumper, where it will shoot to degrees
 * b - normal bumper
 * sx&lt;v|h&gt;&lt;n|s&gt;&lt;distance&gt; - sliding box, first option change between vertical or horizontal, second option changes start point
