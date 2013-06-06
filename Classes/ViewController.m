@@ -23,8 +23,6 @@
 
 #import "NSString+Ext.h"
 
-static NSString *borderType = @"borderType";
-
 #pragma mark - Collisions
 
 void postStepRemove(cpSpace *space, cpShape *shape, void *unused)
