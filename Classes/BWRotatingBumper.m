@@ -13,7 +13,7 @@
 
 @interface BWRotatingBumper()
 @property (nonatomic, assign) CGPoint trappedButtonPosition;
-@property (nonatomic, assign) BWButton *trappedButton;
+@property (nonatomic, weak) BWButton *trappedButton;
 @end
 
 @interface BWRotatingBumper(PrivateMethods)
@@ -41,8 +41,8 @@
         
         cpShapeSetSensor(self.chipmunkLayer.shape, YES);
         
-        cpBodySetUserData(self.chipmunkLayer.body, self);
-        cpShapeSetUserData(self.chipmunkLayer.shape, self);
+        cpBodySetUserData(self.chipmunkLayer.body, (__bridge cpDataPointer)(self));
+        cpShapeSetUserData(self.chipmunkLayer.shape, (__bridge cpDataPointer)(self));
         
         self.chipmunkLayer.chipmunkLayerDelegate = self;
 
@@ -143,7 +143,6 @@
 
 - (void)addRelatedViewsToView:(UIView *)parentView withTopMark:(UIView *)topMark bottomMark:(UIView *)bottomMark angle:(CGFloat)angle {
     
-    [baseView release];
     baseView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"RotatingBumperBase.png"]];
     [baseView sizeToFit];
     baseView.center = CGPointMake(self.center.x, self.center.y);

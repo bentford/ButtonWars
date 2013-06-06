@@ -148,9 +148,7 @@
 - (void)dealloc {
     cpShapeFree(shape);
     cpBodyFree(body);
-    [bwAnimations release];
     
-    [super dealloc];
 }
 @end
 

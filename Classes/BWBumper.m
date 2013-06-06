@@ -29,8 +29,8 @@
         cpShapeSetElasticity(self.chipmunkLayer.shape, 1.0);
         cpShapeSetCollisionType(self.chipmunkLayer.shape, 3);
         
-        cpBodySetUserData(self.chipmunkLayer.body, self);
-        cpShapeSetUserData(self.chipmunkLayer.shape, self);
+        cpBodySetUserData(self.chipmunkLayer.body, (__bridge cpDataPointer)(self));
+        cpShapeSetUserData(self.chipmunkLayer.shape, (__bridge cpDataPointer)(self));
         
         isBumping = NO;
     }

@@ -21,7 +21,7 @@
     IBOutlet UIPickerView *filePicker;
 }
 
-@property (nonatomic, assign) id<LevelPickerDelegate> delegate;
+@property (nonatomic, weak) id<LevelPickerDelegate> delegate;
 
 - (IBAction)close:(id)sender;
 - (IBAction)saveChanges:(id)sender;

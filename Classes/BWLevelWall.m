@@ -18,7 +18,7 @@
 
 - (id)initWithLength:(CGFloat)newLength {
     if( (self = [super initWithFrame:CGRectMake(0, 0, 50, newLength)]) ) {
-        baseImage = [[UIImage imageNamed:@"LevelWall.png"] retain];
+        baseImage = [UIImage imageNamed:@"LevelWall.png"];
         
         cpBodySetMass(self.chipmunkLayer.body, INFINITY);
         cpBodySetMoment(self.chipmunkLayer.body, cpMomentForBox(INFINITY, 22, newLength));
@@ -30,7 +30,7 @@
         
         self.backgroundColor = [UIColor clearColor];
         
-        cpShapeSetUserData(self.chipmunkLayer.shape, self);
+        cpShapeSetUserData(self.chipmunkLayer.shape, (__bridge cpDataPointer)(self));
         
     }
     return self;
@@ -69,9 +69,4 @@
 }
 #pragma mark -
 
-- (void)dealloc {
-    [baseImage release];
-    
-    [super dealloc];
-}
 @end

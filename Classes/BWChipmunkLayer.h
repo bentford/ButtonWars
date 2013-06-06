@@ -21,7 +21,7 @@
     NSMutableArray *bwAnimations;
 }
 
-@property (nonatomic, assign) id<BWChipmunkLayerDelegate> chipmunkLayerDelegate;
+@property (nonatomic, weak) id<BWChipmunkLayerDelegate> chipmunkLayerDelegate;
 
 @property (nonatomic, assign) cpBody *body;
 @property (nonatomic, assign) cpShape *shape;

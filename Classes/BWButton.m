@@ -40,7 +40,7 @@
         
         self.userInteractionEnabled = NO;
         
-        cpShapeSetUserData(self.chipmunkLayer.shape, self);
+        cpShapeSetUserData(self.chipmunkLayer.shape, (__bridge cpDataPointer)(self));
         canDie = NO;
         self.ignoreGuideForce = NO;
         [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(stopDeathPrevention) userInfo:nil repeats:NO];

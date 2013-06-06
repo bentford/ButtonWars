@@ -35,7 +35,6 @@
     cpShapeFree(shape);
     cpBodyFree(body);
     
-    [super dealloc];
 }
 @end
 

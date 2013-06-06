@@ -22,7 +22,7 @@
 
 - (id)init {    
     if( (self = [super initWithFrame:CGRectMake(0, 0, 168, 26)]) ) {
-        baseImage = [[UIImage imageNamed:@"ProgressBar.png"] retain];
+        baseImage = [UIImage imageNamed:@"ProgressBar.png"];
         leftCap = CGImageCreateWithImageInRect(baseImage.CGImage, CGRectMake(0, 0, kInsetAmount, baseImage.size.height));  
         rightCap = CGImageCreateWithImageInRect(baseImage.CGImage, CGRectMake(baseImage.size.width-kInsetAmount, 0, kInsetAmount, baseImage.size.height));
         
@@ -58,12 +58,6 @@
     [self setNeedsDisplay];
 }
 
-- (void)dealloc {
-    [super dealloc];
-
-    
-    [baseImage release];
-}
 @end
 
 @implementation BWProgressBar(PrivateMethods)

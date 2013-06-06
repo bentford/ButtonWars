@@ -19,7 +19,7 @@
         bounceSurface = cpPolyShapeNew(self.chipmunkLayer.body, 4, verts, cpvzero);
 
         cpShapeSetCollisionType(bounceSurface, 7);
-        cpShapeSetUserData(bounceSurface, self);
+        cpShapeSetUserData(bounceSurface, (__bridge cpDataPointer)(self));
     }
     return self;
 }

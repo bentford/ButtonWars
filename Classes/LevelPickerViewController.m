@@ -78,8 +78,7 @@
     NSString *cacheFolder = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject];
     NSString *mapPath = [cacheFolder stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.txt", mapName]];
 
-    [currentLevelPath release];
-    currentLevelPath = [mapPath retain];
+    currentLevelPath = mapPath;
     
     NSError *fileLoadError = nil;
     NSString *mapText = [NSString stringWithContentsOfFile:mapPath encoding:NSUTF8StringEncoding error:&fileLoadError];

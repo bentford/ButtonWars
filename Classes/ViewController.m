@@ -27,36 +27,32 @@
 
 void postStepRemove(cpSpace *space, cpShape *shape, void *unused)
 {
-    BWScorePost *scorePost = shape->data;
-    [scorePost retain];
+    BWScorePost *scorePost = (__bridge BWScorePost *)(shape->data);
     [scorePost removeFromSuperview];
     
     cpSpaceRemoveShape(space, shape);
     
-    [scorePost release];
 }
 
 void postStepRemoveButton(cpSpace *space, cpShape *shape, void *unused) {
-    BWButton *button = shape->data;
-    [button retain];
+    BWButton *button = (__bridge BWButton *)shape->data;
     [button removeFromSuperview];
     
     cpSpaceRemoveBody(space, button.chipmunkLayer.body);
     cpSpaceRemoveShape(space, shape);
     
-    [button release];
 }
 
 void postStepRemoveButtonBodyFromSpace(cpSpace *space, cpShape *shape, void *unused) {
-    BWButton *button = shape->data;
+    BWButton *button = (__bridge BWButton *)shape->data;
     cpSpaceRemoveBody(space, button.chipmunkLayer.body);
 }
 
 int beginCollisionWithButtonAndScorePost(cpArbiter *arbiter, cpSpace *space, void *data) {
     CP_ARBITER_GET_SHAPES(arbiter, a, b);
-    BWButton *button = a->data;
-    BWScorePost *scorePost = b->data;
-    ViewController *viewController = data;
+    BWButton *button = (__bridge BWButton *)a->data;
+    BWScorePost *scorePost = (__bridge BWScorePost *)b->data;
+    ViewController *viewController = (__bridge ViewController *)data;
     
     if( viewController.gameSuspended == YES )
         return 0;
@@ -83,8 +79,8 @@ int beginCollisionWithButtonAndScorePost(cpArbiter *arbiter, cpSpace *space, voi
 int beginCollisionWithButtonAndShooter(cpArbiter *arbiter, cpSpace *space, void *data) {
 
     CP_ARBITER_GET_SHAPES(arbiter, a, b);
-    BWButton *button = a->data;
-    BWShooter *shooter = b->data;
+    BWButton *button = (__bridge BWButton *)a->data;
+    BWShooter *shooter = (__bridge BWShooter *)b->data;
     
     if( button.canDie == YES && button.color == shooter.buttonColor ) 
         return 0;
@@ -95,8 +91,8 @@ int beginCollisionWithButtonAndShooter(cpArbiter *arbiter, cpSpace *space, void 
 void postSolveCollisionWithButtonAndInnerShooter(cpArbiter *arbiter, cpSpace *space, void *data) {
     
     CP_ARBITER_GET_SHAPES(arbiter, a, b);
-    BWButton *button = a->data;
-    BWShooter *shooter = b->data;
+    BWButton *button = (__bridge BWButton *)a->data;
+    BWShooter *shooter = (__bridge BWShooter *)b->data;
     
     if( button.canDie == YES && button.color == shooter.buttonColor ) {
         shooter.activeButtonCount--;
@@ -107,9 +103,9 @@ void postSolveCollisionWithButtonAndInnerShooter(cpArbiter *arbiter, cpSpace *sp
 
 void postSolveCollisionWithButtonAndBumper(cpArbiter *arbiter, cpSpace *space, void *data) {
     CP_ARBITER_GET_SHAPES(arbiter, a, b);
-    BWBumper *bumper = b->data;
-    BWButton *button = a->data;
-    ViewController *viewController = data;
+    BWBumper *bumper = (__bridge BWBumper *)b->data;
+    BWButton *button = (__bridge BWButton *)a->data;
+    ViewController *viewController = (__bridge ViewController*)data;
      
 
     cpVect collisionVector = cpvnormalize(cpvsub(cpBodyGetPos(bumper.chipmunkLayer.body), cpBodyGetPos(button.chipmunkLayer.body)));
@@ -136,8 +132,8 @@ void postSolveCollisionWithButtonAndBumper(cpArbiter *arbiter, cpSpace *space, v
 
 int beginSolveCollisionWithButtonAndRotatingBumper(cpArbiter *arbiter, cpSpace *space, void *data) {
     CP_ARBITER_GET_SHAPES(arbiter, a, b);
-    BWRotatingBumper *bumper = b->data;
-    BWButton *button = a->data;
+    BWRotatingBumper *bumper = (__bridge BWRotatingBumper *)b->data;
+    BWButton *button = (__bridge BWButton *)a->data;
 
     [bumper trapButton:button withSpace:space];
     
@@ -207,13 +203,13 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     cpSpaceAddShape(space, floorShape);
 
     cpSpaceAddCollisionHandler(space, 0, 1, NULL, NULL, (cpCollisionPostSolveFunc)postSolveCollision, NULL, NULL);
-    cpSpaceAddCollisionHandler(space, 1, 2, (cpCollisionBeginFunc)beginCollisionWithButtonAndScorePost, NULL, NULL, NULL, self);
-    cpSpaceAddCollisionHandler(space, 1, 3, NULL, NULL, (cpCollisionPostSolveFunc)postSolveCollisionWithButtonAndBumper, NULL, self);    
-    cpSpaceAddCollisionHandler(space, 1, 4, (cpCollisionBeginFunc)beginCollisionWithButtonAndShooter, NULL, NULL, NULL, self);
-    cpSpaceAddCollisionHandler(space, 1, 5, (cpCollisionBeginFunc)beginSolveCollisionWithButtonAndRotatingBumper, NULL, NULL, NULL, self);
-    cpSpaceAddCollisionHandler(space, 1, 6, NULL, NULL, (cpCollisionPostSolveFunc)postSolveCollisionWithButtonAndInnerShooter, NULL, self);
+    cpSpaceAddCollisionHandler(space, 1, 2, (cpCollisionBeginFunc)beginCollisionWithButtonAndScorePost, NULL, NULL, NULL, (__bridge void *)(self));
+    cpSpaceAddCollisionHandler(space, 1, 3, NULL, NULL, (cpCollisionPostSolveFunc)postSolveCollisionWithButtonAndBumper, NULL, (__bridge void *)(self));    
+    cpSpaceAddCollisionHandler(space, 1, 4, (cpCollisionBeginFunc)beginCollisionWithButtonAndShooter, NULL, NULL, NULL, (__bridge void *)(self));
+    cpSpaceAddCollisionHandler(space, 1, 5, (cpCollisionBeginFunc)beginSolveCollisionWithButtonAndRotatingBumper, NULL, NULL, NULL, (__bridge void *)(self));
+    cpSpaceAddCollisionHandler(space, 1, 6, NULL, NULL, (cpCollisionPostSolveFunc)postSolveCollisionWithButtonAndInnerShooter, NULL, (__bridge void *)(self));
     
-    UISwipeGestureRecognizer *swipeCleanGesture = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(chooseNewLevel:)] autorelease];
+    UISwipeGestureRecognizer *swipeCleanGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(chooseNewLevel:)];
     [self.view addGestureRecognizer:swipeCleanGesture];
 
     topMark = [[UIView alloc] initWithFrame:CGRectZero];
@@ -232,7 +228,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     [super viewWillAppear:animated];
     
 	// Set up the display link to control the timing of the animation.
-	displayLink = [[CADisplayLink displayLinkWithTarget:self selector:@selector(step)] retain];
+	displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(step)];
 	displayLink.frameInterval = 1;
 	[displayLink addToRunLoop:[NSRunLoop mainRunLoop] forMode:NSDefaultRunLoopMode];
     
@@ -290,7 +286,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     
     [JelloPopupAnimation animateView:playerWonPrompt];
     
-    UITapGestureRecognizer *tap = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(resetMap:)] autorelease];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(resetMap:)];
     [playerWonPrompt addGestureRecognizer:tap];
 }
 #pragma mark -
@@ -302,7 +298,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
         return;
     
     shooter.activeButtonCount++;
-    BWButton *greenButton = [[[BWButton alloc] initWithColor:shooter.buttonColor] autorelease];
+    BWButton *greenButton = [[BWButton alloc] initWithColor:shooter.buttonColor];
     [greenButton setupWithSpace:space position:shooter.center];
     [self.view insertSubview:greenButton belowSubview:topMark];
 
@@ -364,8 +360,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     gameSuspended = NO;
     
     if( currentLevelName != levelName ) {
-        [currentLevelName release];
-        currentLevelName = [levelName retain];
+        currentLevelName = levelName;
     }
     
     [self hideWinnerPrompt];
@@ -413,10 +408,6 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     cpBodyApplyImpulse(button.chipmunkLayer.body, cpv(-1000,0), cpvzero);
 }
 
-- (void)dealloc {
-	
-	[super dealloc];
-}
 
 @end
 
@@ -492,14 +483,14 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
             CGPoint currentPosition = CGPointMake(xPoint, yPoint);
             
             if( [character isEqualToString:@"p"] == YES ) {
-                BWScorePost *scorePost = [[[BWScorePost alloc] init] autorelease];
+                BWScorePost *scorePost = [[BWScorePost alloc] init];
                 [scorePost setupWithSpace:space position:currentPosition];
                 [self.view addSubview:scorePost];
                 totalScorePosts++;
             }
             
             if( [character isEqualToString:@"b"] == YES && [previousCharacter isEqualToString:@"r"] == NO ) {
-                BWBumper *bumper = [[[BWBumper alloc] init] autorelease];
+                BWBumper *bumper = [[BWBumper alloc] init];
                 [bumper setupWithSpace:space position:currentPosition];
                 [self.view addSubview:bumper];
             }
@@ -507,7 +498,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
             if( [phrase extBeginsWithString:@"rb"] ) {
                 NSUInteger angle = [[phrase substringFromIndex:2] intValue];
                 
-                BWRotatingBumper *bumper = [[[BWRotatingBumper alloc] init] autorelease];
+                BWRotatingBumper *bumper = [[BWRotatingBumper alloc] init];
                 [bumper setupWithSpace:space position:currentPosition];
                 
                 [self.view insertSubview:bumper aboveSubview:topMark];
@@ -552,9 +543,9 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
                 
                 BWSlidingBox *slidingBox = nil;
                 if( [typeString isEqualToString:@"x"] )
-                    slidingBox = [[[BWSlidingBox alloc] init] autorelease];
+                    slidingBox = [[BWSlidingBox alloc] init];
                 else // y
-                    slidingBox = [[[BWSlidingHalfBox alloc] init] autorelease];
+                    slidingBox = [[BWSlidingHalfBox alloc] init];
                 
                 slidingBox.slideDirection = direction;
                 slidingBox.slideAmount = slideAmount;
@@ -607,7 +598,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
         
         CGPoint midVect = cpvadd(cpvclamp(cpvsub(firstPoint, secondPoint), length/2.0), secondPoint);
         
-        BWLevelWall *wall = [[[BWLevelWall alloc] initWithLength:length] autorelease];
+        BWLevelWall *wall = [[BWLevelWall alloc] initWithLength:length];
         cpBodySetAngle(wall.chipmunkLayer.body, angle);
         [wall setupWithSpace:space position:midVect];
         
@@ -616,31 +607,31 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 }
 
 - (void)populateWalls {
-    BaseWall *baseWall = [[[BaseWall alloc] initWithDirection:BaseWallDirectionNormal] autorelease];
+    BaseWall *baseWall = [[BaseWall alloc] initWithDirection:BaseWallDirectionNormal];
     [baseWall setupWithSpace:space position:cpv(self.view.bounds.size.width-153, self.view.bounds.size.height-60)];
     [self.view insertSubview:baseWall belowSubview:bottomMark];
     
-    baseWall = [[[BaseWall alloc] initWithDirection:BaseWallDirectionFlippedHorizontal] autorelease];
+    baseWall = [[BaseWall alloc] initWithDirection:BaseWallDirectionFlippedHorizontal];
     [baseWall setupWithSpace:space position:cpv(153, self.view.bounds.size.height-60)];
     [self.view insertSubview:baseWall belowSubview:bottomMark];
     
-    baseWall = [[[BaseWall alloc] initWithDirection:BaseWallDirectionFlippedVertical] autorelease];
+    baseWall = [[BaseWall alloc] initWithDirection:BaseWallDirectionFlippedVertical];
     [baseWall setupWithSpace:space position:cpv(self.view.bounds.size.width-153, 60)];
     [self.view insertSubview:baseWall belowSubview:bottomMark];
     
-    baseWall = [[[BaseWall alloc] initWithDirection:BaseWallDirectionFlippedBoth] autorelease];
+    baseWall = [[BaseWall alloc] initWithDirection:BaseWallDirectionFlippedBoth];
     [baseWall setupWithSpace:space position:cpv(153, 60)];
     [self.view insertSubview:baseWall belowSubview:bottomMark];
     
     
-    BWProgressBar *bar = [[[BWProgressBar alloc] init] autorelease];
+    BWProgressBar *bar = [[BWProgressBar alloc] init];
     bar.center = CGPointMake(600, self.view.bounds.size.height-45);
     bar.transform = CGAffineTransformMakeRotation(RADIANS(344));
     [self.view addSubview:bar];
     
     [progressAnimator addBar:bar];
     
-    bar = [[[BWProgressBar alloc] init] autorelease];
+    bar = [[BWProgressBar alloc] init];
     bar.center = CGPointMake(168, 45);
     bar.transform = CGAffineTransformMakeRotation(RADIANS(345));
     [self.view addSubview:bar];
@@ -649,13 +640,11 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     
     
     
-    [topShooter release];
     topShooter = [[BWShooter alloc] initWithButtonColor:ButtonColorGreen];
     [topShooter setupWithSpace:space position:CGPointMake(self.view.bounds.size.width/2.0, 0)];
     topShooter.gameDelegate = self;
     [self.view addSubview:topShooter];
     
-    [bottomShooter release];
     bottomShooter = [[BWShooter alloc] initWithButtonColor:ButtonColorOrange];
     [bottomShooter setupWithSpace:space position:CGPointMake(self.view.bounds.size.width/2.0, self.view.bounds.size.height)];
     bottomShooter.gameDelegate = self;
@@ -679,7 +668,6 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
     } completion:^(BOOL finished) {
         if( finished == YES ) {
             [playerWonPrompt removeFromSuperview];
-            [playerWonPrompt release];
             playerWonPrompt = nil;
         }
     }];

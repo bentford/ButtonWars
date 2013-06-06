@@ -23,9 +23,4 @@
     CGContextDrawImage(context, rect, self.image.CGImage);
 }
 
-- (void)dealloc {
-    self.image = nil;
-    
-    [super dealloc];
-}
 @end

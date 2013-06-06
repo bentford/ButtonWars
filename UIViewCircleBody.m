@@ -31,7 +31,7 @@
 		shape->e = 0.3;
 		shape->u = 0.2;
 		shape->collision_type = 1;
-        shape->data = self;
+        shape->data = (__bridge cpDataPointer)(self);
     }
     return self;
 }

@@ -10,5 +10,5 @@
 
 @interface BWImageView : UIView
 
-@property (nonatomic, retain) UIImage *image;
+@property (nonatomic, strong) UIImage *image;
 @end

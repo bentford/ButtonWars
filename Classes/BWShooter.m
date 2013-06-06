@@ -38,17 +38,17 @@
         self.userInteractionEnabled = YES;
         self.contentMode = UIViewContentModeScaleToFill;
         
-        UIPanGestureRecognizer *pan = [[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)] autorelease];
+        UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
         [self addGestureRecognizer:pan];
         
         cpBodySetMass(self.chipmunkLayer.body, INFINITY);
         
         cpShapeSetCollisionType(self.chipmunkLayer.shape, 4);
-        cpShapeSetUserData(self.chipmunkLayer.shape, self);
+        cpShapeSetUserData(self.chipmunkLayer.shape, (__bridge cpDataPointer)(self));
         
         innerShape = cpCircleShapeNew(self.chipmunkLayer.body, 50, cpvzero);
         cpShapeSetCollisionType(innerShape, 6);
-        cpShapeSetUserData(innerShape, self);
+        cpShapeSetUserData(innerShape, (__bridge cpDataPointer)(self));
     }
     return self;
 }

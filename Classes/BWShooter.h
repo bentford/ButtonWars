@@ -13,12 +13,12 @@
 
 @interface BWShooter : UIImageView <ChipmunkLayerView> {
     NSUInteger panCounter;
-    id<GameDelegate> gameDelegate;
+    id<GameDelegate> __weak gameDelegate;
     ButtonColor theButtonColor;
     cpShape *innerShape;
 }
 
-@property (nonatomic, assign) id<GameDelegate> gameDelegate;
+@property (nonatomic, weak) id<GameDelegate> gameDelegate;
 @property (nonatomic, readonly) ButtonColor buttonColor;
 @property (nonatomic, assign) NSUInteger activeButtonCount;
 

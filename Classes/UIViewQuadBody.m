@@ -18,7 +18,7 @@
 - (id)initWithFrame:(CGRect)frame {
     if( self = [super initWithFrame:frame] ) {
         
-		cpShapeSetUserData(self.chipmunkLayer.shape, self);
+		cpShapeSetUserData(self.chipmunkLayer.shape, (__bridge cpDataPointer)(self));
         
         cpShapeSetCollisionType(self.chipmunkLayer.shape, 0);
         cpShapeSetElasticity(self.chipmunkLayer.shape, 1.0);

@@ -12,7 +12,7 @@
 #define kDelta 0.005f
 
 @interface BWProgressBarAnimator()
-@property (nonatomic, retain) NSTimer *rateTimer;
+@property (nonatomic, strong) NSTimer *rateTimer;
 @end
 
 @interface BWProgressBarAnimator(PrivateMethods)
@@ -55,12 +55,9 @@
 }
 
 - (void)dealloc {
-    [super dealloc];
     
     [self.rateTimer invalidate];
-    self.rateTimer = nil;
     
-    [bars release];
 }
 @end
 

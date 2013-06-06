@@ -28,7 +28,7 @@ typedef enum {
     BOOL hasMaxedOut;
 }
 
-@property (nonatomic, assign) id<BWProgressAnimatorDelegate> delegate;
+@property (nonatomic, weak) id<BWProgressAnimatorDelegate> delegate;
 
 - (void)addBar:(BWProgressBar *)bar;
 - (void)removeBar:(BWProgressBar *)bar;

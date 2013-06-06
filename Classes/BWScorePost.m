@@ -20,7 +20,7 @@
         
         self.image = [UIImage imageNamed:@"Peg.png"];
 		cpShapeSetCollisionType(self.chipmunkLayer.shape, 2);
-        cpShapeSetUserData(self.chipmunkLayer.shape, self);
+        cpShapeSetUserData(self.chipmunkLayer.shape, (__bridge cpDataPointer)(self));
         buttonColor = 0;
     }
     return self;

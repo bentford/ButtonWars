@@ -34,7 +34,7 @@ static inline float bezierat( float a, float b, float c, float d, CGFloat t )
 @synthesize delay;
 
 + (BWAnimation *)animation {
-    return [[[BWAnimation alloc] init] autorelease];
+    return [[BWAnimation alloc] init];
 }
 
 - (id)init {
@@ -150,8 +150,7 @@ static inline float bezierat( float a, float b, float c, float d, CGFloat t )
 }
 
 - (void)dealloc {
-    [self.completionBlock release];
+    self.completionBlock;
     
-    [super dealloc];
 }
 @end
