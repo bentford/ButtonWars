@@ -149,8 +149,4 @@ static inline float bezierat( float a, float b, float c, float d, CGFloat t )
     return CGPointEqualToPoint(fromPoint, toPoint) == NO;
 }
 
-- (void)dealloc {
-    self.completionBlock;
-    
-}
 @end
