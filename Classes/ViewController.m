@@ -309,16 +309,20 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 #pragma mark -
 
 #pragma mark GameDelegate
-- (void)shootWithShooter:(BWShooter *)shooter {
-    
+- (void)shootWithShooter:(BWShooter *)shooter
+{    
+    // limit button count
     if (enableButtonLimit && shooter.activeButtonCount > 0)
         return;
     
     shooter.activeButtonCount++;
+    
+    // add button to screen
     BWButton *greenButton = [[BWButton alloc] initWithColor:shooter.buttonColor];
     [greenButton setupWithSpace:space position:shooter.center];
     [self.view insertSubview:greenButton belowSubview:topMark];
 
+    // apply impulse using chipmunk API
     cpVect v = cpvmult(cpvforangle(cpBodyGetAngle(shooter.chipmunkLayer.body)), 1000.0f);
 	cpBodyApplyImpulse(greenButton.chipmunkLayer.body, v, cpvzero);
 }
