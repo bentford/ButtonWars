@@ -48,7 +48,9 @@ void postStepRemoveButtonBodyFromSpace(cpSpace *space, cpShape *shape, void *unu
     cpSpaceRemoveBody(space, button.chipmunkLayer.body);
 }
 
-int beginCollisionWithButtonAndScorePost(cpArbiter *arbiter, cpSpace *space, void *data) {
+int beginCollisionWithButtonAndScorePost(cpArbiter *arbiter, cpSpace *space, void *data)
+{
+    // step 1: get convert chipmunk pointers to UIView objects
     CP_ARBITER_GET_SHAPES(arbiter, a, b);
     BWButton *button = (__bridge BWButton *)a->data;
     BWScorePost *scorePost = (__bridge BWScorePost *)b->data;
@@ -57,6 +59,7 @@ int beginCollisionWithButtonAndScorePost(cpArbiter *arbiter, cpSpace *space, voi
     if( viewController.gameSuspended == YES )
         return 0;
     
+    // step 2: calculate score
     if( button.color == ButtonColorGreen && scorePost.buttonColor != ButtonColorGreen ) {
         viewController.greenScore += 1;
 
@@ -70,7 +73,10 @@ int beginCollisionWithButtonAndScorePost(cpArbiter *arbiter, cpSpace *space, voi
             viewController.greenScore = fmaxf(viewController.greenScore - 1, 0);
     }
     
+    // step 3: change color
     scorePost.buttonColor = button.color;
+    
+    // step 4: check for winner
     [viewController checkForWinner];
     
     return 0;
