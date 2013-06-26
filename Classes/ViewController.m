@@ -166,12 +166,20 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 @end
 
 @implementation ViewController
+{
+    BOOL enableGravity;
+    BOOL enableButtonLimit;
+}
 @synthesize greenScore;
 @synthesize orangeScore;
 @synthesize gameSuspended;
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
+    
+    enableButtonLimit = YES;
+    enableGravity = YES;
+    
     self.wantsFullScreenLayout = YES;
     
     currentLevelName = nil;
@@ -257,6 +265,9 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
             [(BWChipmunkLayer *)aLayer step:dt];
     
 
+    if (enableGravity == NO)
+        return;
+    
     for( UIView *aView in self.view.subviews ) 
         if( [aView isKindOfClass:[BWButton class]] == YES && ((BWButton *)aView).ignoreGuideForce == NO ) {
             if( ((BWButton *)aView).color == ButtonColorGreen )
@@ -294,7 +305,7 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
 #pragma mark GameDelegate
 - (void)shootWithShooter:(BWShooter *)shooter {
     
-    if( shooter.activeButtonCount >= 1 )
+    if (enableButtonLimit && shooter.activeButtonCount > 0)
         return;
     
     shooter.activeButtonCount++;
@@ -604,6 +615,11 @@ void postSolveCollision(cpArbiter *arbiter, cpSpace *space, void *data) {
         
         [self.view addSubview:wall];
     }
+    
+    NSString *settingsRow = [mapRows lastObject];
+    NSArray *settingStrings = [settingsRow componentsSeparatedByString:@" "];
+    enableGravity = [settingStrings containsObject:@"no-gravity"] == NO;
+    enableButtonLimit = [settingStrings containsObject:@"no-button-limit"] == NO;
 }
 
 - (void)populateWalls {
